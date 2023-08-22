@@ -20,7 +20,12 @@ module.exports = {
         },
         extend: {
             colors: tailpress.colorMapper(tailpress.theme('settings.color.palette', theme)),
-            fontSize: tailpress.fontSizeMapper(tailpress.theme('settings.typography.fontSizes', theme))
+            fontSize: tailpress.fontSizeMapper(tailpress.theme('settings.typography.fontSizes', theme)),
+            fontFamily: {
+                'sans': ['Noto Sans TC', 'sans-serif'],
+                'raj': ['Rajdhani', 'sans-serif'],
+                'awesome': ['Font Awesome 6 Free']
+            }
         },
         screens: {
             'xs': '480px',
