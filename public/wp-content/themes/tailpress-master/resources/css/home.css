@@ -1,0 +1,8 @@
+section {
+    .section-title {
+        @apply font-sans;
+        .sub {
+            @apply uppercase font-raj;
+        }
+    }
+}
