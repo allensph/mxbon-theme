@@ -47,6 +47,9 @@ function tailpress_enqueue_scripts() {
 	wp_enqueue_style( 'noto-sans-tc', 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swa' );
 	wp_enqueue_style( 'rajdhani', 'https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap' );
 	wp_enqueue_style( 'fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
+
+	wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css' );
+	wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js' );
 }
 
 add_action( 'wp_enqueue_scripts', 'tailpress_enqueue_scripts' );
@@ -111,3 +114,26 @@ function tailpress_nav_menu_add_submenu_class( $classes, $args, $depth ) {
 }
 
 add_filter( 'nav_menu_submenu_css_class', 'tailpress_nav_menu_add_submenu_class', 10, 3 );
+
+
+//Disable emojis in WordPress
+add_action( 'init', 'tellustek_disable_emojis' );
+
+function tellustek_disable_emojis() {
+ remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+ remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+ remove_action( 'wp_print_styles', 'print_emoji_styles' );
+ remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+ remove_action( 'admin_print_styles', 'print_emoji_styles' );
+ remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+ remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+ add_filter( 'tiny_mce_plugins', 'disable_emojis_tinymce' );
+}
+
+function disable_emojis_tinymce( $plugins ) {
+ if ( is_array( $plugins ) ) {
+ return array_diff( $plugins, array( 'wpemoji' ) );
+ } else {
+ return array();
+ }
+}
