@@ -45,7 +45,7 @@ function tailpress_enqueue_scripts() {
 	wp_enqueue_script( 'tailpress', tailpress_asset( 'js/app.js' ), array(), $theme->get( 'Version' ) );
 
 	wp_enqueue_style( 'noto-sans-tc', 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swa' );
-	wp_enqueue_style( 'rajdhani', 'https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap' );
+	wp_enqueue_style( 'rajdhani', 'https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap' );
 	wp_enqueue_style( 'fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
 
 	wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css' );
@@ -175,4 +175,7 @@ function tellustek_admin_bar_render() {
     global $wp_admin_bar;
     $wp_admin_bar->remove_menu('comments');
 }
-//add_action( 'wp_before_admin_bar_render', 'tellustek_admin_bar_render' );
+add_action( 'wp_before_admin_bar_render', 'tellustek_admin_bar_render' );
+
+//Disable auto p in thr_content
+remove_filter( 'get_the_content', 'wpautop' );
