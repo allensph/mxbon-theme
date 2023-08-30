@@ -13,6 +13,7 @@ window.addEventListener('load', function () {
 
             pagination: {
                   el: 'section.products .swiper-pagination',
+                  clickable: true,
             },
 
             navigation: {
@@ -28,6 +29,7 @@ window.addEventListener('load', function () {
 
             pagination: {
                   el: 'section.industries .swiper-pagination',
+                  clickable: true,
             },
 
             navigation: {
