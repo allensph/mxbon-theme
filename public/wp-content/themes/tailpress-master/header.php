@@ -19,23 +19,12 @@
 
 	<header>
 
-		<div class="mx-auto container">
-			<div class="lg:flex lg:justify-between lg:items-center border-b py-6">
+		<div class="container">
+			<div class="wrapper">
 				<div class="flex justify-between items-center">
-					<div>
-						<?php if ( has_custom_logo() ) { ?>
-                            <?php the_custom_logo(); ?>
-						<?php } else { ?>
-							<a href="<?php echo get_bloginfo( 'url' ); ?>" class="font-extrabold text-lg uppercase">
-								<?php echo get_bloginfo( 'name' ); ?>
-							</a>
-
-							<p class="text-sm font-light text-gray-600">
-								<?php echo get_bloginfo( 'description' ); ?>
-							</p>
-
-						<?php } ?>
-					</div>
+					<a href="/" class="custom-logo-link" rel="home" aria-current="page">
+						<img src="/wp-content/themes/tailpress-master/resources/images/header-logo.svg" class="custom-logo" alt="<?php echo bloginfo('name'); ?>" decoding="async">
+					</a>
 
 					<div class="lg:hidden">
 						<a href="#" aria-label="Toggle navigation" id="primary-menu-toggle">
@@ -56,14 +45,32 @@
 				wp_nav_menu(
 					array(
 						'container_id'    => 'primary-menu',
-						'container_class' => 'hidden bg-gray-100 mt-4 p-4 lg:mt-0 lg:p-0 lg:bg-transparent lg:block',
-						'menu_class'      => 'lg:flex lg:-mx-4',
+						'container_class' => 'primary-menu',
+						'menu_class'      => '',
 						'theme_location'  => 'primary',
-						'li_class'        => 'lg:mx-4',
+						'li_class'        => '',
 						'fallback_cb'     => false,
 					)
 				);
 				?>
+			</div>
+
+			<?php
+			wp_nav_menu(
+				array(
+					'container'=> false,
+					'menu_class'      => 'language-switcher',
+					'theme_location'  => 'lang',
+					'fallback_cb'     => false,
+				)
+			);			
+			?>
+			<div class="search-wrapper">
+				<button class="search-toggle">
+					<div class="header-button close">close</div>
+					<div class="header-button open">Search</div>
+				</button>
+				<?php echo get_search_form(); ?>
 			</div>
 		</div>
 	</header>

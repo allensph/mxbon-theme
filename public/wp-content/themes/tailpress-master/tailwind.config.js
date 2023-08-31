@@ -22,9 +22,16 @@ module.exports = {
             aspectRatio: {
                 'industry': '460 / 613',
             },
+            backgroundPosition: {
+                'caret-down-position': 'calc(100% - 12px)',
+            },
             backgroundImage: {
+                'lang-icon': 'url("/wp-content/themes/tailpress-master/resources/images/lang-icon.svg")',
+                'lang-icon-hover': 'url("/wp-content/themes/tailpress-master/resources/images/lang-icon-hover.svg")',
+                'caret-down': 'url("/wp-content/themes/tailpress-master/resources/images/caret-down.svg")',
+                'caret-down-focus': 'url("/wp-content/themes/tailpress-master/resources/images/caret-down-focus.svg")',
                 'industries-section': 'url("/wp-content/themes/tailpress-master/resources/images/industries-bg.jpg")',
-                'contact-section': 'url("/wp-content/themes/tailpress-master/resources/images/contact-bg.jpg")'
+                'contact-section': 'url("/wp-content/themes/tailpress-master/resources/images/contact-bg.jpg")',
             },
             boxShadow: {
                 'card': '0px 7px 29px 0px rgba(100, 100, 111, 0.20)',
@@ -42,6 +49,9 @@ module.exports = {
                 '8xl': '1440px',
                 '9xl': '1536px',
             },
+            transitionProperty: {
+                'bg': 'background',
+            },
             transitionTimingFunction: {
                 'out-quad': 'cubic-bezier(0.250, 0.460, 0.450, 0.940)',
             },
@@ -51,6 +61,7 @@ module.exports = {
             colors: {
                 mxcon: {
                     'red': '#DA2127',
+                    'dark-red': '#BB1A1F',
                 },
             },
         },

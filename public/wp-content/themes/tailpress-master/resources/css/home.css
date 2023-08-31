@@ -16,7 +16,7 @@ section {
         }
     }
     .section-title {
-        @apply relative z-10 font-sans font-medium text-5xl leading-ext-tight text-zinc-800 mb-12 lg:mb-16;
+        @apply relative z-10 title font-sans text-zinc-800 mb-12 lg:mb-16;
 
         &:after {
             @apply absolute content-[''] bg-mxcon-red;
@@ -43,7 +43,7 @@ section {
             }
         }
         .swiper-button-prev, .swiper-button-next {
-            @apply w-10 h-10 flex justify-center items-center text-white after:text-base bg-zinc-800 opacity-25 hover:opacity-100 transition-opacity;
+            @apply w-10 h-10 flex justify-center items-center text-white after:text-base bg-zinc-800 opacity-25 hover:opacity-100 transition-opacity duration-300;
         }
         .swiper-button-prev {
             @apply after:content-['prev'];
@@ -137,10 +137,10 @@ section.products {
                 .info {
                     @apply px-4 text-center;
                     .name {
-                        @apply text-2xl leading-ext-tight font-medium text-zinc-800 mb-4;
+                        @apply subtitle-md text-zinc-800 mb-4;
                     }
                     .description {
-                        @apply text-base leading-normal text-zinc-600;
+                        @apply typeface-base text-zinc-600;
                     }
                 }
             }
@@ -191,14 +191,14 @@ section.industries {
                             @apply absolute content-[''] w-1 h-full left-0 top-0 bg-mxcon-red;
                         }
                         .name {
-                            @apply text-white text-[28px] font-bold mb-3;
+                            @apply text-white subtitle-lg font-bold mb-3;
                         }
                         p {
-                            @apply text-white text-base leading-normal line-clamp-2;
+                            @apply text-white typeface-base line-clamp-2;
                         }                        
                     }
                     .permalink {
-                        @apply block text-white text-base leading-none font-raj font-bold bg-mxcon-red px-4 py-2 w-fit ml-auto;
+                        @apply mxcon-btn mxcon-btn-sm ml-auto;
                     }                    
                 }
 
@@ -233,7 +233,7 @@ section.news {
                     }
                 }
                 .title {
-                    @apply text-xl leading-ext-tight font-medium text-zinc-800 line-clamp-2 mb-4;
+                    @apply subtitle text-zinc-800 line-clamp-2 mb-4;
                 }
                 time {
                     @apply font-raj text-base leading-ext-tight tracking-[1.25px] text-zinc-400;
@@ -291,44 +291,14 @@ section.contact-us {
                 }
             }
 
-            .ff_list_inline {
-                .ff-el-input--content {
-                    @apply flex gap-x-2 py-1.5;
-                    .ff-el-form-check {
-                        @apply m-0;
-                        .ff-el-form-check-label {
-                            @apply relative flex p-2 pl-0 mb-0 items-center;
-
-                            input[type=radio] {
-                                @apply hidden;
-                            }
-                            span {
-                                @apply block relative whitespace-nowrap pl-[22px] text-base leading-ext-tight text-zinc-600 transition-colors;
-                                &:before {
-                                    @apply absolute content-[''] w-[14px] h-[14px] left-0 top-1/2 -translate-y-1/2 shadow-radio-not-checked rounded-full;
-                                }
-                            }
-                            input[type=radio]:checked + span {
-                                @apply text-mxcon-red;
-                                &:before {
-                                    @apply shadow-radio-checked;
-                                }
-                            }
-                        }
-                    }
-                }
-               
-            }
-
-
             input[type="text"], input[type="email"], textarea {
-                @apply rounded-none border border-zinc-300 p-3 text-zinc-600 placeholder-zinc-400 text-base leading-normal font-sans focus:outline-none;
+                @apply mxcon-text-box;
             }
 
             .ff_submit_btn_wrapper {
                 @apply mb-0;
                 button {
-                    @apply w-full text-lg leading-ext-tight font-medium text-white bg-mxcon-red px-10 py-4;
+                    @apply w-full mxcon-btn mxcon-btn-lg;
                 }
             }
         }

@@ -6,6 +6,12 @@ window.addEventListener('load', function () {
             main_navigation.classList.toggle('hidden');
       });
 
+      // Header serach toggle
+      document.querySelector('.search-toggle').addEventListener('click', function (e) {
+            e.preventDefault()
+            e.target.closest('.search-wrapper').classList.toggle('active')
+      });
+
       // Home: Products Slider
       const swiper1 = new Swiper('section.products .swiper', {
             slidesPerView: 3,
