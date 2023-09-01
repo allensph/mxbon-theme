@@ -74,7 +74,8 @@ module.exports = {
             'xs': '480px',
             'sm': '600px',
             'md': '768px',
-            'lg': tailpress.theme('settings.layout.contentSize', theme),//960
+            //'lg': tailpress.theme('settings.layout.contentSize', theme),//960
+            'lg': '1024px',
             'xl': tailpress.theme('settings.layout.wideSize', theme),//1280
             '2xl': '1440px',
             '3xl': '1536px',
