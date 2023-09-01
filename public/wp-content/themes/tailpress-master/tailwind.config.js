@@ -35,6 +35,7 @@ module.exports = {
             },
             boxShadow: {
                 'card': '0px 7px 29px 0px rgba(100, 100, 111, 0.20)',
+                'border-light': 'inset 0 0 0 1px #D4D4D8',
                 'radio-not-checked': 'inset 0 0 0 1px #27272A',
                 'radio-checked': 'inset 0 0 0 1px #DA2127, inset 0 0 0 3px #FFFFFF, inset 0 0 0 9px #DA2127'
             },
@@ -59,7 +60,7 @@ module.exports = {
                 'ext-tight': '120%',
             },
             colors: {
-                mxcon: {
+                mxbon: {
                     'red': '#DA2127',
                     'dark-red': '#BB1A1F',
                 },
@@ -72,9 +73,9 @@ module.exports = {
         screens: {
             'xs': '480px',
             'sm': '600px',
-            'md': '782px',
-            'lg': tailpress.theme('settings.layout.contentSize', theme),
-            'xl': tailpress.theme('settings.layout.wideSize', theme),
+            'md': '768px',
+            'lg': tailpress.theme('settings.layout.contentSize', theme),//960
+            'xl': tailpress.theme('settings.layout.wideSize', theme),//1280
             '2xl': '1440px',
             '3xl': '1536px',
         }

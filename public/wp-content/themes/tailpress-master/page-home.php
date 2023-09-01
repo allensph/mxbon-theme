@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
 <section class="products">
-    <div class="wrapper">
+    <div class="container">
         <div class="section-title center">
             產品分類
             <span class="sub">products</span>
@@ -45,7 +45,7 @@
 </section>
 
 <section class="industries">
-    <div class="wrapper">
+    <div class="container">
         <div class="section-title side">
             產業應用
             <span class="sub">industries</span>
@@ -87,12 +87,13 @@
 </section>
 
 <section class="news">
-    <div class="wrapper">
+    <div class="container">
         <div class="section-title side">
             公司新聞
             <span class="sub">company updates</span>
+            <a class="more-news" href="/news">Read More</a>
         </div>
-        <ul class="posts">
+        <div class="posts">
             <?php
                 $posts_arg = array(
                     'post_type' => 'post',
@@ -101,7 +102,7 @@
                 $posts = get_posts( $posts_arg );
             ?>
             <?php foreach ($posts as $post) : ?>
-                <li class="post">
+                <a class="post" href="<?php echo get_permalink($post); ?>">
                     <?php 
                         $thumbnail = has_post_thumbnail($post) ? get_the_post_thumbnail_url($post, 'large') : '/wp-content/themes/tailpress-master/resources/images/news-default-img.svg'; 
                     ?>
@@ -113,14 +114,15 @@
                         <h3 class="title"><?php echo $post->post_title; ?></h3>
                         <time><?php echo get_the_date('Y/m/d', $post); ?></time>
                     </div>
-                </li>
+                </a>
             <?php endforeach; ?>
-        </ul>
+            </div>
+        <a class="more-news mobile" href="/news">Read More</a>
     </div>
 </section>
 
 <section class="contact-us">
-    <div class="wrapper">
+    <div class="container">
         <div class="section-title side">
             聯絡我們
             <span class="sub">contact us</span>

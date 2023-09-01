@@ -182,3 +182,19 @@ add_action( 'wp_before_admin_bar_render', 'tellustek_admin_bar_render' );
 
 //Disable auto p in thr_content
 remove_filter( 'get_the_content', 'wpautop' );
+
+// Custom primary menu walker
+
+class Mxbon_Primary_Menu_Walker extends Walker_Nav_Menu {
+	public function end_lvl( &$output, $depth = 0, $args = null ) {
+		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
+			$t = '';
+			$n = '';
+		} else {
+			$t = "\t";
+			$n = "\n";
+		}
+		$indent  = str_repeat( $t, $depth );
+		$output .= "$indent</ul>{$n}";
+	}
+}
