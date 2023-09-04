@@ -17,7 +17,7 @@
 
 	<?php do_action( 'tailpress_header' ); ?>
 
-	<header>
+	<header x-data="{ menu: false, search: false, nav: 0 }">
 
 		<div class="container">
 
@@ -26,19 +26,31 @@
 					<img src="/wp-content/themes/tailpress-master/resources/images/header-logo.svg" class="custom-logo" alt="<?php echo bloginfo('name'); ?>" decoding="async">
 				</a>
 
-				<?php
-					wp_nav_menu(
-						array(
-							'container_id'    => 'primary-menu',
-							'container_class' => 'primary-menu hidden',
-							'menu_class'      => '',
-							'theme_location'  => 'primary',
-							'li_class'        => '',
-							//'walker'		  => new Mxbon_Primary_Menu_Walker,
-							'fallback_cb'     => false,
-						)
-					);
-				?>
+				<div class="primary-menu-container">
+					<?php
+						wp_nav_menu(
+							array(
+								'container'=> false,
+								'menu_class'      => 'language-switcher mobile',
+								'theme_location'  => 'lang',
+								'fallback_cb'     => false,
+							)
+						);		
+					?>
+					<?php
+						wp_nav_menu(
+							array(
+								'container_id'    => 'primary-menu',
+								'container_class' => 'primary-menu',
+								'menu_class'      => '',
+								'theme_location'  => 'primary',
+								'li_class'        => '',
+								'walker'		  => new Mxbon_Primary_Menu_Walker,
+								'fallback_cb'     => false,
+							)
+						);
+					?>
+				</div>
 			</div><!--wrapper-->
 
 			<?php
@@ -64,6 +76,9 @@
 
 			<div class="toggle-wrapper">
 				<a href="#" aria-label="Toggle navigation" id="primary-menu-toggle">
+					<i class="fa-solid fa-bars"></i>
+					<i class="fa-solid fa-xmark"></i>
+					<!--
 					<svg viewBox="0 0 20 20" class="inline-block w-6 h-6" version="1.1"
 							xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 						<g stroke="none" stroke-width="1" fill="currentColor" fill-rule="evenodd">
@@ -73,6 +88,7 @@
 							</g>
 						</g>
 					</svg>
+					-->
 				</a>
 			</div>
 			<!-- </div> -->

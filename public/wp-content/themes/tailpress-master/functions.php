@@ -51,6 +51,7 @@ function tailpress_enqueue_scripts() {
 	wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css' );
 	wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js' );
 
+	wp_enqueue_script( 'alpine', 'https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js' );
 	wp_enqueue_script( 'tailpress', tailpress_asset( 'js/app.js' ), array('jquery'), $theme->get( 'Version' ) );
 	wp_enqueue_script( 'paroller', 'https://cdn.jsdelivr.net/npm/paroller.js@1.4.4/dist/jquery.paroller.min.js', array('jquery') );
 }
@@ -184,17 +185,7 @@ add_action( 'wp_before_admin_bar_render', 'tellustek_admin_bar_render' );
 remove_filter( 'get_the_content', 'wpautop' );
 
 // Custom primary menu walker
-
-class Mxbon_Primary_Menu_Walker extends Walker_Nav_Menu {
-	public function end_lvl( &$output, $depth = 0, $args = null ) {
-		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
-			$t = '';
-			$n = '';
-		} else {
-			$t = "\t";
-			$n = "\n";
-		}
-		$indent  = str_repeat( $t, $depth );
-		$output .= "$indent</ul>{$n}";
-	}
+function tellustek_custom_nav_walker_class() {
+	require_once('includes/Mxbon_Primary_Menu_Walker.class.php');
 }
+add_action( 'after_setup_theme', 'tellustek_custom_nav_walker_class' );

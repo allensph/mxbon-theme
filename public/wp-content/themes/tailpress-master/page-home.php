@@ -1,5 +1,10 @@
 <?php get_header(); ?>
 
+<section class="page-banner">
+    <?php
+        echo do_shortcode('[smartslider3 slider="3"]');
+    ?>
+</section>
 <section class="products">
     <div class="container">
         <div class="section-title center">
@@ -130,8 +135,8 @@
 
         <?php echo do_shortcode( '[fluentform id="1"]'); ?>
     </div>
-    <span class="molecular-dark" data-paroller-factor="-0.2"></span>
-    <span class="molecular-light" data-paroller-factor="-0.2"></span>
+    <span class="molecular-dark" data-paroller-factor="-0.1"></span>
+    <span class="molecular-light" data-paroller-factor="-0.1"></span>
 
 </section>
 <?php

@@ -264,12 +264,12 @@ section.news {
     }
 }
 section.contact-us {
-    @apply relative pt-[120px] pb-[110px] lg:mb-0 overflow-hidden;
+    @apply relative py-20 lg:pt-[120px] lg:pb-[110px] lg:mb-0 overflow-hidden;
     &:before {
         @apply absolute content-[''] w-full h-full left-0 top-0 clip-path-left-triangle bg-zinc-400 z-10;
     }
     .molecular-dark, .molecular-light {
-        @apply absolute content-[''] w-full h-[115%] left-0 top-[-15%] block bg-contact-section bg-cover bg-no-repeat bg-bottom opacity-25 saturate-0 contrast-50 brightness-200 transition-all ease-out-quad duration-1000 delay-100;
+        @apply absolute content-[''] w-full h-[115%] left-0 top-[-10%] block bg-contact-section bg-cover bg-no-repeat bg-bottom opacity-25 saturate-0 contrast-50 brightness-200 transition-all ease-out-quad duration-1000 delay-100;
     }
     .molecular-dark {
         @apply z-20 mix-blend-color-burn;
@@ -278,7 +278,7 @@ section.contact-us {
         @apply z-0
     }
     .container {
-        @apply relative z-30 flex md:flex-row md:justify-stretch;
+        @apply relative z-30 px-4 flex flex-col md:flex-row md:justify-stretch;
     }
     .section-title {
         @apply text-white pt-[122px] md:pt-10 h-fit;
