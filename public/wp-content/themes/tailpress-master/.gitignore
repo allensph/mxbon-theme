@@ -3,4 +3,8 @@
 /.vscode
 /css
 /js
+../../plugins/akeebabackupwp/app/tmp
+../../plugins/akeebabackupwp/app/backups
+*.jpa
+*.log.php
 *.code-workspace
