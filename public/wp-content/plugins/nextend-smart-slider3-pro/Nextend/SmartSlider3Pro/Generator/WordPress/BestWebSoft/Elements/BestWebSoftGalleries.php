@@ -10,23 +10,24 @@ class BestWebSoftGalleries extends Select {
         parent::__construct($insertAt, $name, $label, $default, $parameters);
 
         $galleries = get_posts(array(
-            'post_type'    => 'bws-gallery',
-            'child_of'     => 0,
-            'parent'       => '',
-            'orderby'      => 'name',
-            'order'        => 'ASC',
-            'hide_empty'   => 0,
-            'hierarchical' => 1,
-            'exclude'      => '',
-            'include'      => '',
-            'number'       => '',
-            'pad_counts'   => false
+            'post_type'      => 'bws-gallery',
+            'child_of'       => 0,
+            'parent'         => '',
+            'orderby'        => 'post_title',
+            'order'          => 'ASC',
+            'hide_empty'     => 0,
+            'hierarchical'   => 1,
+            'exclude'        => '',
+            'include'        => '',
+            'number'         => '',
+            'pad_counts'     => false,
+            'posts_per_page' => -1
         ));
 
         $this->options[0] = 'Please select a gallery';
 
         if (count($galleries)) {
-            foreach ($galleries AS $gallery) {
+            foreach ($galleries as $gallery) {
                 $this->options[$gallery->ID] = $gallery->post_title;
             }
         }

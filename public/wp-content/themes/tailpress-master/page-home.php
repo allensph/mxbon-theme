@@ -2,7 +2,7 @@
 
 <section class="page-banner">
     <?php
-        echo do_shortcode('[smartslider3 slider="3"]');
+        echo do_shortcode('[smartslider3 slider="4"]');
     ?>
 </section>
 <section class="products">

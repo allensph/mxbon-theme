@@ -1164,6 +1164,214 @@ class Storage {
             'referencekey' => '',
             'value'        => n2_('Default')
         ));
+
+        array_push($animations, array(
+            "id"           => 2000,
+            'referencekey' => 1000,
+            "value"        => array(
+                'name' => n2_('Morph - Wave'),
+                'data' => array(
+                    'type'                   => 'GL',
+                    'subType'                => 'GLSL1',
+                    'ease'                   => 'easeOutCubic',
+                    'duration'               => 1,
+                    'width'                  => 1.5,
+                    'scaleX'                 => 1,
+                    'scaleY'                 => 1,
+                    'allowedBackgroundModes' => array('fill')
+                )
+            )
+        ));
+
+        /**
+         * @todo reverse valamiért túl gyors.
+         */
+        array_push($animations, array(
+            "id"           => 2001,
+            'referencekey' => 1000,
+            "value"        => array(
+                'name' => n2_('Morph - Brush'),
+                'data' => array(
+                    'type'                   => 'GL',
+                    'subType'                => 'GLSL1',
+                    'ease'                   => 'easeOutQuint',
+                    'duration'               => 1.5,
+                    'width'                  => 2,
+                    'scaleX'                 => 10,
+                    'scaleY'                 => 10,
+                    'allowedBackgroundModes' => array('fill')
+                )
+            )
+        ));
+
+        array_push($animations, array(
+            "id"           => 2002,
+            'referencekey' => 1000,
+            "value"        => array(
+                'name' => n2_('Morph - Flow'),
+                'data' => array(
+                    'type'                   => 'GL',
+                    'subType'                => 'GLSL2',
+                    'ease'                   => 'easeOutCubic',
+                    'duration'               => 1.5,
+                    'displacementImage'      => '$ss3-pro-frontend$/images/backgroundAnimation/distortion-flow.jpg',
+                    'allowedBackgroundModes' => array('fill')
+                )
+            )
+        ));
+
+        array_push($animations, array(
+            "id"           => 2003,
+            'referencekey' => 1000,
+            "value"        => array(
+                'name' => n2_('Morph - Noise'),
+                'data' => array(
+                    'type'                   => 'GL',
+                    'subType'                => 'GLSL2',
+                    'ease'                   => 'easeOutCubic',
+                    'duration'               => 1.5,
+                    'displacementImage'      => '$ss3-pro-frontend$/images/backgroundAnimation/distortion-noise.jpg',
+                    'allowedBackgroundModes' => array('fill')
+                )
+            )
+        ));
+
+        array_push($animations, array(
+            "id"           => 2004,
+            'referencekey' => 1000,
+            "value"        => array(
+                'name' => n2_('Distortion - Mosaic'),
+                'data' => array(
+                    'type'                   => 'GL',
+                    'subType'                => 'GLSL3',
+                    'ease'                   => 'easeOutQuint',
+                    'duration'               => 1.2,
+                    'effectFactor'           => 0.5,
+                    'displacementImage'      => '$ss3-pro-frontend$/images/backgroundAnimation/distortion-mosaic.png',
+                    'allowedBackgroundModes' => array('fill')
+                )
+            )
+        ));
+
+        array_push($animations, array(
+            "id"           => 2005,
+            'referencekey' => 1000,
+            "value"        => array(
+                'name' => n2_('Distortion - Triangle'),
+                'data' => array(
+                    'type'                   => 'GL',
+                    'subType'                => 'GLSL3',
+                    'ease'                   => 'easeInOutCubic',
+                    'duration'               => 1.5,
+                    'effectFactor'           => 0.5,
+                    'displacementImage'      => '$ss3-pro-frontend$/images/backgroundAnimation/distortion-triangle.png',
+                    'allowedBackgroundModes' => array('fill')
+                )
+            )
+        ));
+
+        array_push($animations, array(
+            "id"           => 2006,
+            'referencekey' => 1000,
+            "value"        => array(
+                'name' => n2_('Distortion - Flow'),
+                'data' => array(
+                    'type'                   => 'GL',
+                    'subType'                => 'GLSL3',
+                    'ease'                   => 'easeOutQuart',
+                    'duration'               => 1.2,
+                    'effectFactor'           => 0.2,
+                    'displacementImage'      => '$ss3-pro-frontend$/images/backgroundAnimation/distortion-flow.jpg',
+                    'allowedBackgroundModes' => array('fill')
+                )
+            )
+        ));
+
+        array_push($animations, array(
+            "id"           => 2007,
+            'referencekey' => 1000,
+            "value"        => array(
+                'name' => n2_('Distortion - Warp'),
+                'data' => array(
+                    'type'                   => 'GL',
+                    'subType'                => 'GLSL3',
+                    'ease'                   => 'easeOutQuad',
+                    'duration'               => 0.8,
+                    'effectFactor'           => 0.6,
+                    'displacementImage'      => '$ss3-pro-frontend$/images/backgroundAnimation/distortion-warp.jpg',
+                    'allowedBackgroundModes' => array('fill')
+                )
+            )
+        ));
+
+        array_push($animations, array(
+            "id"           => 2008,
+            'referencekey' => 1000,
+            "value"        => array(
+                'name' => n2_('Distortion - Storm'),
+                'data' => array(
+                    'type'                   => 'GL',
+                    'subType'                => 'GLSL3',
+                    'ease'                   => 'easeOutCubic',
+                    'duration'               => 0.8,
+                    'effectFactor'           => 2,
+                    'displacementImage'      => '$ss3-pro-frontend$/images/backgroundAnimation/distortion-storm.png',
+                    'allowedBackgroundModes' => array('fill')
+                )
+            )
+        ));
+
+        array_push($animations, array(
+            "id"           => 2009,
+            'referencekey' => 1000,
+            "value"        => array(
+                'name' => n2_('Distortion - Wave'),
+                'data' => array(
+                    'type'                   => 'GL',
+                    'subType'                => 'GLSL3',
+                    'ease'                   => 'easeOutSine',
+                    'duration'               => 0.8,
+                    'effectFactor'           => 0.9,
+                    'displacementImage'      => '$ss3-pro-frontend$/images/backgroundAnimation/distortion-wave.jpg',
+                    'allowedBackgroundModes' => array('fill')
+                )
+            )
+        ));
+
+        array_push($animations, array(
+            "id"           => 2010,
+            'referencekey' => 1000,
+            "value"        => array(
+                'name' => n2_('Distortion - Shard'),
+                'data' => array(
+                    'type'                   => 'GL',
+                    'subType'                => 'GLSL3',
+                    'ease'                   => 'easeOutSine',
+                    'duration'               => 1.2,
+                    'effectFactor'           => 0.1,
+                    'displacementImage'      => '$ss3-pro-frontend$/images/backgroundAnimation/distortion-shard.png',
+                    'allowedBackgroundModes' => array('fill')
+                )
+            )
+        ));
+
+        array_push($animations, array(
+            "id"           => 2011,
+            'referencekey' => 1000,
+            "value"        => array(
+                'name' => n2_('Distortion - Noise'),
+                'data' => array(
+                    'type'                   => 'GL',
+                    'subType'                => 'GLSL3',
+                    'ease'                   => 'easeInOutCubic',
+                    'duration'               => 1.2,
+                    'effectFactor'           => 0.8,
+                    'displacementImage'      => '$ss3-pro-frontend$/images/backgroundAnimation/distortion-noise.jpg',
+                    'allowedBackgroundModes' => array('fill')
+                )
+            )
+        ));
+
         array_push($animations, array(
             "id"           => 1030,
             'referencekey' => 1000,
@@ -1489,14 +1697,14 @@ class Storage {
             "value"        => array(
                 'name' => n2_('Flowing rows'),
                 'data' => array(
-                    'type'        => 'Flat',
-                    'rows'        => 5,
-                    'tiles'       => array(
+                    'type'            => 'Flat',
+                    'rows'            => 5,
+                    'tiles'           => array(
                         'crop'     => false,
                         'delay'    => 0.05,
                         'sequence' => 'ForwardRow'
                     ),
-                    'main'        => array(
+                    'main'            => array(
                         'type'     => 'both',
                         'duration' => .75,
                         'current'  => array(
@@ -1512,7 +1720,7 @@ class Storage {
                             'opacity' => 0
                         )
                     ),
-                    'invert'      => array(
+                    'invert'          => array(
                         'current' => array(
                             'xP' => 100
                         ),
@@ -1520,9 +1728,10 @@ class Storage {
                             'xP' => -100
                         )
                     ),
-                    'invertTiles' => array(
+                    'invertTiles'     => array(
                         'sequence' => 'BackwardRow'
-                    )
+                    ),
+                    'desktopOnly' => true
                 )
             )
         ));
@@ -1533,14 +1742,14 @@ class Storage {
             "value"        => array(
                 'name' => n2_('Flowing cols'),
                 'data' => array(
-                    'type'        => 'Flat',
-                    'columns'     => 5,
-                    'tiles'       => array(
+                    'type'            => 'Flat',
+                    'columns'         => 5,
+                    'tiles'           => array(
                         'crop'     => false,
                         'delay'    => 0.05,
                         'sequence' => 'ForwardCol'
                     ),
-                    'main'        => array(
+                    'main'            => array(
                         'type'     => 'both',
                         'duration' => .75,
                         'current'  => array(
@@ -1556,7 +1765,7 @@ class Storage {
                             'opacity' => 0
                         )
                     ),
-                    'invert'      => array(
+                    'invert'          => array(
                         'current' => array(
                             'xP' => 100
                         ),
@@ -1564,9 +1773,10 @@ class Storage {
                             'xP' => -100
                         )
                     ),
-                    'invertTiles' => array(
+                    'invertTiles'     => array(
                         'sequence' => 'BackwardCol'
-                    )
+                    ),
+                    'desktopOnly' => true
                 )
             )
         ));
@@ -1577,33 +1787,33 @@ class Storage {
             "value"        => array(
                 'name' => n2_('Flowing tiles'),
                 'data' => array(
-                    'type'        => 'Flat',
-                    'columns'     => 5,
-                    'rows'        => 5,
-                    'tiles'       => array(
+                    'type'            => 'Flat',
+                    'columns'         => 5,
+                    'rows'            => 5,
+                    'tiles'           => array(
                         'crop'     => false,
                         'delay'    => .0035,
                         'sequence' => 'ForwardRow'
                     ),
-                    'main'        => array(
+                    'main'            => array(
                         'type'     => 'both',
                         'duration' => .75,
                         'current'  => array(
-                            'ease'    => 'easeinQuad',
-                            'scale'   => 0.5,
-                            'xP'      => -100,
-                            'opacity' => 0,
+                            'ease'      => 'easeinQuad',
+                            'scale'     => 0.5,
+                            'xP'        => -100,
+                            'opacity'   => 0,
                             'rotationY' => 90
                         ),
                         'next'     => array(
-                            'ease'    => 'easeinQuad',
-                            'scale'   => 0.5,
-                            'xP'      => 100,
-                            'opacity' => 0,
+                            'ease'      => 'easeinQuad',
+                            'scale'     => 0.5,
+                            'xP'        => 100,
+                            'opacity'   => 0,
                             'rotationY' => 90
                         )
                     ),
-                    'invert'      => array(
+                    'invert'          => array(
                         'current' => array(
                             'xP' => 100
                         ),
@@ -1611,9 +1821,10 @@ class Storage {
                             'xP' => -100
                         )
                     ),
-                    'invertTiles' => array(
+                    'invertTiles'     => array(
                         'sequence' => 'BackwardRow'
-                    )
+                    ),
+                    'desktopOnly' => true
                 )
             )
         ));
@@ -1774,14 +1985,14 @@ class Storage {
             "value"        => array(
                 'name' => n2_('Curtain to left'),
                 'data' => array(
-                    'type'        => 'Flat',
-                    'rows'        => 1,
-                    'columns'     => 25,
-                    'tiles'       => array(
+                    'type'            => 'Flat',
+                    'rows'            => 1,
+                    'columns'         => 25,
+                    'tiles'           => array(
                         'delay'    => .03,
                         'sequence' => 'BackwardCol'
                     ),
-                    'main'        => array(
+                    'main'            => array(
                         'type'     => 'next',
                         'duration' => .35,
                         'next'     => array(
@@ -1790,14 +2001,15 @@ class Storage {
                             'xP'      => -100
                         )
                     ),
-                    'invert'      => array(
+                    'invert'          => array(
                         'next' => array(
                             'xP' => 100
                         )
                     ),
-                    'invertTiles' => array(
+                    'invertTiles'     => array(
                         'sequence' => 'ForwardCol'
-                    )
+                    ),
+                    'desktopOnly' => true
                 )
             )
         ));
@@ -1845,14 +2057,14 @@ class Storage {
             "value"        => array(
                 'name' => n2_('Slices to left'),
                 'data' => array(
-                    'type'    => 'Flat',
-                    'rows'    => 10,
-                    'columns' => 1,
-                    'tiles'   => array(
+                    'type'            => 'Flat',
+                    'rows'            => 10,
+                    'columns'         => 1,
+                    'tiles'           => array(
                         'delay'    => .1,
                         'sequence' => 'ForwardRow'
                     ),
-                    'main'    => array(
+                    'main'            => array(
                         'type'     => 'both',
                         'duration' => .6,
                         'current'  => array(
@@ -1864,7 +2076,7 @@ class Storage {
                             'xP'   => 100
                         )
                     ),
-                    'invert'  => array(
+                    'invert'          => array(
                         'current' => array(
                             'ease' => 'easeInQuart',
                             'xP'   => 100
@@ -1872,7 +2084,8 @@ class Storage {
                         'next'    => array(
                             'xP' => -100
                         )
-                    )
+                    ),
+                    'desktopOnly' => true
                 )
             )
         ));
@@ -1883,14 +2096,14 @@ class Storage {
             "value"        => array(
                 'name' => n2_('Reversed slices to left'),
                 'data' => array(
-                    'type'    => 'Flat',
-                    'rows'    => 10,
-                    'columns' => 1,
-                    'tiles'   => array(
+                    'type'            => 'Flat',
+                    'rows'            => 10,
+                    'columns'         => 1,
+                    'tiles'           => array(
                         'delay'    => .1,
                         'sequence' => 'BackwardRow'
                     ),
-                    'main'    => array(
+                    'main'            => array(
                         'type'     => 'both',
                         'duration' => .6,
                         'current'  => array(
@@ -1902,7 +2115,7 @@ class Storage {
                             'xP'   => 100
                         )
                     ),
-                    'invert'  => array(
+                    'invert'          => array(
                         'current' => array(
                             'ease' => 'easeInQuart',
                             'xP'   => 100
@@ -1910,7 +2123,8 @@ class Storage {
                         'next'    => array(
                             'xP' => -100
                         )
-                    )
+                    ),
+                    'desktopOnly' => true
                 )
             )
         ));
@@ -1922,21 +2136,22 @@ class Storage {
             "value"        => array(
                 'name' => n2_('Puzzle'),
                 'data' => array(
-                    'type'    => 'Flat',
-                    'rows'    => 5,
-                    'columns' => 7,
-                    'tiles'   => array(
+                    'type'            => 'Flat',
+                    'rows'            => 5,
+                    'columns'         => 7,
+                    'tiles'           => array(
                         'delay'    => 1,
                         'sequence' => 'Random'
                     ),
-                    'main'    => array(
+                    'main'            => array(
                         'type'     => 'next',
                         'duration' => 0.8,
                         'next'     => array(
                             'ease'    => 'easeInQuart',
                             'opacity' => 0
                         )
-                    )
+                    ),
+                    'desktopOnly' => true
                 )
             )
         ));
@@ -2671,15 +2886,15 @@ class Storage {
             "value"        => array(
                 'name' => n2_('Flowing tiles vertical'),
                 'data' => array(
-                    'type'        => 'Flat',
-                    'columns'     => 5,
-                    'rows'        => 5,
-                    'tiles'       => array(
+                    'type'            => 'Flat',
+                    'columns'         => 5,
+                    'rows'            => 5,
+                    'tiles'           => array(
                         'crop'     => false,
                         'delay'    => .0035,
                         'sequence' => 'ForwardRow'
                     ),
-                    'main'        => array(
+                    'main'            => array(
                         'type'     => 'both',
                         'duration' => .75,
                         'current'  => array(
@@ -2695,7 +2910,7 @@ class Storage {
                             'opacity' => 0
                         )
                     ),
-                    'invert'      => array(
+                    'invert'          => array(
                         'current' => array(
                             'yP' => 100
                         ),
@@ -2703,9 +2918,10 @@ class Storage {
                             'yP' => -100
                         )
                     ),
-                    'invertTiles' => array(
+                    'invertTiles'     => array(
                         'sequence' => 'BackwardRow'
-                    )
+                    ),
+                    'desktopOnly' => true
                 )
             )
         ));
@@ -2787,14 +3003,14 @@ class Storage {
             "value"        => array(
                 'name' => n2_('Curtain to bottom'),
                 'data' => array(
-                    'type'        => 'Flat',
-                    'rows'        => 25,
-                    'columns'     => 1,
-                    'tiles'       => array(
+                    'type'            => 'Flat',
+                    'rows'            => 25,
+                    'columns'         => 1,
+                    'tiles'           => array(
                         'delay'    => .03,
                         'sequence' => 'ForwardRow'
                     ),
-                    'main'        => array(
+                    'main'            => array(
                         'type'     => 'next',
                         'duration' => .35,
                         'next'     => array(
@@ -2803,14 +3019,15 @@ class Storage {
                             'yP'      => 100
                         )
                     ),
-                    'invert'      => array(
+                    'invert'          => array(
                         'next' => array(
                             'yP' => -100
                         )
                     ),
-                    'invertTiles' => array(
+                    'invertTiles'     => array(
                         'sequence' => 'BackwardRow'
-                    )
+                    ),
+                    'desktopOnly' => true
                 )
             )
         ));
@@ -2821,14 +3038,14 @@ class Storage {
             "value"        => array(
                 'name' => n2_('Curtain to top'),
                 'data' => array(
-                    'type'        => 'Flat',
-                    'rows'        => 25,
-                    'columns'     => 1,
-                    'tiles'       => array(
+                    'type'            => 'Flat',
+                    'rows'            => 25,
+                    'columns'         => 1,
+                    'tiles'           => array(
                         'delay'    => .03,
                         'sequence' => 'BackwardRow'
                     ),
-                    'main'        => array(
+                    'main'            => array(
                         'type'     => 'next',
                         'duration' => .35,
                         'next'     => array(
@@ -2837,14 +3054,15 @@ class Storage {
                             'yP'      => -100
                         )
                     ),
-                    'invert'      => array(
+                    'invert'          => array(
                         'next' => array(
                             'yP' => 100
                         )
                     ),
-                    'invertTiles' => array(
+                    'invertTiles'     => array(
                         'sequence' => 'ForwardRow'
-                    )
+                    ),
+                    'desktopOnly' => true
                 )
             )
         ));
@@ -3546,14 +3764,14 @@ class Storage {
             "value"        => array(
                 'name' => n2_('Curtain to right'),
                 'data' => array(
-                    'type'        => 'Flat',
-                    'rows'        => 1,
-                    'columns'     => 25,
-                    'tiles'       => array(
+                    'type'            => 'Flat',
+                    'rows'            => 1,
+                    'columns'         => 25,
+                    'tiles'           => array(
                         'delay'    => .03,
                         'sequence' => 'ForwardCol'
                     ),
-                    'main'        => array(
+                    'main'            => array(
                         'type'     => 'next',
                         'duration' => .35,
                         'next'     => array(
@@ -3562,14 +3780,15 @@ class Storage {
                             'xP'      => 100
                         )
                     ),
-                    'invert'      => array(
+                    'invert'          => array(
                         'next' => array(
                             'xP' => -100
                         )
                     ),
-                    'invertTiles' => array(
+                    'invertTiles'     => array(
                         'sequence' => 'BackwardCol'
-                    )
+                    ),
+                    'desktopOnly' => true
                 )
             )
         ));
@@ -3617,14 +3836,14 @@ class Storage {
             "value"        => array(
                 'name' => n2_('Slices to right'),
                 'data' => array(
-                    'type'    => 'Flat',
-                    'rows'    => 10,
-                    'columns' => 1,
-                    'tiles'   => array(
+                    'type'            => 'Flat',
+                    'rows'            => 10,
+                    'columns'         => 1,
+                    'tiles'           => array(
                         'delay'    => .1,
                         'sequence' => 'ForwardRow'
                     ),
-                    'main'    => array(
+                    'main'            => array(
                         'type'     => 'both',
                         'duration' => .6,
                         'current'  => array(
@@ -3636,7 +3855,7 @@ class Storage {
                             'xP'   => -100
                         )
                     ),
-                    'invert'  => array(
+                    'invert'          => array(
                         'current' => array(
                             'ease' => 'easeInQuart',
                             'xP'   => -100
@@ -3644,7 +3863,8 @@ class Storage {
                         'next'    => array(
                             'xP' => 100
                         )
-                    )
+                    ),
+                    'desktopOnly' => true
                 )
             )
         ));
@@ -3655,14 +3875,14 @@ class Storage {
             "value"        => array(
                 'name' => n2_('Reversed slices to right'),
                 'data' => array(
-                    'type'    => 'Flat',
-                    'rows'    => 10,
-                    'columns' => 1,
-                    'tiles'   => array(
+                    'type'            => 'Flat',
+                    'rows'            => 10,
+                    'columns'         => 1,
+                    'tiles'           => array(
                         'delay'    => .1,
                         'sequence' => 'BackwardRow'
                     ),
-                    'main'    => array(
+                    'main'            => array(
                         'type'     => 'both',
                         'duration' => .6,
                         'current'  => array(
@@ -3674,7 +3894,7 @@ class Storage {
                             'xP'   => -100
                         )
                     ),
-                    'invert'  => array(
+                    'invert'          => array(
                         'current' => array(
                             'ease' => 'easeInQuart',
                             'xP'   => -100
@@ -3682,7 +3902,8 @@ class Storage {
                         'next'    => array(
                             'xP' => 100
                         )
-                    )
+                    ),
+                    'desktopOnly' => true
                 )
             )
         ));

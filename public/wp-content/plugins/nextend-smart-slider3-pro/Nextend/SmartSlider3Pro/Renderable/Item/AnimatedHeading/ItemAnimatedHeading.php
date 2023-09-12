@@ -76,8 +76,8 @@ class ItemAnimatedHeading extends AbstractItem {
                 'animate-width' => 1,
 
                 'priority'      => 'div',
-                'before-text'   => 'We are Passionate About',
-                'animated-text' => "Amazing Food\nGreat Hospitality",
+                'before-text'   => n2_('We are Passionate About'),
+                'animated-text' => n2_("Amazing Food\nGreat Hospitality"),
                 'href'          => '#',
                 'href-target'   => '_self',
                 'href-rel'      => '',

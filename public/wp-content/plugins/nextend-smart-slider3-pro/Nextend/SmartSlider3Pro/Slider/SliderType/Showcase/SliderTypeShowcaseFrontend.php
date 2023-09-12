@@ -59,31 +59,34 @@ class SliderTypeShowcaseFrontend extends AbstractSliderTypeFrontend {
 
         $this->initParticleJS();
 
-        echo $this->openSliderElement();
+        echo wp_kses($this->openSliderElement(), Sanitize::$basicTags);
         ob_start();
 
         $overlay = $params->get('slide-overlay', 1);
         ?>
         <div class="n2-ss-slider-1 n2_ss__touch_element n2-ow">
-            <div class="n2-ss-slider-2 n2-ow" style="<?php echo Sanitize::esc_attr($sliderCSS); ?>">
+            <div class="n2-ss-slider-2 n2-ow"<?php echo empty($sliderCSS) ? '' : ' style="' . esc_attr($sliderCSS) . '"'; ?>>
                 <?php
-                echo $this->getBackgroundVideo($params);
+                echo wp_kses($this->getBackgroundVideo($params), Sanitize::$videoTags);
                 ?>
                 <div class="n2-ss-slider-3 n2-ow">
                     <?php
                     $this->displaySizeSVGs($css, true);
 
-                    echo $this->slider->staticHtml;
+                    // PHPCS - Content already escaped
+                    echo $this->slider->staticHtml; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     ?>
                     <div class="n2-ss-showcase-slides n2-ow">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 <?php echo $css->base['slideWidth'] ?> <?php echo $css->base['slideHeight'] ?>" class="n2-ow n2-ss-preserve-size n2-ss-slide-limiter"></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 <?php echo esc_attr($css->base['slideWidth'] . ' ' . $css->base['slideHeight']); ?>" class="n2-ow n2-ss-preserve-size n2-ss-slide-limiter"></svg>
                         <?php
                         foreach ($this->slider->getSlides() as $i => $slide) {
                             $slide->finalize();
 
-                            echo Html::tag('div', Html::mergeAttributes($slide->attributes, array(
-                                'class' => 'n2-ss-slide ' . $slide->classes . ' n2-ow',
-                                'style' => $slide->style . $params->get('slide-css')
+
+                            // PHPCS - Content already escaped
+                            echo Html::tag('div', Html::mergeAttributes($slide->attributes, array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                                                                                                   'class' => 'n2-ss-slide ' . $slide->classes . ' n2-ow',
+                                                                                                   'style' => $slide->style . $params->get('slide-css')
                             )), $slide->background . Html::tag('div', array('class' => 'n2-ss-slide-inner') + $slide->linkAttributes, $slide->getHTML()) . ($overlay ? Html::tag('div', array('class' => 'n2-ss-showcase-overlay n2-ow')) : ''));
                         }
                         ?></div>
@@ -94,8 +97,10 @@ class SliderTypeShowcaseFrontend extends AbstractSliderTypeFrontend {
             </div>
         </div>
         <?php
-        echo $this->widgets->wrapSlider(ob_get_clean());
-        echo $this->closeSliderElement();
+
+        // PHPCS - Content already escaped
+        echo $this->widgets->wrapSlider(ob_get_clean()); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo wp_kses($this->closeSliderElement(), Sanitize::$basicTags);
 
         $this->javaScriptProperties['carousel']           = intval($params->get('carousel'));
         $this->javaScriptProperties['carouselSideSlides'] = intval((max(intval($params->get('carousel-slides')), 1) - 1) / 2);
@@ -212,7 +217,8 @@ class SliderTypeShowcaseFrontend extends AbstractSliderTypeFrontend {
         $limitParams = array(
             'widget-fullscreen-enabled' => 0,
             'responsiveLimitSlideWidth' => 0,
-            'imageloadNeighborSlides'   => 0
+            'imageloadNeighborSlides'   => 0,
+            'slider-size-override'      => 0
         );
 
         if ($params->get('responsive-mode') === 'fullpage') {

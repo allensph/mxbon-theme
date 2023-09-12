@@ -62,7 +62,13 @@ class LayerWindowSettingsSlide extends AbstractLayerWindowSettings {
         ));
 
         new FieldImage($general, 'slide-thumbnail', n2_('Thumbnail'), '', array(
-            'width' => 220
+            'width'         => 220,
+            'relatedFields' => array(
+                'layerslide-thumbnailAlt'
+            )
+        ));
+        new Text($general, 'slide-thumbnailAlt', n2_('Thumbnail alt') . ' [SEO]', '', array(
+            'style' => "width:133px;"
         ));
         new Devices($general, 'slide-show', n2_('Hide on'));
     
@@ -226,7 +232,6 @@ class LayerWindowSettingsSlide extends AbstractLayerWindowSettings {
             'style' => 'width:22px;'
         ));
 
-        new OnOff($rowVideo, 'slide-backgroundVideoMuted', n2_('Muted'), 1);
         new OnOff($rowVideo, 'slide-backgroundVideoLoop', n2_x('Loop', 'Video/Audio play'), 1);
         new OnOff($rowVideo, 'slide-backgroundVideoReset', n2_('Restart on slide change'), 1, array(
             'tipLabel'       => n2_('Restart on slide change'),
@@ -253,7 +258,7 @@ class LayerWindowSettingsSlide extends AbstractLayerWindowSettings {
                 'layerslide-backgroundImageOpacity',
                 'layerslide-backgroundImageBlur',
                 'layerslide-backgroundMode',
-                'layerslide-background-notice-image'
+                'layerslide-background-notice-image',
             )
         );
         $slideBackgroundAttr['tipLabel']       = n2_('Slide background');
@@ -279,22 +284,39 @@ class LayerWindowSettingsSlide extends AbstractLayerWindowSettings {
 
         new Warning($rowImage, 'slide-background-notice-image', sprintf(n2_('Please read %1$sour detailed guide%2$s about setting your own slide background correctly.'), '<a href="https://smartslider.helpscoutdocs.com/article/1922-how-to-set-your-background-image" target="_blank">', '</a>'));
 
+
         new Select\FillMode($rowImage, 'slide-backgroundMode', n2_('Fill mode'), 'default', array(
-            'useGlobal' => true
+            'useGlobal'          => true,
+            'relatedValueFields' => array(
+                array(
+                    'values' => array(
+                        'blurfit'
+                    ),
+                    'field'  => array(
+                        'layerslide-backgroundBlurFit'
+                    )
+                )
+            )
+        ));
+        new NumberSlider($rowImage, 'slide-backgroundBlurFit', n2_('Background blur'), 7, array(
+            'unit' => 'px',
+            'min'  => 7,
+            'max'  => 50,
+            'wide' => 3
         ));
 
         new NumberSlider($rowImage, 'slide-backgroundImageOpacity', n2_('Opacity'), 100, array(
             'unit'  => '%',
             'min'   => 0,
             'max'   => 100,
-            'style' => 'width:22px;'
+            'style' => 'width:33px;'
         ));
 
         new NumberSlider($rowImage, 'slide-backgroundImageBlur', n2_('Blur'), 0, array(
             'unit'  => 'px',
             'min'   => 0,
             'max'   => 50,
-            'style' => 'width:22px;'
+            'style' => 'width:33px;'
         ));
 
         $rowColor = new Grouping($background, '-slide-background-color');

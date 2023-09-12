@@ -5,7 +5,6 @@ namespace Nextend\Framework\Browse\Block\BrowseManager;
 
 
 use Nextend\Framework\Asset\Js\Js;
-use Nextend\Framework\Localization\Localization;
 use Nextend\Framework\View\AbstractBlock;
 use Nextend\SmartSlider3\Application\Admin\TraitAdminUrl;
 

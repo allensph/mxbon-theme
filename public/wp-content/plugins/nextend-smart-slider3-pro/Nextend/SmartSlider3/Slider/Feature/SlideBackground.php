@@ -57,6 +57,8 @@ class SlideBackground {
 
     private function getBackgroundStyle($slide) {
 
+        $attributes = array();
+
         $style = '';
         $color = $slide->fill($slide->parameters->get('backgroundColor', ''));
         if (empty($color)) {
@@ -82,34 +84,43 @@ class SlideBackground {
                     $colorEnd .= 'ff';
                 }
             }
+
+            $startColor = Color::colorToRGBA($color);
+            $endColor   = Color::colorToRGBA($colorEnd);
+
+            $attributes['data-gradient']    = $gradient;
+            $attributes['data-color-start'] = $startColor;
+            $attributes['data-color-end']   = $endColor;
+
             switch ($gradient) {
                 case 'horizontal':
-                    $style .= 'background:linear-gradient(to right, ' . Color::colorToRGBA($color) . ' 0%,' . Color::colorToRGBA($colorEnd) . ' 100%);';
+                    $style .= 'background:linear-gradient(to right, ' . $startColor . ' 0%,' . $endColor . ' 100%);';
                     break;
                 case 'vertical':
-                    $style .= 'background:linear-gradient(to bottom, ' . Color::colorToRGBA($color) . ' 0%,' . Color::colorToRGBA($colorEnd) . ' 100%);';
+                    $style .= 'background:linear-gradient(to bottom, ' . $startColor . ' 0%,' . $endColor . ' 100%);';
                     break;
                 case 'diagonal1':
-                    $style .= 'background:linear-gradient(45deg, ' . Color::colorToRGBA($color) . ' 0%,' . Color::colorToRGBA($colorEnd) . ' 100%);';
+                    $style .= 'background:linear-gradient(45deg, ' . $startColor . ' 0%,' . $endColor . ' 100%);';
                     break;
                 case 'diagonal2':
-                    $style .= 'background:linear-gradient(135deg, ' . Color::colorToRGBA($color) . ' 0%,' . Color::colorToRGBA($colorEnd) . ' 100%);';
+                    $style .= 'background:linear-gradient(135deg, ' . $startColor . ' 0%,' . $endColor . ' 100%);';
                     break;
             }
         } else {
             if (strlen($color) == 8) {
 
-                $alpha = substr($color, 6, 2);
-                if ($alpha != '00') {
-                    $style = 'background-color: #' . substr($color, 0, 6) . ';';
-                    if ($alpha != 'ff') {
-                        $style .= "background-color: " . Color::colorToRGBA($color) . ";";
-                    }
-                }
+                $colorRGBA = Color::colorToRGBA($color);
+                $style     .= "background-color: " . Color::colorToRGBA($color) . ";";
+
+                $attributes['data-color'] = $colorRGBA;
+
+
             }
         }
 
-        return $style;
+        $attributes['style'] = $style;
+
+        return $attributes;
     }
 
     private function makeBackground($slide) {
@@ -129,8 +140,10 @@ class SlideBackground {
         }
 
         $fillMode = $slide->parameters->get('backgroundMode', 'default');
+
         if ($fillMode == 'default') {
             $fillMode = $this->slider->params->get('backgroundMode', 'fill');
+
         }
 
         $backgroundElements = array();
@@ -170,20 +183,17 @@ class SlideBackground {
     }
 
     private function renderColor($slide) {
-        $backgroundColorStyle = $this->getBackgroundStyle($slide);
+        $backgroundAttributes = $this->getBackgroundStyle($slide);
 
-        if (!empty($backgroundColorStyle)) {
+        if (!empty($backgroundAttributes['style'])) {
 
-            $attributes = array(
-                'class' => 'n2-ss-slide-background-color',
-                "style" => $backgroundColorStyle
-            );
+            $backgroundAttributes['class'] = 'n2-ss-slide-background-color';
 
             if ($slide->parameters->get('backgroundColorOverlay', 0)) {
-                $attributes['data-overlay'] = 1;
+                $backgroundAttributes['data-overlay'] = 1;
             }
 
-            return Html::tag('div', $attributes, '');
+            return Html::tag('div', $backgroundAttributes, '');
         }
 
         return '';
@@ -231,25 +241,26 @@ class SlideBackground {
             $style[] = 'opacity:' . ($opacity / 100);
         }
 
-        if ($focusX != '50' || $focusY != '50') {
-            $style[] = 'object-position: ' . $focusX . '% ' . $focusY . '%;';
+        if ($focusX != '50') {
+            $style[] = '--ss-o-pos-x:' . $focusX . '%';
+        }
+
+        if ($focusY != '50') {
+            $style[] = '--ss-o-pos-y:' . $focusY . '%';
         }
 
         $attributes = array(
-            "class"      => 'n2-ss-slide-background-image',
-            "data-blur"  => $backgroundImageBlur,
-            "data-alt"   => $alt,
-            "data-title" => $title
+            "class"        => 'n2-ss-slide-background-image',
+            "data-blur"    => $backgroundImageBlur,
+            "data-opacity" => $opacity,
+            "data-x"       => $focusX,
+            "data-y"       => $focusY,
+            "data-alt"     => $alt,
+            "data-title"   => $title
         );
 
         if (!empty($style)) {
             $attributes['style'] = implode(';', $style);
-        }
-
-        if ($slide->isCurrentlyEdited()) {
-            $attributes['data-opacity'] = $opacity;
-            $attributes['data-x']       = $focusX;
-            $attributes['data-y']       = $focusY;
         }
 
         $sources = array();
@@ -297,13 +308,13 @@ class SlideBackground {
                     $sources[] = HTML::tag('source', Html::addExcludeLazyLoadAttributes(array(
                         'srcset' => $backgroundImageDesktopRetina,
                         'media'  => implode($mediaQueryMinPixelRatio . ',', $mediaQueries['desktopportrait']) . $mediaQueryMinPixelRatio
-                    )));
+                    )), false, false);
                 }
-                if (!empty($mediaQueries['desktopLandscape'])) {
+                if (!empty($mediaQueries['desktoplandscape'])) {
                     $sources[] = HTML::tag('source', Html::addExcludeLazyLoadAttributes(array(
                         'srcset' => $backgroundImageDesktopRetina,
-                        'media'  => implode($mediaQueryMinPixelRatio . ',', $mediaQueries['desktopLandscape']) . $mediaQueryMinPixelRatio
-                    )));
+                        'media'  => implode($mediaQueryMinPixelRatio . ',', $mediaQueries['desktoplandscape']) . $mediaQueryMinPixelRatio
+                    )), false, false);
                 }
 
             }
@@ -318,13 +329,13 @@ class SlideBackground {
                     $sources[] = HTML::tag('source', Html::addExcludeLazyLoadAttributes(array(
                         'srcset' => $backgroundImageMobileUrl,
                         'media'  => implode(',', $mediaQueries['mobileportrait'])
-                    )));
+                    )), false, false);
                 }
                 if (!empty($mediaQueries['mobilelandscape'])) {
                     $sources[] = HTML::tag('source', Html::addExcludeLazyLoadAttributes(array(
                         'srcset' => $backgroundImageMobileUrl,
                         'media'  => implode(',', $mediaQueries['mobilelandscape'])
-                    )));
+                    )), false, false);
                 }
             }
 
@@ -338,22 +349,23 @@ class SlideBackground {
                     $sources[] = HTML::tag('source', Html::addExcludeLazyLoadAttributes(array(
                         'srcset' => $backgroundImageTabletUrl,
                         'media'  => implode(',', $mediaQueries['tabletportrait'])
-                    )));
+                    )), false, false);
                 }
                 if (!empty($mediaQueries['tabletlandscape'])) {
                     $sources[] = HTML::tag('source', Html::addExcludeLazyLoadAttributes(array(
                         'srcset' => $backgroundImageTabletUrl,
                         'media'  => implode(',', $mediaQueries['tabletlandscape'])
-                    )));
+                    )), false, false);
                 }
             }
             if (!$hasDeviceSpecificImage) {
 
                 $retinaSupport = !!$this->slider->params->get('optimize-slide-width-retina', 0);
+                $optimizeScale = $this->slider->params->get('optimize-scale', 0);
                 $optimizedData = $this->slider->features->optimize->optimizeImageWebP($backgroundImage, array(
                     'optimize'         => $this->slider->params->get('optimize-webp', 0),
                     'quality'          => intval($this->slider->params->get('optimize-quality', 70)),
-                    'resize'           => $this->slider->params->get('optimize-scale', 0),
+                    'resize'           => $optimizeScale,
                     'defaultWidth'     => intval($this->slider->params->get('optimize-slide-width-normal', 1920)),
                     'mediumWidth'      => intval($this->slider->params->get('optimize-slide-width-tablet', 1200)),
                     'mediumHeight'     => intval($this->slider->params->get('optimize-slide-height-tablet', 0)),
@@ -365,7 +377,7 @@ class SlideBackground {
                 ));
 
 
-                if ($retinaSupport) {
+                if ($optimizeScale && $retinaSupport) {
 
                     $webPSrcSet = array();
                     if (isset($optimizedData['small'])) {
@@ -394,7 +406,7 @@ class SlideBackground {
                         $sources[] = HTML::tag('source', Html::addExcludeLazyLoadAttributes(array(
                             'srcset' => implode(',', $webPSrcSet),
                             'type'   => 'image/webp'
-                        )));
+                        )), false, false);
                     }
                 } else {
 
@@ -405,7 +417,7 @@ class SlideBackground {
                             'srcset' => $optimizedData['small']['src'],
                             'type'   => 'image/webp',
                             'media'  => '(max-width: ' . $optimizedData['small']['width'] . 'px)'
-                        )));
+                        )), false, false);
                     }
 
                     if (isset($optimizedData['medium'])) {
@@ -415,7 +427,7 @@ class SlideBackground {
                             'srcset' => $optimizedData['medium']['src'],
                             'type'   => 'image/webp',
                             'media'  => '(max-width: ' . $optimizedData['medium']['width'] . 'px)'
-                        )));
+                        )), false, false);
                     }
 
                     if (isset($optimizedData['normal'])) {
@@ -424,7 +436,7 @@ class SlideBackground {
                         $sources[] = HTML::tag('source', Html::addExcludeLazyLoadAttributes(array(
                             'srcset' => $optimizedData['normal']['src'],
                             'type'   => 'image/webp'
-                        )));
+                        )), false, false);
                     }
                 }
             }
@@ -443,20 +455,34 @@ class SlideBackground {
 
         $sources[] = Html::tag('img', $imageAttributes, '', false);
 
-        $picture = '<picture>' . implode('', $sources) . '</picture>';
+        $picture = HTML::tag('picture', Html::addExcludeLazyLoadAttributes(), implode('', $sources));
 
         $originalImage = Html::tag('div', $attributes, $picture);
 
         if ($fillMode === 'blurfit') {
+            $slideOption = $slide->parameters->get('backgroundMode', 'default');
 
-            $picture = '<picture style="filter:blur(7px)">' . implode('', $sources) . '</picture>';
-
+            if ($slideOption === 'blurfit') {
+                $blurFit = $slide->parameters->get('backgroundBlurFit', 7);
+            } else {
+                $blurFit                        = $this->slider->params->get('backgroundBlurFit', 7);
+                $attributes['data-blurfitmode'] = 'default';
+            }
+            $picture      = HTML::tag('picture', Html::addExcludeLazyLoadAttributes(array(
+                'style' => 'filter:blur(' . $blurFit . 'px)'
+            )), implode('', $sources));
+            $blurFitStyle = array(
+                'margin:-' . ($blurFit * 2) . 'px',
+                'padding:' . ($blurFit * 2) . 'px'
+            );
             if (!isset($attributes['style'])) {
                 $attributes['style'] = '';
             }
-            $attributes['style'] .= 'margin:-14px;padding:14px;';
 
-            $ret = Html::tag('div', $attributes, $picture) . $originalImage;
+            $attributes['data-globalblur'] = $this->slider->params->get('backgroundBlurFit', 7);
+            $attributes['data-bgblur']     = $slide->parameters->get('backgroundBlurFit', 7);
+            $attributes['style']           = implode(';', $blurFitStyle);
+            $ret                           = Html::tag('div', $attributes, $picture) . $originalImage;
         } else {
             $ret = $originalImage;
         }
@@ -488,19 +514,16 @@ class SlideBackground {
         $opacity = min(100, max(0, $slide->parameters->get('backgroundVideoOpacity', 100)));
 
         $attributes = array(
-            'class'              => 'n2-ss-slide-background-video intrinsic-ignore',
+            'class'              => 'n2-ss-slide-background-video intrinsic-ignore data-tf-not-load',
             'style'              => 'opacity:' . ($opacity / 100) . ';',
             'data-mode'          => $slide->parameters->get('backgroundVideoMode', 'fill'),
             'playsinline'        => 1,
             'webkit-playsinline' => 1,
             'onloadstart'        => 'this.n2LoadStarted=1;',
             'data-keepplaying'   => 1,
-            'preload'            => 'none'
+            'preload'            => 'none',
+            'muted'              => 'muted'
         );
-
-        if ($slide->parameters->get('backgroundVideoMuted', 1)) {
-            $attributes['muted'] = 'muted';
-        }
 
         if ($slide->parameters->get('backgroundVideoLoop', 1)) {
             $attributes['loop'] = 'loop';

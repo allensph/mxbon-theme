@@ -4,7 +4,6 @@
 namespace Nextend\SmartSlider3\Application\Admin\Slides;
 
 
-use Nextend\Framework\Localization\Localization;
 use Nextend\Framework\Request\Request;
 use Nextend\Framework\Sanitize;
 use Nextend\Framework\View\AbstractView;
@@ -48,7 +47,7 @@ class ViewSlidesEdit extends AbstractView {
     protected $frontendSlider;
 
     /**
-     * @var string
+     * @var string contains already escaped data
      */
     protected $renderedSlider;
 
@@ -87,7 +86,7 @@ class ViewSlidesEdit extends AbstractView {
         $this->editorOverlay = new BlockEditorOverlay($this);
         $this->layout->setEditorOverlay($this->editorOverlay);
 
-        $this->frontendSlider                           = new AdminSlider($this->MVCHelper, Request::$GET->getInt('sliderid'), array(
+        $this->frontendSlider = new AdminSlider($this->MVCHelper, Request::$GET->getInt('sliderid'), array(
             'disableResponsive' => true
         ));
         $this->frontendSlider->setEditedSlideID($this->getSlideID());

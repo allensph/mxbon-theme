@@ -2,6 +2,7 @@
 
 namespace Nextend\SmartSlider3Pro\Generator\Common\YouTube\Elements;
 
+use Exception;
 use Nextend\Framework\Asset\Js\Js;
 use Nextend\Framework\Form\Element\Select;
 use Nextend\Framework\Notification\Notification;
@@ -27,7 +28,7 @@ class YouTubePlaylistByUser extends Select {
                 $this->setValue($playlists[0]['id']);
             }
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Notification::error($e->getMessage());
         }
 

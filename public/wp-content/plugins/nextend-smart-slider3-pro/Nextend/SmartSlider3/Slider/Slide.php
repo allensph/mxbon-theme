@@ -37,7 +37,12 @@ class Slide extends AbstractRenderableOwner {
 
     protected $title = '', $description = '', $thumbnail = '';
 
-    public $parameters, $background = '';
+    public $parameters;
+
+    /**
+     * @var string contains escaped html data
+     */
+    public $background = '';
 
     protected $html = '';
 
@@ -269,29 +274,25 @@ class Slide extends AbstractRenderableOwner {
 
             $url = ResourceTranslator::toUrl($url);
 
-            $this->linkAttributes['onclick'] = '';
-            if (strpos($url, 'javascript:') === 0) {
-                $this->linkAttributes['onclick'] = $url;
-            } else {
 
-                $url = Link::parse($url, $this->linkAttributes);
-                $this->linkAttributes['data-href'] = $url;
-            
-                $this->linkAttributes['tabindex'] = 0;
-                $this->linkAttributes['role']     = 'button';
+            $url = Link::parse($url, $this->linkAttributes);
+            $this->linkAttributes['data-href'] = $url;
+        
+            $this->linkAttributes['tabindex'] = 0;
+            $this->linkAttributes['role']     = 'button';
 
-                $ariaLabel = $this->parameters->get('aria-label');
-                if (!empty($ariaLabel)) {
-                    $this->linkAttributes['aria-label'] = $ariaLabel;
-                }
-
-                if (empty($this->linkAttributes['onclick']) && !isset($this->linkAttributes['data-n2-lightbox'])) {
-                    if (!empty($target) && $target != '_self') {
-                        $this->linkAttributes['data-target'] = $target;
-                    }
-                    $this->linkAttributes['data-n2click'] = "url";
-                }
+            $ariaLabel = $this->parameters->get('aria-label');
+            if (!empty($ariaLabel)) {
+                $this->linkAttributes['aria-label'] = $this->fill($ariaLabel);
             }
+
+            if (!isset($this->linkAttributes['onclick']) && !isset($this->linkAttributes['data-n2-lightbox'])) {
+                if (!empty($target) && $target != '_self') {
+                    $this->linkAttributes['data-target'] = $target;
+                }
+                $this->linkAttributes['data-n2click'] = "url";
+            }
+
             if (!isset($this->linkAttributes['style'])) {
                 $this->linkAttributes['style'] = '';
             }
@@ -327,6 +328,10 @@ class Slide extends AbstractRenderableOwner {
         return $this->sliderObject;
     }
 
+    public function getAvailableDevices() {
+        return array_diff(array_keys($this->sliderObject->features->responsive->mediaQueries), array('all'));
+    }
+
     protected function renderHtml() {
         if (empty($this->html)) {
 
@@ -334,7 +339,16 @@ class Slide extends AbstractRenderableOwner {
 
             $mainContainer = new ComponentSlide($this, $this->slide);
 
-            $this->html = '<div tabindex="-1" class="n2-ss-slide--focus" role="note">' . $this->getTitle() . '</div>';
+            $attributes = array(
+                'role'  => 'note',
+                'class' => 'n2-ss-slide--focus'
+            );
+
+            if (!isset($this->linkAttributes['role']) || $this->linkAttributes['role'] != 'button') {
+                $attributes['tabindex'] = '-1';
+            }
+
+            $this->html = Html::tag('div', $attributes, Sanitize::remove_all_html($this->getTitle()));
             $this->html .= Html::tag('div', $this->containerAttributes, $mainContainer->render($this->sliderObject->isAdmin));
         }
     }
@@ -365,7 +379,7 @@ class Slide extends AbstractRenderableOwner {
                     'class'   => 'n2-ss-slide-thumbnail'
                 ));
 
-                $this->html .= Html::image($this->sliderObject->features->optimize->optimizeThumbnail($thumbnail), Sanitize::esc_attr($this->getTitle()), $attributes);
+                $this->html .= Html::image($this->sliderObject->features->optimize->optimizeThumbnail($thumbnail), esc_attr($this->getThumbnailAltDynamic()), $attributes);
             }
         }
         if ($this->sliderObject->exposeSlideData['lightboxImage']) {
@@ -431,6 +445,9 @@ class Slide extends AbstractRenderableOwner {
         return $this->parameters->get('mobilelandscape', 1);
     }
 
+    /**
+     * @return string contains escaped html data
+     */
     public function getHTML() {
         return $this->html;
     }
@@ -589,12 +606,16 @@ class Slide extends AbstractRenderableOwner {
 
     private function _splitbywords($s, $start, $length) {
 
-        $len      = Str::strlen($s);
-        $posStart = max(0, $start == 0 ? 0 : Str::strpos($s, ' ', $start));
-        $posEnd   = max(0, $length > $len ? $len : Str::strpos($s, ' ', $length));
-        if ($posEnd == 0 && $length <= $len) $posEnd = $len;
+        $len = intval(Str::strlen($s));
+        if ($len > $start) {
+            $posStart = max(0, $start == 0 ? 0 : Str::strpos($s, ' ', $start));
+            $posEnd   = max(0, $length > $len ? $len : Str::strpos($s, ' ', $length));
+            if ($posEnd == 0 && $length <= $len) $posEnd = $len;
 
-        return Str::substr($s, $posStart, $posEnd);
+            return Str::substr($s, $posStart, $posEnd);
+        } else {
+            return '';
+        }
     }
 
     private function _findimage($s, $index) {
@@ -673,6 +694,15 @@ class Slide extends AbstractRenderableOwner {
         }
 
         return $this->fill($image);
+    }
+
+    public function getThumbnailAltDynamic() {
+        $alt = $this->fill($this->parameters->get('thumbnailAlt'));
+        if (empty($alt)) {
+            $alt = $this->getTitle();
+        }
+
+        return $alt;
     }
 
     public function getLightboxImage() {
@@ -832,7 +862,7 @@ class Slide extends AbstractRenderableOwner {
             $imagePath = ResourceTranslator::toPath($src);
             if (isset($imagePath[0])) {
                 $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
-                if ($extension != 'svg' && $extension != 'webp') {
+                if ($extension != 'svg') {
 
                     $lazyLoad = $this->sliderObject->features->lazyLoad;
 
@@ -873,7 +903,13 @@ class Slide extends AbstractRenderableOwner {
         if (isset($imagePath[0])) {
             $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
 
-            if ($lazyLoad->layerImageSizeBase64 && $lazyLoad->layerImageSizeBase64Size && filesize($imagePath) < $lazyLoad->layerImageSizeBase64Size) {
+            $isRemote = false;
+            if (preg_match('/(https?:)?\/\//', $imagePath)) {
+                //this is a remote image
+                $isRemote = true;
+            }
+
+            if (!$isRemote && $lazyLoad->layerImageSizeBase64 && $lazyLoad->layerImageSizeBase64Size && filesize($imagePath) < $lazyLoad->layerImageSizeBase64Size) {
 
                 if ($extension != 'svg') {
                     $attributes['src'] = ImageEdit::base64($imagePath, $imageUrl);
@@ -882,15 +918,16 @@ class Slide extends AbstractRenderableOwner {
                     $attributes['src'] = Image::SVGToBase64($src);
                 }
 
-                return Html::tag('img', $attributes);
+                return Html::tag('img', $attributes, false);
             }
 
-            if ($extension != 'svg' && $extension != 'webp' && $item->data->get('image-optimize', 1)) {
+            if ($extension != 'svg' && $item->data->get('image-optimize', 1)) {
 
+                $optimizeScale = $this->sliderObject->params->get('layer-image-optimize', 0);
                 $optimizedData = $this->sliderObject->features->optimize->optimizeImageWebP($src, array(
                     'optimize'     => $this->sliderObject->params->get('layer-image-webp', 0),
                     'quality'      => intval($this->sliderObject->params->get('layer-image-optimize-quality', 70)),
-                    'resize'       => $this->sliderObject->params->get('layer-image-optimize', 0),
+                    'resize'       => $optimizeScale,
                     'defaultWidth' => $lazyLoad->layerImageWidthNormal,
                     'mediumWidth'  => $lazyLoad->layerImageWidthTablet,
                     'smallWidth'   => $lazyLoad->layerImageWidthMobile
@@ -900,7 +937,7 @@ class Slide extends AbstractRenderableOwner {
 
                 $sources = array();
 
-                if ($retinaSupport) {
+                if ($optimizeScale && $retinaSupport) {
 
                     $webPSrcSet = array();
                     if (isset($optimizedData['small'])) {
@@ -924,7 +961,7 @@ class Slide extends AbstractRenderableOwner {
                         $sources[] = HTML::tag('source', Html::addExcludeLazyLoadAttributes(array(
                             'srcset' => implode(',', $webPSrcSet),
                             'type'   => 'image/webp'
-                        )));
+                        )), false, false);
                     }
                 } else {
 
@@ -935,7 +972,7 @@ class Slide extends AbstractRenderableOwner {
                             'srcset' => $optimizedData['small']['src'],
                             'type'   => 'image/webp',
                             'media'  => '(max-width: ' . $optimizedData['small']['width'] . 'px)'
-                        )));
+                        )), false, false);
                     }
 
                     if (isset($optimizedData['medium'])) {
@@ -945,7 +982,7 @@ class Slide extends AbstractRenderableOwner {
                             'srcset' => $optimizedData['medium']['src'],
                             'type'   => 'image/webp',
                             'media'  => '(max-width: ' . $optimizedData['medium']['width'] . 'px)'
-                        )));
+                        )), false, false);
                     }
 
                     if (isset($optimizedData['normal'])) {
@@ -954,7 +991,7 @@ class Slide extends AbstractRenderableOwner {
                         $sources[] = HTML::tag('source', Html::addExcludeLazyLoadAttributes(array(
                             'srcset' => $optimizedData['normal']['src'],
                             'type'   => 'image/webp'
-                        )));
+                        )), false, false);
                     }
                 }
 
@@ -963,7 +1000,7 @@ class Slide extends AbstractRenderableOwner {
 
                 $sources[] = Html::tag('img', $attributes, false);
 
-                return HTML::tag('picture', $pictureAttributes, implode('', $sources));
+                return HTML::tag('picture', Html::addExcludeLazyLoadAttributes($pictureAttributes), implode('', $sources));
             }
         }
     
@@ -971,7 +1008,7 @@ class Slide extends AbstractRenderableOwner {
         $attributes['src'] = $imageUrl;
         $this->addImage($imageUrl);
 
-        return Html::tag('img', $attributes);
+        return Html::tag('img', $attributes, false);
     }
 
     public function getThumbnailType() {
@@ -1002,7 +1039,7 @@ class Slide extends AbstractRenderableOwner {
         if (isset($imagePath[0])) {
             $optimizeThumbnail = $this->sliderObject->params->get('optimize-thumbnail-scale', 0);
             $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
-            if ($extension != 'webp' && $this->sliderObject->params->get('optimize-webp', 0) && function_exists('imagewebp')) {
+            if ($extension && $this->sliderObject->params->get('optimize-webp', 0) && function_exists('imagewebp')) {
 
                 $isRemote = false;
                 if (preg_match('/(https?:)?\/\//', $imagePath)) {
@@ -1035,7 +1072,7 @@ class Slide extends AbstractRenderableOwner {
                     $sources[] = HTML::tag('source', Html::addExcludeLazyLoadAttributes(array(
                         'srcset' => $imageWebpUrl,
                         'type'   => 'image/webp'
-                    )));
+                    )), false, false);
                 }
             }
         
@@ -1055,6 +1092,6 @@ class Slide extends AbstractRenderableOwner {
 
         $sources[] = Html::tag('img', $attributes, false);
 
-        return HTML::tag('picture', array(), implode('', $sources));
+        return HTML::tag('picture', Html::addExcludeLazyLoadAttributes(), implode('', $sources));
     }
 }

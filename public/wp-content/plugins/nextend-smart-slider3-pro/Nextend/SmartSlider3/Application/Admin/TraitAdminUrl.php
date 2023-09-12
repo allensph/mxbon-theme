@@ -2,6 +2,7 @@
 
 namespace Nextend\SmartSlider3\Application\Admin;
 
+use JUri;
 use Nextend\Framework\Pattern\MVCHelperTrait;
 
 trait TraitAdminUrl {
@@ -30,12 +31,20 @@ trait TraitAdminUrl {
         ));
     }
 
-    public function getUrlDashboardOrderBy($orderBy, $direction) {
-        $args = array();
+    public function getUrlPaginator() {
 
-        $args[$orderBy] = $direction;
+        return $this->createAjaxUrl(array(
+            'sliders/pagination',
+        ));
+    }
 
-        return $this->createUrl(array(
+    public function getUrlDashboardOrderBy($orderBy, $direction, $page = null, $limit = null) {
+        $args              = array();
+        $args[$orderBy]    = $direction;
+        $args['pageIndex'] = $page;
+        $args['limit']     = $limit;
+
+        return $this->createAjaxUrl(array(
             'sliders/orderby',
             $args
         ), true);
@@ -651,13 +660,7 @@ trait TraitAdminUrl {
      *
      * @return string
      */
-    public function getUrlHelpCurl() {
-        return $this->createUrl(array(
-            'help/index',
-            array(
-                'curl' => 1
-            )
-        ));
+    public function getUrlHelpRepairDatabase() {
     }
 
     public function getUrlUpdateDownload() {

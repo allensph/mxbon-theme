@@ -13,6 +13,7 @@ use Nextend\SmartSlider3\Generator\AbstractGenerator;
 use Nextend\SmartSlider3\Generator\WordPress\Posts\Elements\PostsAllTaxonomies;
 use Nextend\SmartSlider3\Generator\WordPress\Posts\Elements\PostsMetaKeys;
 use Nextend\SmartSlider3\Generator\WordPress\Posts\Elements\PostsPostTypes;
+use Nextend\SmartSlider3\Generator\WordPress\Posts\GeneratorGroupPosts;
 
 
 class PostsAllCustomPosts extends AbstractGenerator {
@@ -59,7 +60,7 @@ class PostsAllCustomPosts extends AbstractGenerator {
         new PostsMetaKeys($postMeta, 'postmetakey', n2_('Field name'), 0, array(
             'tipLabel'       => n2_('Field name'),
             'tipDescription' => n2_('Only show posts, where the given meta key is equal to the given meta value.'),
-            'tipLink'        => '??????'
+            'tipLink'        => 'https://smartslider.helpscoutdocs.com/article/1900-wordpress-custom-posts-generator#post-meta-comparison'
         ));
 
         new Select($postMeta, 'postmetacompare', n2_('Compare method'), '=', array(
@@ -86,12 +87,25 @@ class PostsAllCustomPosts extends AbstractGenerator {
 
         new Text($postMeta, 'postmetavalue', n2_('Field value'));
 
-        $postMetaMore = $postMetaGroup->createRow('postmeta-more');
+        new Select($postMeta, 'postmetatype', n2_('Field type'), 'CHAR', array(
+            'options' => array(
+                'CHAR'     => 'CHAR',
+                'NUMERIC'  => 'NUMERIC',
+                'DATE'     => 'DATE',
+                'DATETIME' => 'DATETIME',
+                'TIME'     => 'TIME',
+                'BINARY'   => 'BINARY',
+                'DECIMAL'  => 'DECIMAL',
+                'SIGNED'   => 'SIGNED',
+                'UNSIGNED' => 'UNSIGNED'
+            )
+        ));
 
-        new Textarea($postMetaMore, 'postmetakeymore', n2_('Meta comparison'), 'field_name||compare_method||field_value', array(
+        $postMetaMore = $postMetaGroup->createRow('postmeta-more');
+        new Textarea($postMetaMore, 'postmetakeymore', n2_('Meta comparison'), '', array(
             'tipLabel'       => n2_('Meta comparison'),
-            'tipDescription' => n2_('Same as the previous option, just you can write down more comparisons. Read the "Field name" and "Compare method" out from the previous option. Example:') . ' published||=||yes',
-            'tipLink'        => 'https://smartslider.helpscoutdocs.com/article/1900-wordpress-custom-posts-generator',
+            'tipDescription' => sprintf(n2_('You can create other comparisons based on the previous "Post Meta Comparison" options. Use the following format: name||compare||value||type%1$s%1$s Example:%1$spublished||=||yes||CHAR%1$s%1$sWrite one comparison per line.'), '<br>'),
+            'tipLink'        => 'https://smartslider.helpscoutdocs.com/article/1900-wordpress-custom-posts-generator#post-meta-comparison',
             'width'          => 300,
             'height'         => 100
         ));
@@ -130,7 +144,7 @@ class PostsAllCustomPosts extends AbstractGenerator {
 
         if (count($taxonomies)) {
             $tax_array = array();
-            foreach ($taxonomies AS $tax) {
+            foreach ($taxonomies as $tax) {
                 $parts = explode('|*|', $tax);
                 if (!is_array(@$tax_array[$parts[0]]) || !in_array($parts[1], $tax_array[$parts[0]])) {
                     $tax_array[$parts[0]][] = $parts[1];
@@ -138,7 +152,7 @@ class PostsAllCustomPosts extends AbstractGenerator {
             }
 
             $tax_query = array();
-            foreach ($tax_array AS $taxonomy => $terms) {
+            foreach ($tax_array as $taxonomy => $terms) {
                 $tax_query[] = array(
                     'taxonomy' => $taxonomy,
                     'terms'    => $terms,
@@ -164,6 +178,7 @@ class PostsAllCustomPosts extends AbstractGenerator {
                     array(
                         'key'   => $postMetaKey,
                         'value' => $postMetaValue,
+                        'type'  => $this->data->get('postmetatype', 'CHAR')
                     ) + $compare
                 )
             );
@@ -174,7 +189,7 @@ class PostsAllCustomPosts extends AbstractGenerator {
         $metaMore = $this->data->get('postmetakeymore', '');
         if (!empty($metaMore) && $metaMore != 'field_name||compare_method||field_value') {
             $metaMoreValues = explode(PHP_EOL, $metaMore);
-            foreach ($metaMoreValues AS $metaMoreValue) {
+            foreach ($metaMoreValues as $metaMoreValue) {
                 $metaMoreValue = trim($metaMoreValue);
                 if ($metaMoreValue != 'field_name||compare_method||field_value') {
                     $metaMoreArray = explode('||', $metaMoreValue);
@@ -188,6 +203,12 @@ class PostsAllCustomPosts extends AbstractGenerator {
                         if (!empty($metaMoreArray[2])) {
                             $key_query += array(
                                 'value' => $metaMoreArray[2]
+                            );
+                        }
+
+                        if (!empty($metaMoreArray[3])) {
+                            $key_query += array(
+                                'type' => $metaMoreArray[3]
                             );
                         }
 
@@ -268,7 +289,7 @@ class PostsAllCustomPosts extends AbstractGenerator {
             $record['url']                = get_permalink();
             $record['title']              = apply_filters('the_title', get_the_title(), $post->ID);
             $record['content']            = get_the_content();
-            $record['description']        = preg_replace('#\[[^\]]+\]#', '', $record['content']);
+            $record['description']        = GeneratorGroupPosts::removeShortcodes($record['content']);
             $record['author_name']        = $record['author'] = get_the_author();
             $userID                       = get_the_author_meta('ID');
             $record['author_url']         = get_author_posts_url($userID);
@@ -277,10 +298,8 @@ class PostsAllCustomPosts extends AbstractGenerator {
             $record['modified']           = get_the_modified_date();
             $type_object                  = get_post_type_object(get_post_type());
             $record['type_singular_name'] = $type_object->labels->singular_name;
-            $category                     = get_the_category();
-            if (isset($category[0]->name)) {
-                $record['category_name'] = $category[0]->name;
-            }
+
+            $record = array_merge($record, GeneratorGroupPosts::getCategoryData($post->ID));
 
             $thumbnail_id             = get_post_thumbnail_id($post->ID);
             $record['featured_image'] = wp_get_attachment_image_url($thumbnail_id, 'full');
@@ -289,7 +308,7 @@ class PostsAllCustomPosts extends AbstractGenerator {
             } else {
                 $thumbnail_meta = get_post_meta($thumbnail_id, '_wp_attachment_metadata', true);
                 if (isset($thumbnail_meta['sizes'])) {
-                    $sizes  = $this->getImageSizes($thumbnail_id, $thumbnail_meta['sizes']);
+                    $sizes  = GeneratorGroupPosts::getImageSizes($thumbnail_id, $thumbnail_meta['sizes']);
                     $record = array_merge($record, $sizes);
                 }
                 $record['alt'] = '';
@@ -302,43 +321,12 @@ class PostsAllCustomPosts extends AbstractGenerator {
             $record['thumbnail'] = $record['image'] = $record['featured_image'];
             $record['url_label'] = 'View';
 
-            $post_meta = get_post_meta($post->ID);
-
-            $excluded_metas = array(
-                'hc-editor-mode',
-                'techline-sidebar'
-            );
-
-            foreach ($excluded_metas AS $excluded_meta) {
-                if (isset($post_meta[$excluded_meta])) {
-                    unset($post_meta[$excluded_meta]);
-                }
-            }
-
-            if (count($post_meta)) {
-                foreach ($post_meta AS $key => $value) {
-                    foreach ($value AS $v) {
-                        if (!empty($v)) {
-                            $key = str_replace(array(
-                                '_',
-                                '-'
-                            ), array(
-                                '',
-                                ''
-                            ), $key);
-                            if (array_key_exists($key, $record)) {
-                                $key = 'meta' . $key;
-                            }
-                            $record[$key] = $v;
-                        }
-                    }
-                }
-            }
+            $record = array_merge($record, GeneratorGroupPosts::extractPostMeta(get_post_meta($post->ID)));
 
             $taxonomies = get_post_taxonomies($post->ID);
-            foreach ($taxonomies AS $taxonomy) {
+            foreach ($taxonomies as $taxonomy) {
                 $post_terms = wp_get_post_terms($post->ID, $taxonomy);
-                $taxonomy = str_replace('-', '', $taxonomy);
+                $taxonomy   = str_replace('-', '', $taxonomy);
 
                 for ($j = 0; $j < count($post_terms); $j++) {
                     $record[$taxonomy . '_' . ($j + 1)]                  = $post_terms[$j]->name;
@@ -347,46 +335,8 @@ class PostsAllCustomPosts extends AbstractGenerator {
                 }
             }
 
-            if (class_exists('acf')) {
-                $fields = get_fields($post->ID);
-                if (is_array($fields) && !empty($fields) && count($fields)) {
-                    foreach ($fields AS $k => $v) {
-                        $type = $this->getACFType($k, $post->ID);
-                        $k    = str_replace('-', '', $k);
+            $record = array_merge($record, GeneratorGroupPosts::getACFData($post->ID));
 
-                        while (isset($record[$k])) {
-                            $k = 'acf_' . $k;
-                        }
-                        if (!is_array($v) && !is_object($v)) {
-                            if ($type['type'] == "image" && is_numeric($type["value"])) {
-                                $thumbnail_meta = wp_get_attachment_metadata($type["value"]);
-                                $src            = wp_get_attachment_image_src($v, $thumbnail_meta['file']);
-                                $v              = $src[0];
-                            }
-                            $record[$k] = $v;
-                        } else if (!is_object($v)) {
-                            if (isset($v['url'])) {
-                                $record[$k] = $v['url'];
-                            } else if (is_array($v)) {
-                                foreach ($v AS $v_v => $k_k) {
-                                    if (is_array($k_k) && isset($k_k['url'])) {
-                                        $record[$k . $v_v] = $k_k['url'];
-                                    }
-                                }
-                            }
-                        }
-                        if ($type['type'] == "image" && (is_numeric($type["value"]) || is_array($type['value']))) {
-                            if (is_array($type['value'])) {
-                                $sizes = $this->getImageSizes($type["value"]["id"], $type["value"]["sizes"], $k);
-                            } else {
-                                $thumbnail_meta = wp_get_attachment_metadata($type["value"]);
-                                $sizes          = $this->getImageSizes($type["value"], $thumbnail_meta['sizes'], $k);
-                            }
-                            $record = array_merge($record, $sizes);
-                        }
-                    }
-                }
-            }
             if (isset($record['primarytermcategory'])) {
                 $primary                         = get_category($record['primarytermcategory']);
                 $record['primary_category_name'] = $primary->name;
@@ -405,31 +355,6 @@ class PostsAllCustomPosts extends AbstractGenerator {
         wp_reset_postdata();
 
         return $data;
-    }
-
-    protected function getImageSizes($thumbnail_id, $sizes, $prefix = false) {
-        $data = array();
-        if (!$prefix) {
-            $prefix = "";
-        } else {
-            $prefix = $prefix . "_";
-        }
-        foreach ($sizes AS $size => $image) {
-            $imageSrc                                               = wp_get_attachment_image_src($thumbnail_id, $size);
-            $data[$prefix . 'image_' . $this->clearSizeName($size)] = $imageSrc[0];
-        }
-
-        return $data;
-    }
-
-    protected function clearSizeName($size) {
-        return preg_replace("/-/", "_", $size);
-    }
-
-    protected function getACFType($key, $post_id) {
-        $type = get_field_object($key, $post_id);
-
-        return $type;
     }
 }
 

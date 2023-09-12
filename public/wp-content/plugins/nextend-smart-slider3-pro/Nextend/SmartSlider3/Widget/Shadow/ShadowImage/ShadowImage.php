@@ -5,7 +5,6 @@ namespace Nextend\SmartSlider3\Widget\Shadow\ShadowImage;
 
 
 use Nextend\Framework\Form\Element\Radio\ImageListFromFolder;
-use Nextend\Framework\Form\Element\Text;
 use Nextend\Framework\Form\Element\Text\FieldImage;
 use Nextend\Framework\Form\Fieldset\FieldsetRow;
 use Nextend\SmartSlider3\Widget\Shadow\AbstractWidgetShadow;

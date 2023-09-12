@@ -91,7 +91,7 @@ class ControlTypePicker extends AbstractFieldHidden {
 
         $this->plugins = $this->widgetGroup->getWidgets();
 
-        foreach ($this->plugins AS $name => $type) {
+        foreach ($this->plugins as $name => $type) {
             $this->options[$name] = array(
                 'path' => $type->getSubFormImagePath()
             );

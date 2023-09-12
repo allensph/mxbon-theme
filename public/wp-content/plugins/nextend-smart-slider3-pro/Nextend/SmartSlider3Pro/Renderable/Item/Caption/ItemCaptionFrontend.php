@@ -6,6 +6,7 @@ namespace Nextend\SmartSlider3Pro\Renderable\Item\Caption;
 
 use Nextend\Framework\Parser\Color;
 use Nextend\Framework\Parser\Common;
+use Nextend\Framework\Sanitize;
 use Nextend\Framework\View\Html;
 use Nextend\SmartSlider3\Renderable\AbstractRenderableOwner;
 use Nextend\SmartSlider3\Renderable\Item\AbstractItemFrontend;
@@ -60,13 +61,13 @@ class ItemCaptionFrontend extends AbstractItemFrontend {
             "style" => "background: {$rgba};" . 'justify-content:' . $this->data->get('verticalalign', 'center') . ';'
         ));
 
-        $title = $owner->fill($this->data->get('content', ''));
+        $title = Sanitize::filter_allowed_html($owner->fill($this->data->get('content', '')));
         if ($title != '') {
             $fontTitle = $owner->addFont($this->data->get('fonttitle'), 'paragraph');
             $html      .= Html::tag("div", array("class" => 'n2-div-h4 ' . $fontTitle), $title);
         }
 
-        $description = $owner->fill($this->data->get('description', ''));
+        $description = Sanitize::filter_allowed_html($owner->fill($this->data->get('description', '')));
         if ($description != '') {
             $font = $owner->addFont($this->data->get('font'), 'paragraph');
             $html .= Html::tag("p", array("class" => $font), $description);

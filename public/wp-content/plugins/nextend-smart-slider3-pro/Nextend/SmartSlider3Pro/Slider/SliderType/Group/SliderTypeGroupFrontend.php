@@ -28,7 +28,10 @@ class SliderTypeGroupFrontend extends AbstractSliderTypeFrontend {
         foreach ($rows as $row) {
             $slider     = new SliderManager($this->slider, $row['slider_id'], $isAdmin);
             $sliderHTML = $slider->render();
-            echo $sliderHTML;
+
+
+            // PHPCS - Content already escaped
+            echo $sliderHTML; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             if (!empty($sliderHTML)) {
                 $this->earlier = min($slider->slider->getNextCacheRefresh(), $this->earlier);
             }

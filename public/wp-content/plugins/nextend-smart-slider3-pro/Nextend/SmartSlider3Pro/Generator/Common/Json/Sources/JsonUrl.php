@@ -92,14 +92,10 @@ class JsonUrl extends AbstractGenerator {
     }
 
     protected function _getData($count, $startIndex) {
-        $source = $this->data->get('sourcefile', '');
-        $data   = array();
-
-        $options = array(
-            'referer' => '',
-            'error'   => false
-        );
-        $options = apply_filters('smartslider3_json_url_get_options', $args);
+        $source  = $this->data->get('sourcefile', '');
+        $data    = array();
+        $options = array();
+        $options = apply_filters('smartslider3_json_url_get_options', $options);
     
 
         $content = HttpClient::get($source, $options);

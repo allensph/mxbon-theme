@@ -64,13 +64,10 @@ class ItemAudio extends AbstractItem {
                 'show'          => 1,
                 'show-progress' => 1,
                 'show-time'     => 1,
-                'show-volume'   => 1
+                'show-volume'   => 1,
+                'iconsize'      => 'small',
             );
     }
-
-    /**
-     * @return string
-     */
 
 
     public function getFilled($slide, $data) {
@@ -146,9 +143,20 @@ class ItemAudio extends AbstractItem {
 
         $display = new Fieldset\LayerWindow\FieldsetLayerWindow($container, 'item-audio-display', n2_('Display'));
         new OnOff($display, 'fullwidth', n2_('Full width'), 0);
-        new OnOff($display, 'show', n2_('Controls'), 0);
+        new OnOff($display, 'show', n2_('Controls'), 0, array(
+            'relatedFieldsOn' => array(
+                'item_audioiconsize'
+            )
+        ));
         new OnOff($display, 'show-progress', n2_('Progress'), 0);
         new OnOff($display, 'show-time', n2_('Time'), 0);
         new OnOff($display, 'show-volume', n2_('Volume'), 0);
+        new Select($display, 'iconsize', n2_('Icon Size'), 'small', array(
+            'options' => array(
+                'small'  => 'Small',
+                'medium' => 'Medium',
+                'large'  => 'Large'
+            )
+        ));
     }
 }

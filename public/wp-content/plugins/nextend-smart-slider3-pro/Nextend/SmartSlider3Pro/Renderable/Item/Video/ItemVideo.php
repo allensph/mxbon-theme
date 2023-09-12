@@ -97,6 +97,7 @@ class ItemVideo extends AbstractItem {
 
         $export->addImage($data->get('poster'));
         $export->addImage($data->get('video_mp4'));
+        $export->addImage($data->get('playbuttonimage'));
     }
 
     public function prepareImport($import, $data) {
@@ -104,6 +105,7 @@ class ItemVideo extends AbstractItem {
 
         $data->set('poster', $import->fixImage($data->get('poster')));
         $data->set('video_mp4', $import->fixImage($data->get('video_mp4')));
+        $data->set('playbuttonimage', $import->fixImage($data->get('playbuttonimage')));
 
         return $data;
     }
@@ -180,7 +182,7 @@ class ItemVideo extends AbstractItem {
         new Select($misc, 'ended', n2_('When ended'), '', array(
             'options' => array(
                 ''     => n2_('Do nothing'),
-                'next' => 'Go to next slide'
+                'next' => n2_('Go to next slide')
             )
         ));
 

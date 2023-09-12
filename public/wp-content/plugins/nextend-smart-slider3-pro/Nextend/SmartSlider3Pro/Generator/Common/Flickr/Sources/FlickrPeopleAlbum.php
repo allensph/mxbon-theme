@@ -28,7 +28,7 @@ class FlickrPeopleAlbum extends AbstractGenerator {
     }
 
     protected function fallback($images) {
-        foreach ($images AS $image) {
+        foreach ($images as $image) {
             if (!empty($image)) {
                 return $image;
             }
@@ -71,14 +71,14 @@ class FlickrPeopleAlbum extends AbstractGenerator {
 
             $ownerCache = array();
             $i          = 0;
-            foreach ($photos AS $photo) {
+            foreach ($photos as $photo) {
                 if (!isset($ownerCache[$photo['ownername']])) {
                     $owner                           = $client->people_findByUsername($photo['ownername']);
                     $ownerCache[$photo['ownername']] = $client->people_getInfo($owner['user']['nsid']);
                 }
                 $ow = $ownerCache[$photo['ownername']];
 
-                foreach ($imageTypes AS $imageType) {
+                foreach ($imageTypes as $imageType) {
                     if (!isset($photo['url_' . $imageType])) {
                         $photo['url_' . $imageType] = '';
                     }

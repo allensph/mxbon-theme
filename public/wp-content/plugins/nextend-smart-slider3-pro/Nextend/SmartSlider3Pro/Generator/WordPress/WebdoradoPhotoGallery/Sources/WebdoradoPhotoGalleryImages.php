@@ -112,6 +112,7 @@ class WebdoradoPhotoGalleryImages extends AbstractGenerator {
 
             $r += array(
                 'title'                 => $p->alt,
+                'description'           => $p->description,
                 'slug'                  => $p->slug,
                 'filename'              => $p->filename,
                 'date'                  => $p->date,

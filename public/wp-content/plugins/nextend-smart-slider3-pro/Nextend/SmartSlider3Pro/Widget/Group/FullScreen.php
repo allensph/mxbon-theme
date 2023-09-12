@@ -50,7 +50,7 @@ class FullScreen extends AbstractWidgetGroup {
         ));
 
         $fullscreenWarning = $table->createRow('widget-fullscreen-warning');
-        $warningText       = sprintf(n2_('%1$s %2$s does not support the full screen API %3$s so other elements of the page may overlap the slider in Fullscreen mode. To avoid such problems, we suggest hiding the Fullscreen control from mobile view!'), 'iPhone', '<a href="https://smartslider.helpscoutdocs.com/article/1859-fullscreen#safari" target="_blank">', '</a>');
+        $warningText       = sprintf(n2_('%1$s does not support the full screen API. For this reason the full screen button will not appear on %1$s devices.'), 'iPhone');
         new Warning($fullscreenWarning, 'widget-fullscreen-warning-iphone', $warningText);
 
         $row1 = $table->createRow('widget-fullscreen-1');

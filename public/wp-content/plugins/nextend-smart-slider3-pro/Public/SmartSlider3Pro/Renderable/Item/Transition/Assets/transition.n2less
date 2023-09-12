@@ -14,6 +14,8 @@
     max-width: 100%;
     will-change: opacity;
     line-height: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
   .n2-ss-item-transition .n2-ss-item-transition-image2 {

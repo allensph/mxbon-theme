@@ -12,7 +12,7 @@ class NextgenGalleries extends Select {
         $galleries = $wpdb->get_results("SELECT * FROM " . $wpdb->base_prefix . "ngg_gallery ORDER BY name");
 
         if (count($galleries)) {
-            foreach ($galleries AS $gallery) {
+            foreach ($galleries as $gallery) {
                 $this->options[$gallery->gid] = $gallery->title;
             }
 

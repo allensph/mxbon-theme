@@ -17,6 +17,8 @@ class ControllerSlider extends AbstractControllerAdmin {
 
     protected $sliderID = 0;
 
+    protected $sliderAliasOrID = 0;
+
     protected $groupID = 0;
 
     public function initialize() {
@@ -24,6 +26,8 @@ class ControllerSlider extends AbstractControllerAdmin {
 
         $this->sliderID = Request::$REQUEST->getInt('sliderid');
         $this->groupID  = Request::$REQUEST->getInt('groupID', 0);
+
+        $this->setSliderIDFromAlias();
     }
 
     /**
@@ -31,6 +35,19 @@ class ControllerSlider extends AbstractControllerAdmin {
      */
     public function getSliderID() {
         return $this->sliderID;
+    }
+
+    public function setSliderIDFromAlias() {
+        $this->sliderAliasOrID = Request::$REQUEST->getVar('slideraliasorid');
+        if (!empty($this->sliderAliasOrID)) {
+            if (is_numeric($this->sliderAliasOrID)) {
+                $this->sliderID = $this->sliderAliasOrID;
+            } else {
+                $slidersModel   = new ModelSliders($this);
+                $slider         = $slidersModel->getByAlias($this->sliderAliasOrID);
+                $this->sliderID = $slider['id'];
+            }
+        }
     }
 
     public function actionClearCache() {
@@ -51,6 +68,7 @@ class ControllerSlider extends AbstractControllerAdmin {
 
     public function actionEdit() {
 
+
         if ($this->validatePermission('smartslider_edit')) {
 
             $slidersModel = new ModelSliders($this);
@@ -63,9 +81,11 @@ class ControllerSlider extends AbstractControllerAdmin {
 
             if ($slider['type'] == 'group') {
 
-                $this->doAction('editGroup', array(
-                    $slider
-                ));
+                if (N2SSPRO) {
+                    $this->doAction('editGroup', array(
+                        $slider
+                    ));
+                }  //N2SSPRO
 
             } else {
 
@@ -212,11 +232,16 @@ class ControllerSlider extends AbstractControllerAdmin {
             $slidersModel = new ModelSliders($this);
             if (($sliderid = Request::$REQUEST->getInt('sliderid')) && $slidersModel->get($sliderid)) {
                 $newSliderId = $slidersModel->duplicate($sliderid);
-                Notification::success(n2_('Slider duplicated.'));
+                if ($newSliderId) {
+                    Notification::success(n2_('Slider duplicated.'));
 
-                $groupData = $this->getGroupData($newSliderId);
+                    $groupData = $this->getGroupData($newSliderId);
 
-                $this->redirect($this->getUrlSliderEdit($newSliderId, $groupData['group_id']));
+                    $this->redirect($this->getUrlSliderEdit($newSliderId, $groupData['group_id']));
+                } else {
+                    Notification::error(n2_('Database error'));
+                }
+
             }
             $this->redirectToSliders();
         }

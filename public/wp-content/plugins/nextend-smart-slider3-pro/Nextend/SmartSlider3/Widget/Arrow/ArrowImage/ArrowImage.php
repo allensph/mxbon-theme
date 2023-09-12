@@ -157,8 +157,6 @@ class ArrowImage extends AbstractWidgetArrow {
             'unit' => 'px'
         ));
 
-    
-
     }
 
     public function prepareExport($export, $params) {

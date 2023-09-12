@@ -19,7 +19,6 @@ use Nextend\Framework\Form\Element\Text\HiddenText;
 use Nextend\Framework\Form\Element\Text\Number;
 use Nextend\Framework\Form\Element\Text\NumberAutoComplete;
 use Nextend\Framework\Form\Element\Text\Url;
-use Nextend\Framework\Form\Element\Unit;
 use Nextend\Framework\Form\Fieldset\LayerWindow\FieldsetLayerWindowLabelFields;
 use Nextend\Framework\Form\Fieldset\LayerWindow\FieldsetLayerWindowStyleMode;
 use Nextend\SmartSlider3\Form\Element\Radio\FlexAlign;
@@ -207,11 +206,13 @@ class LayerWindowSettingsColumn extends AbstractLayerWindowSettings {
         ));
 
 
-        $padding = new MarginPadding($size, 'col-padding', n2_('Padding'), '5|*|5|*|5|*|5|*|px', array(
+        $padding = new MarginPadding($size, 'col-padding', n2_('Padding'), '5|*|5|*|5|*|5', array(
             'rowAttributes' => array(
                 'data-devicespecific' => ''
             )
         ));
+        $padding->setUnit('px');
+
         for ($i = 1; $i < 5; $i++) {
             new NumberAutoComplete($padding, 'col-padding-' . $i, false, '', array(
                 'values' => array(
@@ -224,11 +225,5 @@ class LayerWindowSettingsColumn extends AbstractLayerWindowSettings {
                 'wide'   => 3
             ));
         }
-
-        new Unit($padding, 'col-padding-5', '', '', array(
-            'units' => array(
-                'px' => 'px'
-            )
-        ));
     }
 }

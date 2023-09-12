@@ -2,13 +2,14 @@
 
 namespace Nextend\Framework\Image;
 
+use Nextend\Framework\Database\AbstractPlatformConnectorTable;
 use Nextend\Framework\Database\Database;
 use Nextend\Framework\Misc\Base64;
 
 class ImageStorage {
 
     /**
-     * @var \Nextend\Framework\Database\AbstractPlatformConnectorTable
+     * @var AbstractPlatformConnectorTable
      */
     private $tableImageStorage;
 

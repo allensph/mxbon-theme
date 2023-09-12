@@ -21,7 +21,7 @@ class VimeoAlbums extends Select {
 
         if ($response['status'] == 200) {
             $albums = $response['body']['data'];
-            foreach ($albums AS $album) {
+            foreach ($albums as $album) {
                 $this->options[$album['uri']] = $album['name'];
             }
 

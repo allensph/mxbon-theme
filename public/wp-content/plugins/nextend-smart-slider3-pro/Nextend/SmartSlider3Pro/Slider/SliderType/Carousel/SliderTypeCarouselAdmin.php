@@ -169,7 +169,7 @@ class SliderTypeCarouselAdmin extends AbstractSliderTypeAdmin {
         }
 
         $rowGroupSlides = new ContainerRowGroup(new InsertAfter($form->getElement('/slides/slides-design/slides-design-1')), 'slider-type-carousel-group-slides', false);
-        
+
         $rowSlideBackground = new FieldsetRow($rowGroupSlides, 'slider-type-carousel-background-slide');
 
         new Color($rowSlideBackground, 'slide-background-color', n2_('Slide background color'), 'ffffffff', array(
@@ -256,11 +256,14 @@ class SliderTypeCarouselAdmin extends AbstractSliderTypeAdmin {
         $rowAnimation2 = new FieldsetRow($tableMainAnimation, 'slider-type-carousel-animation-2');
 
         new OnOff($rowAnimation2, 'carousel', n2_x('Carousel', 'Feature'), 1, array(
-            'tipLabel'        => n2_x('Carousel', 'Feature'),
-            'tipDescription'  => n2_('This option will create a complete round from your slides if you have enough slides. If you don\'t have enough slides, you could consider duplicating all the slides or just add more slides until you will get a carousel round.'),
-            'tipLink'         => 'https://smartslider.helpscoutdocs.com/article/1786-carousel-slider-type#carousel',
-            'relatedFieldsOn' => array(
+            'tipLabel'         => n2_x('Carousel', 'Feature'),
+            'tipDescription'   => n2_('This option will create a complete round from your slides if you have enough slides. If you don\'t have enough slides, you could consider duplicating all the slides or just add more slides until you will get a carousel round.'),
+            'tipLink'          => 'https://smartslider.helpscoutdocs.com/article/1786-carousel-slider-type#carousel',
+            'relatedFieldsOn'  => array(
                 'slidercontrolsBlockCarouselInteraction'
+            ),
+            'relatedFieldsOff' => array(
+                'sliderdisabled-carousel-notice'
             )
         ));
 
@@ -294,6 +297,8 @@ class SliderTypeCarouselAdmin extends AbstractSliderTypeAdmin {
         $form->getElement('/size/size/size-2')
              ->remove();
         $form->getElement('/optimize/optimize-slide/optimize-slide-loading-mode/imageloadNeighborSlides')
+             ->remove();
+        $form->getElement('/size/override-slider-size')
              ->remove();
 
 

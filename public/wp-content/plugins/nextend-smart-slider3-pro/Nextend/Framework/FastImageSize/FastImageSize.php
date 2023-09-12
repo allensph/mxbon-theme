@@ -50,8 +50,12 @@ class FastImageSize {
         $imagePath = ResourceTranslator::toPath($image);
 
         if (!isset(self::$cache[$imagePath])) {
-            self::$cache[$imagePath] = self::getInstance()
-                                           ->getImageSize($imagePath);
+            if (empty($imagePath)) {
+                self::$cache[$imagePath] = false;
+            } else {
+                self::$cache[$imagePath] = self::getInstance()
+                                               ->getImageSize($imagePath);
+            }
         }
 
         return self::$cache[$imagePath];
@@ -69,43 +73,7 @@ class FastImageSize {
         'gif'  => array('gif'),
         'jpeg' => array(
             'jpeg',
-            'jpg',
-            'jpe',
-            'jif',
-            'jfif',
-            'jfi',
-        ),
-        'jp2'  => array(
-            'jp2',
-            'j2k',
-            'jpf',
-            'jpg2',
-            'jpx',
-            'jpm',
-        ),
-        'psd'  => array(
-            'psd',
-            'photoshop',
-        ),
-        'bmp'  => array('bmp'),
-        'tif'  => array(
-            'tif',
-            'tiff',
-        ),
-        'wbmp' => array(
-            'wbm',
-            'wbmp',
-            'vnd.wap.wbmp',
-        ),
-        'iff'  => array(
-            'iff',
-            'x-iff',
-        ),
-        'ico'  => array(
-            'ico',
-            'vnd.microsoft.icon',
-            'x-icon',
-            'icon',
+            'jpg'
         ),
         'webp' => array(
             'webp',
@@ -219,7 +187,7 @@ class FastImageSize {
      */
     public function getImage($filename, $offset, $length, $forceLength = true) {
         if (empty($this->data)) {
-            $this->data = @file_get_contents($filename, null, null, $offset, $length);
+            $this->data = @file_get_contents($filename, false, null, $offset, $length);
         }
 
         // Force length to expected one. Return false if data length
@@ -275,7 +243,8 @@ class FastImageSize {
             return;
         }
 
-        $className              = '\\' . __NAMESPACE__ . '\Type\Type' . mb_convert_case(mb_strtolower($imageType), MB_CASE_TITLE);
+        $className = '\\' . __NAMESPACE__ . '\Type\Type' . ucfirst($imageType);
+
         $this->type[$imageType] = new $className($this);
 
         // Create class map

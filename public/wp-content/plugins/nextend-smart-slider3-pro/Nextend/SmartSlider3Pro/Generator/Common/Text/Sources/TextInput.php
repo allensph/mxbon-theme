@@ -23,8 +23,7 @@ class TextInput extends AbstractGenerator {
 
         new Textarea($filter, 'source', 'CSV', '', array(
             'width'  => 300,
-            'height' => 200,
-            'resize' => 'both'
+            'height' => 200
         ));
 
         new Text($filter, 'delimiter', 'Column delimiter', ',', array(
@@ -49,7 +48,7 @@ class TextInput extends AbstractGenerator {
                     $line  = rtrim($line, "\r\n");
                     $parts = explode($delimiter, $line);
                     $j     = 1;
-                    foreach ($parts AS $part) {
+                    foreach ($parts as $part) {
                         $data[$k]['variable' . $j] = $part;
                         $j++;
                     }

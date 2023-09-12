@@ -58,10 +58,9 @@ class SliderTypeCarouselCss extends AbstractSliderTypeCss {
         $slideBorderWidth                  = max(0, $params->get('slide-border-width', 0));
         $this->context['slideborderwidth'] = $slideBorderWidth . 'px';
 
-        $rgba = Color::hex2rgba($params->get('slide-border-color'));
-        if (!empty($rgba)) {
-            $this->context['slidebordercolor'] = 'RGBA(' . $rgba[0] . ',' . $rgba[1] . ',' . $rgba[2] . ',' . round($rgba[3] / 127, 2) . ')';
-        }
+        $rgba                              = Color::hex2rgba($params->get('slide-border-color'));
+        $this->context['slidebordercolor'] = 'RGBA(' . $rgba[0] . ',' . $rgba[1] . ',' . $rgba[2] . ',' . round($rgba[3] / 127, 2) . ')';
+
 
         $slideWidth  = min($width, max(50, intval($params->get('slide-width'))));
         $slideHeight = max(50, intval($params->get('slide-height')));
@@ -125,10 +124,8 @@ class SliderTypeCarouselCss extends AbstractSliderTypeCss {
         $slideBorderWidth                  = max(0, $params->get('slide-border-width', 0));
         $this->context['slideborderwidth'] = $slideBorderWidth . 'px';
 
-        $rgba = Color::hex2rgba($params->get('slide-border-color'));
-        if (!empty($rgba)) {
-            $this->context['slidebordercolor'] = 'RGBA(' . $rgba[0] . ',' . $rgba[1] . ',' . $rgba[2] . ',' . round($rgba[3] / 127, 2) . ')';
-        }
+        $rgba                              = Color::hex2rgba($params->get('slide-border-color'));
+        $this->context['slidebordercolor'] = 'RGBA(' . $rgba[0] . ',' . $rgba[1] . ',' . $rgba[2] . ',' . round($rgba[3] / 127, 2) . ')';
 
         $slideWidth                        = min($width, max(50, intval($params->get('slide-width'))));
         $slideHeight                       = max(50, intval($params->get('slide-height')));

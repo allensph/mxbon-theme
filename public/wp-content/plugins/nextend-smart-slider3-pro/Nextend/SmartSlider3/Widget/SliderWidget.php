@@ -93,6 +93,11 @@ class SliderWidget {
         $this->placementAdvanced->add($renderCallback, $horizontalSide, $horizontalPosition, $horizontalUnit, $verticalSide, $verticalPosition, $verticalUnit);
     }
 
+    /**
+     * @param $innerHTML
+     *
+     * @return mixed|string contains already escaped data
+     */
     public function wrapSlider($innerHTML) {
 
         $insideAbsoluteHTML = '';
@@ -149,12 +154,28 @@ class SliderWidget {
             ), $leftHTML . $innerHTML . $rightHTML);
         }
 
+        $templateRows = array();
+
         if (!$this->placements['above']->empty()) {
-            $innerHTML = $this->placements['above']->render() . $innerHTML;
+            $innerHTML      = $this->placements['above']->render() . $innerHTML;
+            $templateRows[] = 'auto';
         }
 
+        $templateRows[] = '1fr';
+
         if (!$this->placements['below']->empty()) {
-            $innerHTML .= $this->placements['below']->render();
+            $innerHTML      .= $this->placements['below']->render();
+            $templateRows[] = 'auto';
+        }
+
+        if (count($templateRows) > 1) {
+            /**
+             * Full page responsive type need this grid to properly render
+             */
+            $innerHTML = Html::tag('div', array(
+                'class' => 'n2-ss-slider-wrapper-outside',
+                'style' => 'grid-template-rows:' . implode(' ', $templateRows)
+            ), $innerHTML);
         }
 
         return $innerHTML;

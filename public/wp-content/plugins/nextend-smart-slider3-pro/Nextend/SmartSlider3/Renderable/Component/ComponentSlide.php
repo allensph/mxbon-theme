@@ -39,14 +39,7 @@ class ComponentSlide extends AbstractComponent {
 
         $this->upgradeData();
 
-        $devices = array(
-            'desktopportrait',
-            'desktoplandscape',
-            'tabletportrait',
-            'tabletlandscape',
-            'mobileportrait',
-            'mobilelandscape'
-        );
+        $devices = $this->owner->getAvailableDevices();
 
         foreach ($devices as $device) {
             $padding = $this->data->get($device . 'padding');
@@ -105,6 +98,7 @@ class ComponentSlide extends AbstractComponent {
         $this->createProperty('published', 1);
         $this->createProperty('description', '');
         $this->createProperty('thumbnail', '');
+        $this->createProperty('thumbnailAlt', '');
         $this->createProperty('thumbnailType', 'default');
 
         $this->createProperty('static-slide', 0);
@@ -137,10 +131,11 @@ class ComponentSlide extends AbstractComponent {
         $this->createProperty('backgroundAlt', '');
         $this->createProperty('backgroundTitle', '');
         $this->createProperty('backgroundMode', 'default');
+        $this->createProperty('backgroundBlurFit', 7);
+
 
         $this->createProperty('backgroundVideoMp4', '');
         $this->createProperty('backgroundVideoOpacity', 100);
-        $this->createProperty('backgroundVideoMuted', 1);
         $this->createProperty('backgroundVideoLoop', 1);
         $this->createProperty('backgroundVideoReset', 1);
         $this->createProperty('backgroundVideoMode', 'fill');

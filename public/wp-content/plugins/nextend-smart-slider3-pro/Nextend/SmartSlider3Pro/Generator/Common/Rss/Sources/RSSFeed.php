@@ -2,6 +2,7 @@
 
 namespace Nextend\SmartSlider3Pro\Generator\Common\Rss\Sources;
 
+use Exception;
 use Nextend\Framework\Form\Container\ContainerTable;
 use Nextend\Framework\Form\Element\Text;
 use Nextend\Framework\Form\Element\Textarea;
@@ -30,8 +31,8 @@ class RSSFeed extends AbstractGenerator {
         $date = $filterGroup->createRow('date');
 
         new Text($date, 'dateformat', n2_('Date format'), 'm-d-Y');
-        new Text($date, 'offset', n2_('Offset'), '', array(
-            'tipLabel'       => n2_('Offset'),
+        new Text($date, 'offset', n2_('Offset hours'), '', array(
+            'tipLabel'       => n2_('Offset hours'),
             'tipDescription' => n2_('Timezone offset in hours. For example: +2 or -7.')
         ));
         new Textarea($date, 'sourcetranslatedate', n2_('Translate date and time'), 'January->January||February->February||March->March', array(
@@ -46,10 +47,7 @@ class RSSFeed extends AbstractGenerator {
         $sourceTranslate = $this->data->get('sourcetranslatedate', '');
         $translate       = $this->generateTranslationArray($sourceTranslate);
 
-        $content = HttpClient::get($url, array(
-            'referer' => '',
-            'error'   => false
-        ));
+        $content = HttpClient::get($url);
 
         if (!$content) {
             Notification::error('The file on the given url is either empty or it cannot be accessed.');
@@ -60,7 +58,7 @@ class RSSFeed extends AbstractGenerator {
         try {
             @$xml = new SimpleXmlElement($content);
             $namespaces = $xml->getNamespaces(true);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Notification::error(n2_('The data in the given url is not valid XML.'));
 
             return null;
@@ -88,6 +86,8 @@ class RSSFeed extends AbstractGenerator {
                         $offset = $this->data->get('offset', '');
                         if (!empty($offset)) {
                             $offset = intval($offset) * 3600;
+                        } else {
+                            $offset = 0;
                         }
                         $val = $this->translate(date($date_format, strtotime($val) + $offset), $translate);
                     }
@@ -111,20 +111,17 @@ class RSSFeed extends AbstractGenerator {
                             if (!empty($value)) {
                                 $data[$i][$namespace . '_' . $k] = trim($value);
                             }
-                        }
-                    }
-                }
-
-                if (isset($namespaces['media'])) {
-                    foreach ($entry->children($namespaces['media']) as $k => $v) {
-                        $url = trim((string)$v->attributes()->url);
-                        if (!empty($url)) {
-                            $data[$i]['media'] = trim((string)$v->attributes()->url);
-                            break;
+                            $namespace_attributes = @$v->attributes();
+                            if (!empty($namespace_attributes)) {
+                                foreach ($namespace_attributes as $attr => $attr_val) {
+                                    $data[$i][$namespace . '_' . $k . '_' . $attr] = trim((string)$attr_val);
+                                }
+                            }
                         }
                     }
                 }
             }
+
             $group = $entry->children('http://search.yahoo.com/mrss/')->group;
             foreach ($group as $group_name => $group_data) {
                 foreach ($group_data as $group_key => $group_val) {

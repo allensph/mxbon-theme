@@ -6,7 +6,6 @@ namespace Nextend\Framework\Form\Element\Radio;
 
 use Nextend\Framework\Asset\Js\Js;
 use Nextend\Framework\Form\Element\AbstractFieldHidden;
-use Nextend\Framework\Localization\Localization;
 use Nextend\Framework\Url\Url;
 use Nextend\Framework\View\Html;
 

@@ -6,18 +6,16 @@ namespace Nextend\Framework\Asset\Fonts\Google;
 
 use Nextend\Framework\Asset\AbstractAsset;
 use Nextend\Framework\Asset\Css\Css;
+use Nextend\Framework\Cache\CacheGoogleFont;
+use Nextend\Framework\Filesystem\Filesystem;
+use Nextend\Framework\Font\FontSettings;
 use Nextend\Framework\Url\UrlHelper;
+use Nextend\SmartSlider3\SmartSlider3Info;
 
 class Asset extends AbstractAsset {
 
     public function getLoadedFamilies() {
         return array_keys($this->files);
-    }
-
-    function addSubset($subset = 'latin') {
-        if (!in_array($subset, $this->inline)) {
-            $this->inline[] = $subset;
-        }
     }
 
     function addFont($family, $style = '400') {
@@ -33,7 +31,7 @@ class Asset extends AbstractAsset {
     public function loadFonts() {
 
         if (!empty($this->files)) {
-            //https://fonts.googleapis.com/css?display=swap&family=Montserrat:400%7CRoboto:100italic,300,400&subset=latin,greek-ext
+            //https://fonts.googleapis.com/css?display=swap&family=Montserrat:400%7CRoboto:100italic,300,400
 
             $families = array();
             foreach ($this->files as $name => $styles) {
@@ -45,11 +43,23 @@ class Asset extends AbstractAsset {
             if (count($families)) {
                 $params = array(
                     'display' => 'swap',
-                    'family'  => implode('|', $families),
-                    'subset'  => implode(',', $this->inline)
+                    'family'  => urlencode(implode('|', $families))
                 );
 
-                Css::addUrl(UrlHelper::add_query_arg($params, 'https://fonts.googleapis.com/css'));
+                $url = UrlHelper::add_query_arg($params, 'https://fonts.googleapis.com/css');
+
+                $fontSettings = FontSettings::getPluginsData();
+                if ($fontSettings->get('google-cache', 0)) {
+                    $cache = new CacheGoogleFont();
+
+                    $path = $cache->makeCache($url, 'css');
+
+                    if ($path) {
+                        $url = Filesystem::pathToAbsoluteURL($path) . '?ver=' . SmartSlider3Info::$revisionShort;
+                    }
+                }
+
+                Css::addUrl($url);
             }
 
         }

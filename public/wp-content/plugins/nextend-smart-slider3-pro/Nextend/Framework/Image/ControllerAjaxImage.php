@@ -7,7 +7,6 @@ namespace Nextend\Framework\Image;
 use Nextend\Framework\Controller\Admin\AdminVisualManagerAjaxController;
 use Nextend\Framework\Notification\Notification;
 use Nextend\Framework\Request\Request;
-use Nextend\Framework\ResourceTranslator\ResourceTranslator;
 
 class ControllerAjaxImage extends AdminVisualManagerAjaxController {
 

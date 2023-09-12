@@ -47,7 +47,10 @@ class WooCommerceProductsByIds extends AbstractGenerator {
         $skus = $this->getSKUs();
         if (!empty($skus)) {
             foreach ($skus as $sku) {
-                $ids[] = wc_get_product_id_by_sku(trim($sku));
+                $trimmed_sku = trim($sku);
+                if (!empty($trimmed_sku)) {
+                    $ids[] = wc_get_product_id_by_sku($trimmed_sku);
+                }
             }
         }
 
@@ -55,21 +58,40 @@ class WooCommerceProductsByIds extends AbstractGenerator {
             $product = $productFactory->get_product($id);
             if ($product && $product->is_visible()) {
                 $product_id   = $product->get_id();
+                $productTitle = $product->get_title();
                 $thumbnail_id = get_post_thumbnail_id($product_id);
-                $image        = wp_get_attachment_url($thumbnail_id);
-                $thumbnail    = wp_get_attachment_image_src($thumbnail_id);
-                if ($thumbnail[0] != null) {
-                    $thumbnail = $thumbnail[0];
-                } else {
-                    $thumbnail = $image;
+
+                if (!empty($thumbnail_id)) {
+                    $image     = wp_get_attachment_url($thumbnail_id);
+                    $thumbnail = wp_get_attachment_image_src($thumbnail_id);
+                    if (!empty($thumbnail[0])) {
+                        $thumbnail = $thumbnail[0];
+                    } else {
+                        $thumbnail = $image;
+                    }
+
+                    $imageAlt = get_post_meta($thumbnail_id, "_wp_attachment_image_alt", true);
+                    if (empty($imageAlt)) {
+                        $imageAlt = $productTitle;
+                    }
                 }
 
                 $data[$i] = array(
-                    'title'          => $product->get_title(),
-                    'url'            => $product->get_permalink(),
-                    'description'    => get_post($product_id)->post_content,
-                    'image'          => ResourceTranslator::urlToResource($image),
-                    'thumbnail'      => ResourceTranslator::urlToResource($thumbnail),
+                    'title'             => $productTitle,
+                    'url'               => $product->get_permalink(),
+                    'description'       => get_post($product_id)->post_content,
+                    'short_description' => get_post($product_id)->post_excerpt
+                );
+
+                if (!empty($thumbnail_id)) {
+                    $data[$i] += array(
+                        'image'     => ResourceTranslator::urlToResource($image),
+                        'thumbnail' => ResourceTranslator::urlToResource($thumbnail),
+                        'image_alt' => $imageAlt,
+                    );
+                }
+
+                $data[$i] += array(
                     'price'          => wc_price($product->get_price()),
                     'price_html'     => $product->get_price_html(),
                     'regular_price'  => wc_price($product->get_regular_price()),
@@ -77,12 +99,15 @@ class WooCommerceProductsByIds extends AbstractGenerator {
                     'rating'         => $product->get_average_rating()
                 );
 
-                $image_sizes = get_intermediate_image_sizes();
-                foreach ($image_sizes as $image_size) {
-                    $image_data = wp_get_attachment_image_src($thumbnail_id, $image_size);
-                    $data[$i]   += array(
-                        'image_' . $image_size => ResourceTranslator::urlToResource($image_data[0])
-                    );
+                if (!empty($thumbnail_id)) {
+                    $image_sizes = get_intermediate_image_sizes();
+                    foreach ($image_sizes as $image_size) {
+                        $image_data = wp_get_attachment_image_src($thumbnail_id, $image_size);
+                        $image_size = str_replace('-', '', $image_size);
+                        $data[$i]   += array(
+                            'image_' . $image_size => ResourceTranslator::urlToResource($image_data[0])
+                        );
+                    }
                 }
 
                 $product_gallery = get_post_meta($product_id, "_product_image_gallery", true);

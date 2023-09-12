@@ -2,6 +2,7 @@
 
 namespace Nextend\SmartSlider3Pro\Generator\Common\YouTube\googleclient;
 
+use Nextend\Framework\Request\Request;
 use Nextend\SmartSlider3Pro\Generator\Common\YouTube\googleclient\Auth\Google_Auth_OAuth2;
 use Nextend\SmartSlider3Pro\Generator\Common\YouTube\googleclient\Http\Google_Http_Request;
 use Nextend\SmartSlider3Pro\Generator\Common\YouTube\googleclient\Http\Google_Http_REST;
@@ -668,6 +669,6 @@ class Google_Client {
      * return bool
      */
     public function isAppEngine() {
-        return (isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Google App Engine') !== false);
+        return (Request::$SERVER->getVar('SERVER_SOFTWARE') !== null && strpos(Request::$SERVER->getVar('SERVER_SOFTWARE'), 'Google App Engine') !== false);
     }
 }

@@ -191,7 +191,7 @@ class ArrowGrowFrontend extends AbstractWidgetFrontend {
                 'class' => $fontClass . ' nextend-arrow-title'
             ), '') . Html::tag('div', array(
                 'class' => 'nextend-arrow-arrow',
-                'style' => 'background-image: URL(' . $image . ');'
+                'style' => 'background-image: url(' . $image . ');'
             ), ''));
     }
 }

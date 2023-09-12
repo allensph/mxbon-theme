@@ -2,13 +2,8 @@
 
 namespace Nextend\SmartSlider3\Platform\WordPress\Integration\ThemifyBuilder;
 
-use Themify_Builder_Model;
-use Nextend\SmartSlider3\Application\Admin\ApplicationTypeAdmin;
 use Nextend\SmartSlider3\Platform\WordPress\Shortcode\Shortcode;
-use Nextend\SmartSlider3\Platform\WordPress\HelperTinyMCE;
-use Nextend\Framework\Url\Url;
-use Nextend\Framework\Settings;
-use Nextend\SmartSlider3\SmartSlider3Info;
+use Themify_Builder_Model;
 
 class ThemifyBuilder {
 
@@ -22,22 +17,6 @@ class ThemifyBuilder {
 
     //WORKING
     public function init() {
-        if (class_exists('Themify_Builder_Model', false)) {
-            /**
-             * Themify Builder loads the editor with AJAX. The slider will be in an iframe, but our Widget controls are outside of the iframe.
-             * Our scripts and styles won't be called in on the editor page, so we need to call them in manually.
-             */
-            if (current_user_can('manage_options') && current_user_can('smartslider_edit')) {
-                add_action('wp_ajax_module_widget_get_form', function () {
-                    if (isset($_POST['tb_load_nonce'])) {
-                        //Remove "Select slider" button as it can not trigger the slider selecting in the iframed editor of Themify Builder.
-                        add_filter('smartslider3_display_widget_button', function () {
-                            return false;
-                        });
-                    }
-                }, 9);
-            }
-        };
 
         /**
          * Fix for slider shortcode appearance in Themmify Builder frontend editor

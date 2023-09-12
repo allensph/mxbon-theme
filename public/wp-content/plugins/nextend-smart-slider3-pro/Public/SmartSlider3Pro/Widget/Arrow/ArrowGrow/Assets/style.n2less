@@ -10,6 +10,7 @@
 
     display: grid;
     grid-template-columns: 48px auto;
+    justify-content: flex-start;
   }
 
   .nextend-arrow-grow:HOVER,

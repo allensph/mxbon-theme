@@ -26,7 +26,7 @@ class FlickrGalleries extends Select {
             $galleries = $result['galleries']['gallery'];
 
             if (count($galleries)) {
-                foreach ($galleries AS $gallery) {
+                foreach ($galleries as $gallery) {
                     $this->options[$gallery['id']] = $gallery['title']['_content'];
                 }
                 if ($this->getValue() == '') {

@@ -1,5 +1,5 @@
 (~'div#@{sliderid}') {
-  .nextend-bar-vertical{
+  .nextend-bar-vertical {
     z-index: 10;
   }
 

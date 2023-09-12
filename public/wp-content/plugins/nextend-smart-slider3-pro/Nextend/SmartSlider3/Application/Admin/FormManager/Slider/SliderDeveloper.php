@@ -9,6 +9,7 @@ use Nextend\Framework\Form\Element\Message\Warning;
 use Nextend\Framework\Form\Element\OnOff;
 use Nextend\Framework\Form\Element\Select;
 use Nextend\Framework\Form\Element\Text;
+use Nextend\Framework\Form\Element\Text\Number;
 use Nextend\Framework\Form\Element\Textarea;
 use Nextend\Framework\Form\FormTabbed;
 
@@ -46,6 +47,7 @@ class SliderDeveloper extends AbstractSliderTab {
         $row1 = $table->createRow('developer-1');
         new OnOff($row1, 'blockrightclick', n2_('Block right click'), 0);
     
+
         /**
          * Used for field removal: /developer/developer/developer-1/controlsBlockCarouselInteraction
          */
@@ -54,7 +56,6 @@ class SliderDeveloper extends AbstractSliderTab {
             'tipDescription' => n2_('Stops the carousel at the last slide when the source of interaction is vertical touch, vertical pointer, mouse wheel or vertical keyboard.'),
             'tipLink'        => 'https://smartslider.helpscoutdocs.com/article/1806-slider-settings-developer#block-carousel'
         ));
-    
 
         new OnOff($row1, 'clear-both', n2_('Clear before'), 1, array(
             'tipLabel'       => n2_('Clear before'),
@@ -98,10 +99,20 @@ class SliderDeveloper extends AbstractSliderTab {
         $row21 = $table->createRow('developer-21');
 
         new OnOff($row21, 'is-delayed', n2_('Delayed (for lightbox/tabs)'), 0, array(
-            'tipLabel'        => n2_('Delayed (for lightbox/tabs)'),
-            'tipDescription'  => n2_('Delays the loading of the slider until its container gets visible. Useful when you display the slider in a lightbox or tab.'),
-            'tipLink'         => 'https://smartslider.helpscoutdocs.com/article/1801-slider-settings-optimize#delayed-for-lightboxtabs'
+            'tipLabel'       => n2_('Delayed (for lightbox/tabs)'),
+            'tipDescription' => n2_('Delays the loading of the slider until its container gets visible. Useful when you display the slider in a lightbox or tab.'),
+            'tipLink'        => 'https://smartslider.helpscoutdocs.com/article/1801-slider-settings-optimize#delayed-for-lightboxtabs'
         ));
+
+        $row211 = $table->createRow('developer-211');
+
+        new OnOff($row211, 'legacy-font-scale', n2_('Legacy font scale'), 0, array(
+            'relatedFieldsOn' => array(
+                'sliderlegacy-font-scale-notice'
+            )
+        ));
+        new Warning($row211, 'legacy-font-scale-notice', n2_('This feature brings back the non-adaptive font size for absolute layers which were made before version 3.5. Turning on can affect website performance, so we suggest to keep it disabled.
+'));
 
         $row22 = $table->createRow('developer-22');
 
@@ -113,14 +124,18 @@ class SliderDeveloper extends AbstractSliderTab {
 
         $row3 = $table->createRow('developer-3');
         new Textarea($row3, 'custom-css-codes', 'CSS', '', array(
-            'height' => 26,
-            'resize' => 'both'
+            'height' => 26
         ));
-
         $row4 = $table->createRow('developer-4');
         new Textarea($row4, 'callbacks', n2_('JavaScript callbacks'), '', array(
-            'height' => 26,
-            'resize' => 'both'
+            'height' => 26
+        ));
+    
+
+        $row11 = $table->createRow('developer-11');
+        new Number($row11, 'loading-time', n2_('Loading animation waiting time'), 2000, array(
+            'wide' => 5,
+            'unit' => 'ms',
         ));
         $row10 = $table->createRow('developer-10');
         new Textarea($row10, 'related-posts', n2_('Post IDs') . ' (' . n2_('one per line') . ')', '', array(
@@ -129,6 +144,13 @@ class SliderDeveloper extends AbstractSliderTab {
             'tipLink'        => 'https://smartslider.helpscoutdocs.com/article/1806-slider-settings-developer#post-ids-one-per-line',
             'height'         => 26
         ));
+        $row11 = $table->createRow('developer-11');
+        new Text($row11, 'fallback-slider', n2_('Fallback slider') . ' (' . n2_('ID or Alias') . ')', '', array(
+            'tipLabel'       => n2_('Fallback slider') . ' (' . n2_('ID or Alias') . ')',
+            'tipDescription' => n2_('Select another slider by its ID or Alias that displays if your current slider has no published slides.'),
+            'tipLink'        => 'https://smartslider.helpscoutdocs.com/article/1806-slider-settings-developer#fallbackslider',
+        ));
     
+
     }
 }

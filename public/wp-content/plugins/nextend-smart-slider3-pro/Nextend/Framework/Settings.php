@@ -21,7 +21,7 @@ class Settings {
             'frontend-accessibility' => 1,
             'curl'                   => 1,
             'curl-clean-proxy'       => 0,
-            'async-non-primary-css'     => 0,
+            'async-non-primary-css'  => 0,
             'icon-fa'                => 1,
             'header-preload'         => 0
         );

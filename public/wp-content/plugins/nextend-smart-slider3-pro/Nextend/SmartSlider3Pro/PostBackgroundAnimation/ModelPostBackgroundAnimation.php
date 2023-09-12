@@ -36,7 +36,7 @@ class ModelPostBackgroundAnimation extends ModelVisual {
         $setsTab = new FieldsetVisualSet($form->getContainer(), 'postbackgroundanimation-sets', n2_('Animation type'));
         new Select($setsTab, 'sets', false);
 
-        echo $form->render();
+        $form->render();
     }
 
     public function renderForm() {

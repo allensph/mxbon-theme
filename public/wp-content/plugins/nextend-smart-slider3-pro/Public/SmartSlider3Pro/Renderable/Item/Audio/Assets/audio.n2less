@@ -6,6 +6,30 @@
     height: 32px;
     flex-wrap: wrap;
     justify-content: center;
+
+
+    &.n2-ss-item-audio-bar--medium {
+      height: 48px;
+
+      & .n2-ss-item-audio-play,
+      & .n2-ss-item-audio-pause,
+      & .n2-ss-item-audio-mute,
+      & .n2-ss-item-audio-unmute {
+        width: 48px;
+      }
+    }
+
+    &.n2-ss-item-audio-bar--large {
+      height: 64px;
+
+      & .n2-ss-item-audio-play,
+      & .n2-ss-item-audio-pause,
+      & .n2-ss-item-audio-mute,
+      & .n2-ss-item-audio-unmute {
+        width: 64px;
+      }
+    }
+
   }
 
   .n2-ss-item-audio-bar audio {
@@ -19,6 +43,7 @@
   .n2-ss-item-audio-bar .n2-ss-item-audio-play {
     width: 32px;
     cursor: pointer;
+
   }
 
   .n2-ss-item-audio-bar[data-state="playing"] .n2-ss-item-audio-play {

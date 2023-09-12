@@ -82,7 +82,7 @@ class JsonInput extends AbstractGenerator {
 
     protected function removeLevel($array) {
         $result = array();
-        foreach ($array AS $key => $value) {
+        foreach ($array as $key => $value) {
             if (is_array($value)) {
                 $result = array_merge($result, $value);
             }
@@ -106,9 +106,9 @@ class JsonInput extends AbstractGenerator {
         $json = json_decode($source, true);
         if (!is_array($json) || $json == array('0' => false)) {
             if ($xmlData) {
-                Notification::error(sprintf(n2_('The given text is not valid XML! %1$sValidate your code%2$s to make sure it is correct.'),'<a href="https://www.xmlvalidation.com/" target="_blank">','</a>'));
+                Notification::error(sprintf(n2_('The given text is not valid XML! %1$sValidate your code%2$s to make sure it is correct.'), '<a href="https://www.xmlvalidation.com/" target="_blank">', '</a>'));
             } else {
-                Notification::error(sprintf(n2_('The given text is not valid JSON! %1$sValidate your code%2$s to make sure it is correct.'),'<a href="https://jsonlint.com/" target="_blank">','</a>'));
+                Notification::error(sprintf(n2_('The given text is not valid JSON! %1$sValidate your code%2$s to make sure it is correct.'), '<a href="https://jsonlint.com/" target="_blank">', '</a>'));
             }
 
             return null;
@@ -126,7 +126,7 @@ class JsonInput extends AbstractGenerator {
                 $data[] = $this->flatten_array($json);
                 break;
             case 2:
-                foreach ($json AS $key => $json_row) {
+                foreach ($json as $key => $json_row) {
                     if (is_array($json_row)) {
                         $data[] = $this->flatten_array($json_row, '', $key);
                     }
@@ -137,7 +137,7 @@ class JsonInput extends AbstractGenerator {
                 if (is_array($array_values)) {
                     $array_shift = array_shift($array_values);
                     if (is_array($array_shift) && !empty($array_shift)) {
-                        foreach ($array_shift AS $key => $json_row) {
+                        foreach ($array_shift as $key => $json_row) {
                             if (is_array($json_row)) {
                                 $data[] = $this->flatten_array($json_row, '', $key);
                             }

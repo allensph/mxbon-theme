@@ -2,6 +2,7 @@
 
 namespace Nextend\SmartSlider3Pro\Generator\Common\YouTube;
 
+use Exception;
 use Nextend\Framework\Data\Data;
 use Nextend\Framework\Form\Container\ContainerTable;
 use Nextend\Framework\Form\Element\Message\Notice;
@@ -55,7 +56,7 @@ class ConfigurationYoutube extends AbstractGeneratorGroupConfiguration {
             }
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
@@ -96,7 +97,7 @@ class ConfigurationYoutube extends AbstractGeneratorGroupConfiguration {
                             if (!is_array($oldAccessToken)) {
                                 $oldAccessToken = array();
                             }
-                        } catch (\Exception $e) {
+                        } catch (Exception $e) {
                             $oldAccessToken = array();
                         }
 
@@ -105,7 +106,7 @@ class ConfigurationYoutube extends AbstractGeneratorGroupConfiguration {
                     }
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Notification::error($e->getMessage());
         }
 
@@ -145,11 +146,11 @@ class ConfigurationYoutube extends AbstractGeneratorGroupConfiguration {
         new Notice($settings, 'callback', n2_('Callback url'), $this->getCallbackUrl($MVCHelper->getRouter()));
         new Token($settings);
 
-        echo $form->render();
+        $form->render();
 
         try {
             $this->getApi();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Notification::error($e->getMessage());
         }
     }
@@ -177,7 +178,7 @@ class ConfigurationYoutube extends AbstractGeneratorGroupConfiguration {
         unset($_SESSION['data']);
         try {
             $client = $this->getApi();
-            $client->authenticate($_GET['code']);
+            $client->authenticate(Request::$GET->getVar('code'));
             $accessToken = $client->getAccessToken();
 
             if ($accessToken) {
@@ -188,7 +189,7 @@ class ConfigurationYoutube extends AbstractGeneratorGroupConfiguration {
                     if (!is_array($oldAccessToken)) {
                         $oldAccessToken = array();
                     }
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $oldAccessToken = array();
                 }
 
@@ -206,7 +207,7 @@ class ConfigurationYoutube extends AbstractGeneratorGroupConfiguration {
             }
 
             return false;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $e;
         }
     }
@@ -221,7 +222,7 @@ class ConfigurationYoutube extends AbstractGeneratorGroupConfiguration {
 
         $response = array();
         if (count($playLists)) {
-            foreach ($playLists AS $playlist) {
+            foreach ($playLists as $playlist) {
                 $response[$playlist['id']] = $playlist['snippet']['title'];
             }
         }

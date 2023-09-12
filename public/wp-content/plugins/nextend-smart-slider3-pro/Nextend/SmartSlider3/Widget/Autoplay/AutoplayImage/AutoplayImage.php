@@ -99,8 +99,6 @@ class AutoplayImage extends AbstractWidgetAutoplay {
             'unit' => 'px'
         ));
 
-    
-
         new WidgetPosition($row2, 'widget-autoplay-position', n2_('Position'));
 
     }

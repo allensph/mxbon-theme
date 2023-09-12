@@ -18,11 +18,12 @@ $externals = Settings::get('external-css-files');
 if (!empty($externals)) {
     $externals = explode("\n", $externals);
     foreach ($externals as $external) {
-        echo "<link rel='stylesheet' href='" . $external . "' type='text/css' media='all'>";
+        echo "<link rel='stylesheet' href='" . esc_url($external) . "' type='text/css' media='all'>";
     }
 }
 
-echo $slider;
+// PHPCS - Content already escaped
+echo $slider; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 
 $slidesData = $this->getSlidesData();
@@ -31,9 +32,9 @@ if (!empty($slidesData)) {
     if ($slideId > 0) {
         ?>
         <script>
-            n2ss.ready(<?php echo $this->getSliderID(); ?>, function (slider) {
+            n2ss.ready(<?php echo esc_html($this->getSliderID()); ?>, function (slider) {
                 slider.visible(function () {
-                    slider.slideToID(<?php echo key($slidesData); ?>);
+                    slider.slideToID(<?php echo esc_html($slideId); ?>);
                 });
             });
         </script>
@@ -70,12 +71,13 @@ if (!empty($slidesData)) {
             }
 
             function syncDeviceDetailsSlider(slider) {
-                var breakpoints = slider.responsive.parameters.breakpoints,
+                var isLandscape = window.matchMedia("(orientation: landscape)").matches,
+                    breakpoints = slider.responsive.parameters.breakpoints,
                     breakpoint, screenWidthLimit, maxWidth = -1, minWidth = 0, hadMinScreenWidth = false, i;
 
                 for (i = breakpoints.length - 1; i >= 0; i--) {
                     breakpoint = breakpoints[i];
-                    screenWidthLimit = slider.responsive.isLandscape ? breakpoint.landscapeWidth : breakpoint.portraitWidth;
+                    screenWidthLimit = isLandscape ? breakpoint.landscapeWidth : breakpoint.portraitWidth;
 
                     if (breakpoint.type === 'max-screen-width') {
                         minWidth = maxWidth + 1;
@@ -107,7 +109,7 @@ if (!empty($slidesData)) {
                             id: slider.id,
                             top: slider.sliderElement.getBoundingClientRect().top + document.documentElement.scrollTop,
                             device: slider.responsive.device,
-                            isLandscape: slider.responsive.isLandscape,
+                            isLandscape: isLandscape,
                             minScreenWidth: minWidth,
                             maxScreenWidth: maxWidth
                         }

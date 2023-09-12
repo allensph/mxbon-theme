@@ -31,7 +31,7 @@
   .nextend-thumbnail-button {
     position: absolute;
     display: grid;
-    place-items: center;
+    place-content: center;
 
     transition: all 0.4s;
 
@@ -49,9 +49,11 @@
 
   .n2-thumbnail-dot {
     position: relative;
+    cursor: pointer;
 
     img {
       object-fit: cover;
+      max-width: none !important;
     }
   }
 
@@ -64,7 +66,7 @@
     box-sizing: border-box;
 
     display: grid;
-    place-items: center;
+    place-content: center;
   }
 
   .n2-thumbnail-dot-type {
@@ -110,6 +112,7 @@
     .n2-thumbnail-dot {
       display: grid;
       grid-template-columns: auto 1fr;
+      overflow:hidden;
     }
 
     .nextend-thumbnail-button {
@@ -184,7 +187,6 @@
 
     .nextend-thumbnail-previous {
       left: 10px;
-      transform: rotateZ(-90deg);
     }
 
     &[data-has-previous="0"] .nextend-thumbnail-previous {
@@ -194,7 +196,6 @@
 
     .nextend-thumbnail-next {
       right: 10px;
-      transform: rotateZ(-90deg);
     }
 
     &[data-has-next="0"] .nextend-thumbnail-next {

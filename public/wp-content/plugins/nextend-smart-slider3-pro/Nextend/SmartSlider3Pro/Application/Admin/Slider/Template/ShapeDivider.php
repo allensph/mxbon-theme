@@ -6,7 +6,6 @@ use Nextend\Framework\Asset\Js\Js;
 use Nextend\Framework\Filesystem\Filesystem;
 use Nextend\Framework\Request\Request;
 use Nextend\Framework\ResourceTranslator\ResourceTranslator;
-use Nextend\Framework\Sanitize;
 
 /**
  * @var $this ViewSliderShapeDivider
@@ -15,8 +14,16 @@ use Nextend\Framework\Sanitize;
 JS::addGlobalInline('document.documentElement.classList.add("n2_html--application-only");');
 
 $postedSliderData                    = (array)Request::$POST->getVar('slider', false);
-$postedSliderData['desktop']         = 1; // Shape divider does not work if slider is not visible.
 $postedSliderData['playWhenVisible'] = 0;
+/**
+ * Shape divider admin editor does not work if slider is not visible.
+ */
+$postedSliderData['desktopportrait']  = 1;
+$postedSliderData['desktoplandscape'] = 1;
+$postedSliderData['tabletportrait']   = 1;
+$postedSliderData['tabletlandscape']  = 1;
+$postedSliderData['mobileportrait']   = 1;
+$postedSliderData['mobilelandscape']  = 1;
 
 $folder = ResourceTranslator::toPath('$ss3-pro-frontend$/shapedivider/');
 
@@ -48,13 +55,13 @@ $this->renderForm();
 
 <div class="n2_slider_preview_area" style="min-height:0;">
     <div class="n2_slider_preview_area__inner">
-        <form id="n2_shape_divider__frame_form" target="n2_shape_divider__frame" action="<?php echo $this->MVCHelper->createUrl(array(
+        <form id="n2_shape_divider__frame_form" target="n2_shape_divider__frame" action="<?php echo esc_url($this->MVCHelper->createUrl(array(
             'slider/shapedividerpreview',
             array(
                 'sliderid' => $this->getSliderID()
             )
-        ), true); ?>" method="post" style="display:none;">
-            <input type="hidden" name="sliderData" value="<?php echo Sanitize::esc_attr(json_encode($postedSliderData)); ?>">
+        ), true)); ?>" method="post" class="n2_form_element--hidden">
+            <input type="hidden" name="sliderData" value="<?php echo esc_attr(json_encode($postedSliderData)); ?>">
         </form>
         <iframe name="n2_shape_divider__frame" id="n2_shape_divider__frame" style="width:100%;height: calc(100vh - 100px);"></iframe>
     </div>

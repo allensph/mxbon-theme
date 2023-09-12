@@ -21,10 +21,10 @@ namespace Nextend\SmartSlider3\Application\Admin\Sliders\Pro;
     </div>
     <div class="n2_page_activate__buttons">
         <div class="n2_page_activate__button_dont_show">
-            <a href="<?php echo $this->getUrlDashboard(); ?>"><?php n2_e('Go to dashboard'); ?></a>
+            <a href="<?php echo esc_url($this->getUrlDashboard()); ?>"><?php n2_e('Go to dashboard'); ?></a>
         </div>
         <div class="n2_page_activate__button_dashboard">
-            <a href="<?php echo $this->getUrlDashboard(); ?>" onclick="_N2.License.get().startActivation().done((function(){window.location=this.getAttribute('href');}).bind(this));return false;"><?php n2_e('Activate'); ?></a>
+            <a href="<?php echo esc_url($this->getUrlDashboard()); ?>" onclick="_N2.License.get().startActivation().done((function(){window.location=this.getAttribute('href');}).bind(this));return false;"><?php n2_e('Activate'); ?></a>
         </div>
     </div>
 </div>

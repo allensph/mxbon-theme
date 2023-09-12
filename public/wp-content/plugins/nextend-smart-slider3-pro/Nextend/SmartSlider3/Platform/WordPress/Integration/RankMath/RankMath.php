@@ -35,9 +35,9 @@ class RankMath {
 
     public function admin_enqueue_scripts($hook_suffix) {
         if (in_array($hook_suffix, array(
-            'post.php',
-            'post-new.php'
-        ), true)) {
+                'post.php',
+                'post-new.php'
+            ), true) && wp_script_is('rank-math-analyzer')) {
 
             $router = ApplicationSmartSlider3::getInstance()
                                              ->getApplicationTypeAdmin()

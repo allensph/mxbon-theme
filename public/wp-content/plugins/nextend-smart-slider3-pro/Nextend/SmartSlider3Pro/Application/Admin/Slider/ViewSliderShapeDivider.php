@@ -215,6 +215,6 @@ class ViewSliderShapeDivider extends AbstractView {
         ));
 
 
-        echo $form->render();
+        $form->render();
     }
 }

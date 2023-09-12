@@ -5,6 +5,7 @@ namespace Nextend\SmartSlider3Pro\Renderable\Item\HtmlList;
 
 
 use Nextend\Framework\View\Html;
+use Nextend\Framework\Sanitize;
 use Nextend\SmartSlider3\Renderable\Item\AbstractItemFrontend;
 
 class ItemHtmlListFrontend extends AbstractItemFrontend {
@@ -27,8 +28,8 @@ class ItemHtmlListFrontend extends AbstractItemFrontend {
 
 
         $html = '';
-        $lis  = explode("\n", $owner->fill($this->data->get('content', '')));
-        foreach ($lis AS $li) {
+        $lis  = explode("\n", Sanitize::filter_allowed_html($owner->fill($this->data->get('content', ''))));
+        foreach ($lis as $li) {
             $html .= '<li class="' . $itemStyle . ' n2-ow" style="list-style-type:inherit;">' . $li . '</li>';
         }
 

@@ -52,13 +52,13 @@ class Tab extends AbstractFieldHidden {
 
     public function renderOptions() {
         $html = '';
-        foreach ($this->options AS $option => $label) {
+        foreach ($this->options as $option => $label) {
             $class = 'n2_field_tab__option';
             if ($option == $this->defaultValue) {
                 $class .= ' n2_field_tab__option--selected';
             }
             $html .= Html::openTag("div", array(
-                "class"       => $class,
+                "class"         => $class,
                 "data-ssoption" => $option
             ));
             $html .= $label;

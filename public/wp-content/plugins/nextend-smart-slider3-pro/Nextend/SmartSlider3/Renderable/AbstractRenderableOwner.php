@@ -101,4 +101,6 @@ abstract class AbstractRenderableOwner {
     public abstract function addImage($imageUrl);
 
     public abstract function isAdmin();
+
+    public abstract function getAvailableDevices();
 }

@@ -4,6 +4,8 @@
 namespace Nextend\SmartSlider3\Slider\WordPress;
 
 
+use Automattic\Jetpack\Image_CDN\Image_CDN;
+use Automattic\Jetpack\Image_CDN\Image_CDN_Core;
 use Nextend\SmartSlider3\Slider\Base\PlatformSliderBase;
 
 class PlatformSlider extends PlatformSliderBase {
@@ -18,8 +20,8 @@ class PlatformSlider extends PlatformSliderBase {
     private function applyFilters($text) {
         $text = apply_filters('translate_text', $text);
 
-        if (function_exists('jetpack_photon_url')) {
-            $text = \Jetpack_Photon::filter_the_content(preg_replace_callback('/data-(desktop|tablet|mobile)="(.*?)"/', array(
+        if (method_exists('Image_CDN_Core', 'cdn_url')) {
+            $text = Image_CDN::filter_the_content(preg_replace_callback('/data-(desktop|tablet|mobile)="(.*?)"/', array(
                 $this,
                 'deviceImageReplaceCallback'
             ), $text));
@@ -34,7 +36,7 @@ class PlatformSlider extends PlatformSliderBase {
             return $matches[0];
         }
 
-        return 'data-' . $matches[1] . '="' . jetpack_photon_url($matches[2]) . '"';
+        return 'data-' . $matches[1] . '="' . Image_CDN_Core::cdn_url($matches[2]) . '"';
     }
 
 }

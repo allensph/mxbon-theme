@@ -49,14 +49,7 @@ class ComponentContent extends AbstractComponent {
         $this->attributes['style'] = '';
 
 
-        $devices = array(
-            'desktopportrait',
-            'desktoplandscape',
-            'tabletportrait',
-            'tabletlandscape',
-            'mobileportrait',
-            'mobilelandscape'
-        );
+        $devices = $this->owner->getAvailableDevices();
 
         $desktopPortraitSelfAlign = $this->data->get('desktopportraitselfalign', 'inherit');
 
@@ -65,7 +58,9 @@ class ComponentContent extends AbstractComponent {
         foreach ($devices as $device) {
             $padding = $this->data->get($device . 'padding');
             if (!empty($padding)) {
-                $this->style->add($device, '-inner', 'padding:' . $this->spacingToCSS($padding));
+                $paddingValues = $this->spacingToPxValue($padding);
+
+                $this->style->add($device, '-inner', 'padding:' . implode('px ', $paddingValues) . 'px');
             }
 
             $maxWidth = intval($this->data->get($device . 'maxwidth', 0));
@@ -73,8 +68,7 @@ class ComponentContent extends AbstractComponent {
                 $this->style->add($device, '', 'max-width: ' . $maxWidth . 'px');
             }
 
-
-            $innerAlign = $this->data->get($device . 'inneralign', 'inherit');
+            $innerAlign = $this->data->get($device . 'inneralign', '');
 
             if ($device == 'desktopportrait') {
                 if ($desktopportraitInnerAlign != 'inherit') {
@@ -85,10 +79,12 @@ class ComponentContent extends AbstractComponent {
             }
 
 
-            $selfAlign = $this->data->get($device . 'selfalign', 'inherit');
+            $selfAlign = $this->data->get($device . 'selfalign', '');
 
             if ($device == 'desktopportrait') {
-                $this->style->add($device, '', AbstractComponent::selfAlignToStyle($selfAlign));
+                if ($desktopPortraitSelfAlign != 'inherit') {
+                    $this->style->add($device, '', AbstractComponent::selfAlignToStyle($selfAlign));
+                }
             } else if ($desktopPortraitSelfAlign != $selfAlign) {
                 $this->style->add($device, '', AbstractComponent::selfAlignToStyle($selfAlign));
             }
@@ -107,21 +103,6 @@ class ComponentContent extends AbstractComponent {
     }
 
     protected function upgradeData() {
-
-        $devices = array(
-            'desktopportrait',
-            'desktoplandscape',
-            'tabletportrait',
-            'tabletlandscape',
-            'mobileportrait',
-            'mobilelandscape'
-        );
-        foreach ($devices as $device) {
-            $padding = $this->data->get($device . 'padding', null);
-            if ($padding !== null) {
-                $this->data->set($device . 'padding', str_replace('px+', 'px', $padding));
-            }
-        }
 
         if ($this->data->has('verticalalign')) {
             /**
@@ -169,7 +150,7 @@ class ComponentContent extends AbstractComponent {
         $this->createDeviceProperty('inneralign', 'inherit');
         $this->createDeviceProperty('selfalign', 'center');
         $this->createDeviceProperty('maxwidth', '0');
-        $this->createDeviceProperty('padding', '10|*|10|*|10|*|10|*|px');
+        $this->createDeviceProperty('padding', '10|*|10|*|10|*|10');
 
         $this->createProperty('bgimage', '');
         $this->createProperty('bgimagex', 50);

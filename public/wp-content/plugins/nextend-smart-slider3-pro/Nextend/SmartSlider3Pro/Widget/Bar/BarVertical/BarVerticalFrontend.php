@@ -68,10 +68,10 @@ class BarVerticalFrontend extends AbstractWidgetFrontend {
         $slider->features->addInitCallback('new _N2.SmartSliderWidgetBarVertical(this, ' . json_encode($parameters) . ');');
         $slider->sliderType->addJSDependency('SmartSliderWidgetBarVertical');
 
-        return Html::tag("div", Html::mergeAttributes($attributes, $displayAttributes, $attributes + array(
-                "class" => "nextend-bar nextend-bar-vertical n2-ow-all",
-                "style" => $style
-            )), Html::tag("div", array(
+        return Html::tag("div", Html::mergeAttributes($attributes, $displayAttributes, array(
+            "class" => "nextend-bar nextend-bar-vertical n2-ss-widget-hidden n2-ow-all",
+            "style" => $style
+        )), Html::tag("div", array(
             "class" => $styleClass
         ), Html::tag("div", array(), '')));
     }

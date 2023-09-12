@@ -4,7 +4,6 @@ namespace Nextend\SmartSlider3\Renderable;
 
 use Nextend\Framework\Font\FontParser;
 use Nextend\Framework\Font\FontRenderer;
-use Nextend\Framework\Platform\Platform;
 use Nextend\Framework\Style\StyleParser;
 use Nextend\Framework\Style\StyleRenderer;
 use Nextend\SmartSlider3\Slider\FeatureManager;
@@ -58,9 +57,6 @@ abstract class AbstractRenderable {
     }
 
     public function getSelector() {
-        if (Platform::needStrongerCSS()) {
-            return 'div#' . $this->elementId . '.n2-ss-slider ';
-        }
 
         return 'div#' . $this->elementId . ' ';
     }

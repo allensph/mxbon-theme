@@ -6,7 +6,6 @@ namespace Nextend\Framework\Form\Element\Text;
 
 use Nextend\Framework\Asset\Js\Js;
 use Nextend\Framework\Form\Element\AbstractChooserText;
-use Nextend\Framework\Localization\Localization;
 use Nextend\Framework\Pattern\MVCHelperTrait;
 use Nextend\Framework\Platform\Platform;
 

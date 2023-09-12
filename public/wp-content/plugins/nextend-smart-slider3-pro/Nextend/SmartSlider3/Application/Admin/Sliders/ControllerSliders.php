@@ -4,7 +4,6 @@
 namespace Nextend\SmartSlider3\Application\Admin\Sliders;
 
 
-use Nextend\Framework\Localization\Localization;
 use Nextend\Framework\Misc\Zip\Creator;
 use Nextend\Framework\Model\StorageSectionManager;
 use Nextend\Framework\PageFlow;
@@ -47,10 +46,10 @@ class ControllerSliders extends AbstractControllerAdmin {
     }
 
     protected function actionIndex() {
-
         $this->loadSliderManager();
 
         $view = new ViewSlidersIndex($this);
+        $view->setPaginationIndex(max(0, intval(Request::$REQUEST->getInt('pageIndex', 0)) - 1));   /*-1 needs because beautified query string*/
 
         $view->display();
     }
@@ -62,40 +61,20 @@ class ControllerSliders extends AbstractControllerAdmin {
         $view->display();
     }
 
-    protected function actionOrderBy() {
-        $ordering = Request::$REQUEST->getCmd('ordering', null);
-        if ($ordering == 'DESC' || $ordering == 'ASC') {
-            Settings::set('slidersOrder2', 'ordering');
-            Settings::set('slidersOrder2Direction', 'ASC');
-        }
-
-        $time = Request::$REQUEST->getCmd('time', null);
-        if ($time == 'DESC' || $time == 'ASC') {
-            Settings::set('slidersOrder2', 'time');
-            Settings::set('slidersOrder2Direction', $time);
-        }
-        $title = Request::$REQUEST->getCmd('title', null);
-        if ($title == 'DESC' || $title == 'ASC') {
-            Settings::set('slidersOrder2', 'title');
-            Settings::set('slidersOrder2Direction', $title);
-        }
-
-        $this->redirectToSliders();
-    }
-
     protected function actionExportAll() {
         $slidersModel = new ModelSliders($this);
-        $sliders      = $slidersModel->getAll(Request::$REQUEST->getInt('currentGroupID', 0), 'published');
+        $groupID      = (Request::$REQUEST->getVar('inSearch', false)) ? '*' : Request::$REQUEST->getInt('currentGroupID', 0);
+        $sliders      = $slidersModel->getAll($groupID, 'published');
+        $ids          = Request::$REQUEST->getVar('sliders');
 
-        $ids = Request::$REQUEST->getVar('sliders');
-
-        $files = array();
+        $files      = array();
+        $saveAsFile = count($ids) == 1 ? false : true;
         foreach ($sliders as $slider) {
             if (!empty($ids) && !in_array($slider['id'], $ids)) {
                 continue;
             }
             $export  = new ExportSlider($this, $slider['id']);
-            $files[] = $export->create(true);
+            $files[] = $export->create($saveAsFile);
         }
 
         $zip = new Creator();
@@ -106,7 +85,8 @@ class ControllerSliders extends AbstractControllerAdmin {
         PageFlow::cleanOutputBuffers();
         header('Content-disposition: attachment; filename=sliders_unzip_to_import.zip');
         header('Content-type: application/zip');
-        echo $zip->file();
+        // PHPCS - Contains binary zip data, so nothing to escape.
+        echo $zip->file(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         PageFlow::exitApplication();
     
     }

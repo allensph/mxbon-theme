@@ -30,7 +30,7 @@ class TheEventsCalendarVenues extends Select {
 
         $this->options['0'] = n2_('All');
         if (count($venues)) {
-            foreach ($venues AS $option) {
+            foreach ($venues as $option) {
                 $this->options[$option->ID] = ' - ' . $option->post_title;
             }
         }

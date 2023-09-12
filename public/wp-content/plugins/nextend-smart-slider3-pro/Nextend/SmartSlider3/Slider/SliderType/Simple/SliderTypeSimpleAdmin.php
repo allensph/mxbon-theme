@@ -97,11 +97,14 @@ class SliderTypeSimpleAdmin extends AbstractSliderTypeAdmin {
         new Easing($rowMainAnimation, 'animation-easing', n2_('Easing'), 'easeOutQuad');
 
         new OnOff($rowMainAnimation, 'carousel', n2_x('Carousel', 'Feature'), 1, array(
-            'tipLabel'        => n2_x('Carousel', 'Feature'),
-            'tipDescription'  => n2_('If you turn off this option, you can\'t switch to the first slide from the last one.'),
-            'tipLink'         => 'https://smartslider.helpscoutdocs.com/article/1780-simple-slider-type#carousel',
-            'relatedFieldsOn' => array(
+            'tipLabel'         => n2_x('Carousel', 'Feature'),
+            'tipDescription'   => n2_('If you turn off this option, you can\'t switch to the first slide from the last one.'),
+            'tipLink'          => 'https://smartslider.helpscoutdocs.com/article/1780-simple-slider-type#carousel',
+            'relatedFieldsOn'  => array(
                 'slidercontrolsBlockCarouselInteraction'
+            ),
+            'relatedFieldsOff' => array(
+                'sliderdisabled-carousel-notice'
             )
         ));
     
@@ -111,10 +114,13 @@ class SliderTypeSimpleAdmin extends AbstractSliderTypeAdmin {
         $rowBackgroundAnimation = new FieldsetRow($tableBackground, 'slider-type-simple-background-animation');
 
         new BackgroundAnimation($rowBackgroundAnimation, 'background-animation', n2_('Background animation'), '', array(
-            'relatedFields' => array(
+            'relatedFields'  => array(
                 'sliderbackground-animation-speed',
                 'slideranimation-shifted-background-animation'
-            )
+            ),
+            'tipLabel'       => n2_('Background animation'),
+            'tipDescription' => n2_('Background animations only work on the slide background images, which have Fill selected at their Fill mode. They don\'t affect any images if the background parallax is enabled.'),
+            'tipLink'        => 'https://smartslider.helpscoutdocs.com/article/1780-simple-slider-type#background-animation',
         ));
         new Hidden($rowBackgroundAnimation, 'background-animation-color', '333333ff');
 
@@ -171,12 +177,6 @@ class SliderTypeSimpleAdmin extends AbstractSliderTypeAdmin {
         ));
 
     
-
-        new OnOff(new InsertAfter($form->getElement('/autoplay/autoplay/row-finish/autoplayfinish')), 'loop-single-slide', n2_('Loop single slide'), 0, array(
-            'tipLabel'       => n2_('Loop single slide'),
-            'tipDescription' => n2_('In case of one slide, it repeats the animation of the slide.'),
-            'tipLink'        => 'https://smartslider.helpscoutdocs.com/article/1780-simple-slider-type#loop-single-slide'
-        ));
 
         $margin = new MarginPadding(new InsertAfter($form->getElement('/general/design/design-1/margin')), 'padding', n2_('Padding'), '0|*|0|*|0|*|0', array(
             'unit' => 'px'
@@ -243,15 +243,13 @@ class SliderTypeSimpleAdmin extends AbstractSliderTypeAdmin {
         ));
 
         new Textarea($rowSliderCSS, 'slider-css', n2_('Slider') . ' CSS', '', array(
-            'height' => 26,
-            'resize' => 'both'
+            'height' => 26
         ));
 
         $rowSlideCSS = new FieldsetRow(new InsertAfter($form->getElement('/slides/slides-design/slides-design-1')), 'slider-type-simple-settings-slidecss');
 
         new Textarea($rowSlideCSS, 'slide-css', n2_('Slide') . ' CSS', '', array(
-            'height' => 26,
-            'resize' => 'both'
+            'height' => 26
         ));
     }
 

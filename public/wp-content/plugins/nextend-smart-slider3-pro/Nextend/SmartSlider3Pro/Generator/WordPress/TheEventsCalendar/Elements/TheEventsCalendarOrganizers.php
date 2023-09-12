@@ -31,7 +31,7 @@ class TheEventsCalendarOrganizers extends Select {
         $this->options['0'] = n2_('All');
 
         if (count($organizers)) {
-            foreach ($organizers AS $option) {
+            foreach ($organizers as $option) {
                 $this->options[$option->ID] = $option->post_title;
             }
         }

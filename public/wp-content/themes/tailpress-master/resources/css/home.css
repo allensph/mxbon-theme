@@ -78,6 +78,23 @@ section {
     }
 }
 
+section.page-banner {
+    .n2-ss-slider .mxbon-gradient-modify > .n2-ss-layer-with-background {
+        --customgradient: linear-gradient(to right, RGBA(20,27,53,0) 50%,RGBA(20,27,53,0.5) 100%);
+        background-image: var(--customgradient),var(--n2bgimage);
+    }
+    .n2-ss-slider-wrapper-inside .n2-ss-slider-controls {
+        @apply gap-x-4 pr-4 pb-16 lg:pr-24 lg:pb-[84px] flex-row justify-end;
+    }
+    /*
+    div#n2-ss-4 .mxbon-slide-subtitle {
+        @apply absolute top-0 right-0 translate-y-[30%] -mt-[5vh] 3xl:-mt-[7vh];
+        .n2-ss-item-content {
+            @apply p-4 pt-14 pl-[12.5vw] 3xl:p-10 3xl:pt-[calc((100vh-90px)*116/848)] 3xl:pl-[12.5vw];
+        }
+    }
+    */
+}
 section.products {
     @apply pt-20 pb-10;
     .section-title {

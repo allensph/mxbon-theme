@@ -35,10 +35,7 @@ class TextText extends AbstractGenerator {
     protected function _getData($count, $startIndex) {
         $delimiter = $this->data->get('delimiter', ',');
         $source    = $this->data->get('sourcefile', '');
-
-        $content = HttpClient::get($source, array(
-            'error' => false
-        ));
+        $content   = HttpClient::get($source);
 
         if (!$content) {
             Notification::error('The file on the given url is either empty or it cannot be accessed.');
@@ -54,7 +51,7 @@ class TextText extends AbstractGenerator {
                 if ($startIndex <= $i) {
                     $parts = explode($delimiter, $lines[$i]);
                     $j     = 1;
-                    foreach ($parts AS $part) {
+                    foreach ($parts as $part) {
                         $data[$k]['variable' . $j] = $part;
                         $j++;
                     }

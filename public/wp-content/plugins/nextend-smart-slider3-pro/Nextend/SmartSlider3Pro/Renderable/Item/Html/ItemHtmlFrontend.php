@@ -37,11 +37,11 @@ class ItemHtmlFrontend extends AbstractItemFrontend {
             'class' => 'n2-ss-item-content n2-ow'
         ), $html);
 
-        if (class_exists('tidy', false)) {
+        if (class_exists('tidy', false) && $this->data->get('tidy', 1)) {
             $tidy_config = array(
                 'show-body-only'      => true,
                 'wrap'                => 0,
-                'new-blocklevel-tags' => 'menu,mytag,article,header,footer,section,nav,svg,path,g,a',
+                'new-blocklevel-tags' => 'menu,mytag,article,header,footer,section,nav,svg,path,g,a,lottie-player',
                 'new-inline-tags'     => 'video,audio,canvas,ruby,rt,rp',
                 'doctype'             => '<!DOCTYPE HTML>',
                 'preserve-entities'   => true,

@@ -87,8 +87,7 @@ class SliderTypeBlockAdmin extends AbstractSliderTypeAdmin {
 
         $rowOther = new FieldsetRow($rowGroup, 'slider-type-block-other');
         new Textarea($rowOther, 'slider-css', n2_('Slider') . ' CSS', '', array(
-            'height' => 26,
-            'resize' => 'both'
+            'height' => 26
         ));
     
 
@@ -107,15 +106,15 @@ class SliderTypeBlockAdmin extends AbstractSliderTypeAdmin {
              ->remove();
         $form->getElement('/controls/widget-thumbnail')
              ->remove();
-        $form->getElement('/animations/layer-animations/layer-animations/playonce')
+        $form->getElement('/developer/developer/developer-1/controlsBlockCarouselInteraction')
+             ->remove();
+        $form->getElement('/animations/layer-animations')
              ->remove();
         $form->getElement('/optimize/optimize-slide/optimize-slide-loading-mode')
              ->remove();
         $form->getElement('/slides/slides-randomize')
              ->remove();
         $form->getElement('/slides/other')
-             ->remove();
-        $form->getElement('/developer/developer/developer-1/controlsBlockCarouselInteraction')
              ->remove();
         $form->getElement('/controls/widget-fullscreen')
              ->remove();

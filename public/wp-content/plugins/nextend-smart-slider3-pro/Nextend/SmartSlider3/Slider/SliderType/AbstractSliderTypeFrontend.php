@@ -78,17 +78,23 @@ abstract class AbstractSliderTypeFrontend {
 
     protected function getSliderClasses() {
 
-        return $this->slider->getAlias() . ' ' . implode('', $this->classes);
+        return $this->slider->getAlias() . ' ' . implode(' ', $this->classes);
     }
 
     protected function openSliderElement() {
 
-        return Html::openTag('div', array(
+        $attributes = array(
             'id'              => $this->slider->elementId,
             'data-creator'    => 'Smart Slider 3',
             'data-responsive' => $this->slider->features->responsive->type,
             'class'           => 'n2-ss-slider n2-ow n2-has-hover n2notransition ' . $this->getSliderClasses(),
-        ));
+        );
+
+        if ($this->slider->isLegacyFontScale()) {
+            $attributes['data-ss-legacy-font-scale'] = 1;
+        }
+
+        return Html::openTag('div', $attributes);
     }
 
     protected function closeSliderElement() {
@@ -205,19 +211,20 @@ abstract class AbstractSliderTypeFrontend {
 
                 $animate = $data->get('animate') == '1';
 
-                $id = $this->slider->elementId . '-shape-divider-' . $side;
+                $id       = $this->slider->elementId . '-shape-divider-' . $side;
+                $selector = 'div#' . $id;
 
                 $height = max(0, $data->get('desktopportraitheight'));
 
                 if ($height > 0) {
-                    $this->slider->addDeviceCSS('all', 'div#' . $id . '{' . 'height:' . $height . 'px}');
+                    $this->slider->addDeviceCSS('all', $selector . '{' . 'height:' . $height . 'px}');
                 } else {
-                    $this->slider->addDeviceCSS('all', 'div#' . $id . '{' . 'display:none}');
+                    $this->slider->addDeviceCSS('all', $selector . '{' . 'display:none}');
                 }
 
                 $width = $data->get('desktopportraitwidth');
                 if ($width != 100) {
-                    $this->slider->addDeviceCSS('all', 'div#' . $id . ' .n2-ss-shape-divider-inner{' . 'width:' . $width . '%;margin: 0 ' . (($width - 100) / -2) . '%;}');
+                    $this->slider->addDeviceCSS('all', $selector . ' .n2-ss-shape-divider-inner{' . 'width:' . $width . '%;margin: 0 ' . (($width - 100) / -2) . '%;}');
 
                 }
 
@@ -230,23 +237,23 @@ abstract class AbstractSliderTypeFrontend {
 
                     if ($height != $deviceHeight) {
                         if ($height > 0) {
-                            $this->slider->addDeviceCSS($device, 'div#' . $id . '{' . 'height:' . $deviceHeight . 'px}');
+                            $this->slider->addDeviceCSS($device, $selector . '{' . 'height:' . $deviceHeight . 'px}');
                         } else {
-                            $this->slider->addDeviceCSS($device, 'div#' . $id . '{' . 'display:none}');
+                            $this->slider->addDeviceCSS($device, $selector . '{' . 'display:none}');
                         }
                     }
 
                     $deviceWidth = $data->get($device . 'width');
                     if ($width != $deviceWidth) {
-                        $this->slider->addDeviceCSS($device, 'div#' . $id . ' .n2-ss-shape-divider-inner{' . 'width:' . $deviceWidth . '%;margin: 0 ' . (($deviceWidth - 100) / -2) . '%;}');
+                        $this->slider->addDeviceCSS($device, $selector . ' .n2-ss-shape-divider-inner{' . 'width:' . $deviceWidth . '%;margin: 0 ' . (($deviceWidth - 100) / -2) . '%;}');
                     }
                 }
 
                 $scroll = $data->get('scroll', null);
 
                 $outer = array(
-                    'id'           => $id,
-                    'class'        => 'n2-ss-shape-divider n2-ss-shape-divider-' . $side,
+                    'id'                 => $id,
+                    'class'              => 'n2-ss-shape-divider n2-ss-shape-divider-' . $side,
                     'data-ss-sd-animate' => ($animate ? 1 : 0),
                     'data-ss-sd-scroll'  => $scroll,
                     'data-ss-sd-speed'   => $data->get('speed', 100),
@@ -295,13 +302,15 @@ abstract class AbstractSliderTypeFrontend {
                     }
                 }
 
-                echo Html::tag('div', $outer, Html::tag('div', $inner, str_replace(array(
+                $output = Html::tag('div', $outer, Html::tag('div', $inner, str_replace(array(
                     '#000000',
                     '#000010'
                 ), array(
                     Color::colorToRGBA($data->get('color')),
                     Color::colorToRGBA($data->get('color2'))
                 ), $svg)));
+                // PHPCS - Content already escaped
+                echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
                 if (!$this->shapeDividerAdded) {
 
@@ -344,12 +353,20 @@ abstract class AbstractSliderTypeFrontend {
     }
 
     public function displaySizeSVGs($css, $hasMaxWidth = false) {
+        if (!$this->slider->isAdmin && $this->slider->features->responsive->type == 'fullpage' && !intval($this->slider->params->get('responsiveConstrainRatio', 0))) {
+
+            /**
+             * Full page responsive type with constrain ratio off does not use the initial slider size to prevent too large heights.
+             */
+            return;
+        }
+    
 
         $attrs = array(
             'xmlns'               => "http://www.w3.org/2000/svg",
             'viewBox'             => '0 0 ' . $css->base['sliderWidth'] . ' ' . $css->base['sliderHeight'],
             'data-related-device' => "desktopPortrait",
-            'class'               => "n2-ow n2-ss-preserve-size n2-ss-slide-limiter"
+            'class'               => "n2-ow n2-ss-preserve-size n2-ss-preserve-size--slider n2-ss-slide-limiter"
         );
         if ($hasMaxWidth) {
             $attrs['style'] = 'max-width:' . $css->base['sliderWidth'] . 'px';
@@ -381,8 +398,8 @@ abstract class AbstractSliderTypeFrontend {
 
         }
 
-
-        echo implode('', $svgs);
+        // PHPCS - Content already escaped
+        echo implode('', $svgs);  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 
     protected function initSliderBackground($selector) {
@@ -395,7 +412,7 @@ abstract class AbstractSliderTypeFrontend {
         $sliderCSS2 = '';
 
         if (!empty($backgroundImage)) {
-            $sliderCSS2 .= 'background-image: URL(' . ResourceTranslator::toUrl($backgroundImage) . ');';
+            $sliderCSS2 .= 'background-image: url(' . ResourceTranslator::toUrl($backgroundImage) . ');';
         }
         if (!empty($backgroundColor)) {
             $rgba = Color::hex2rgba($backgroundColor);
@@ -424,19 +441,19 @@ abstract class AbstractSliderTypeFrontend {
                 if (isset($optimizedData['normal'])) {
                     $this->slider->addImage($optimizedData['normal']['src']);
 
-                    $this->slider->addCSS('.n2webp div#' . $this->slider->elementId . ' ' . $selector . '{background-image: URL(' . $optimizedData['normal']['src'] . ')}');
+                    $this->slider->addCSS('.n2webp div#' . $this->slider->elementId . ' ' . $selector . '{background-image: url(' . $optimizedData['normal']['src'] . ')}');
                 }
 
                 if (isset($optimizedData['medium'])) {
                     $this->slider->addImage($optimizedData['medium']['src']);
 
-                    $this->slider->addCSS('@media (max-width: ' . $optimizedData['medium']['width'] . 'px) {.n2webp div#' . $this->slider->elementId . ' ' . $selector . '{background-image: URL(' . $optimizedData['medium']['src'] . ')}}');
+                    $this->slider->addCSS('@media (max-width: ' . $optimizedData['medium']['width'] . 'px) {.n2webp div#' . $this->slider->elementId . ' ' . $selector . '{background-image: url(' . $optimizedData['medium']['src'] . ')}}');
                 }
 
                 if (isset($optimizedData['small'])) {
                     $this->slider->addImage($optimizedData['small']['src']);
 
-                    $this->slider->addCSS('@media (max-width: ' . $optimizedData['small']['width'] . 'px) {.n2webp div#' . $this->slider->elementId . ' ' . $selector . '{background-image: URL(' . $optimizedData['small']['src'] . ')}}');
+                    $this->slider->addCSS('@media (max-width: ' . $optimizedData['small']['width'] . 'px) {.n2webp div#' . $this->slider->elementId . ' ' . $selector . '{background-image: url(' . $optimizedData['small']['src'] . ')}}');
 
                 }
 
@@ -454,10 +471,6 @@ abstract class AbstractSliderTypeFrontend {
 
         $attributes = array();
 
-        if ($params->get('backgroundVideoMuted', 1)) {
-            $attributes['muted'] = 'muted';
-        }
-
         if ($params->get('backgroundVideoLoop', 1)) {
             $attributes['loop'] = 'loop';
         }
@@ -469,17 +482,15 @@ abstract class AbstractSliderTypeFrontend {
         }
 
         return Html::tag('video', $attributes + array(
-                'class'              => 'n2-ss-slider-background-video n2-ow',
-                'style'              => 'object-fit:' . $objectFit,
+                'class'              => 'n2-ss-slider-background-video n2-ow n2-' . $objectFit,
                 'playsinline'        => 1,
                 'webkit-playsinline' => 1,
                 'data-keepplaying'   => 1,
-                'preload'            => 'none'
+                'preload'            => 'none',
+                'muted'              => 'muted'
             ), Html::tag("source", array(
             "src"  => $mp4,
             "type" => "video/mp4"
         ), '', false));
-
-    
     }
 }

@@ -22,7 +22,7 @@ use Nextend\SmartSlider3\Slider\SliderParams;
 
 $slider = $this->getSlider();
 
-$sliderParams = new SliderParams($slider['type'], $slider['params'], true);
+$sliderParams = new SliderParams($slider['id'], $slider['type'], $slider['params'], true);
 
 $sliderData              = $sliderParams->toArray();
 $sliderData['title']     = $slider['title'];
@@ -31,8 +31,8 @@ $sliderData['thumbnail'] = $slider['thumbnail'];
 $sliderData['alias']     = isset($slider['alias']) ? $slider['alias'] : '';
 
 ?>
-<form id="n2_slider_form" action="<?php echo $this->getUrlSliderSimpleEdit($slider['id'], $this->groupID); ?>" method="post">
-    <div id="slider-settings-region" role="region" tabindex="0" aria-label="<?php echo n2_('Slider settings') . ': ' . Sanitize::esc_attr($slider['title']); ?>">
+<form id="n2_slider_form" action="<?php echo esc_url($this->getUrlSliderSimpleEdit($slider['id'], $this->groupID)); ?>" method="post">
+    <div id="slider-settings-region" role="region" tabindex="0" aria-label="<?php echo esc_attr(n2_('Slider settings') . ': ' . $slider['title']); ?>">
         <?php
         $form = new Form($this, 'slider');
 
@@ -72,7 +72,7 @@ $sliderData['alias']     = isset($slider['alias']) ? $slider['alias'] : '';
         $slideData['title']       = $slide['title'];
         $slideData['description'] = $slide['description'];
         ?>
-        <div role="region" tabindex="0" aria-label="<?php echo Sanitize::esc_attr(n2_('Edit slide') . ': ' . $slide['title']); ?>">
+        <div role="region" tabindex="0" aria-label="<?php echo esc_attr(n2_('Edit slide') . ': ' . $slide['title']); ?>">
             <?php
 
             $form = new Form($this, 'slide[' . $slide['id'] . ']');

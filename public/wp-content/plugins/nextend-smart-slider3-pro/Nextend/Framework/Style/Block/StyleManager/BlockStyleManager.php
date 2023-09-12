@@ -5,7 +5,6 @@ namespace Nextend\Framework\Style\Block\StyleManager;
 
 
 use Nextend\Framework\Asset\Js\Js;
-use Nextend\Framework\Localization\Localization;
 use Nextend\Framework\Style\ModelStyle;
 use Nextend\Framework\Style\StyleRenderer;
 use Nextend\Framework\Visual\AbstractBlockVisual;

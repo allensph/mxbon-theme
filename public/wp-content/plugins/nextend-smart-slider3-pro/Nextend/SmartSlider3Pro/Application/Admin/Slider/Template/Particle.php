@@ -28,11 +28,11 @@ $frontendSlider = new Slider($this, $this->getSliderID(), array(
 $frontendSlider->initAll();
 $sliderHTML = $frontendSlider->render();
 
-$externals = Settings::get('external-css-files');
+$externals = esc_attr(Settings::get('external-css-files'));
 if (!empty($externals)) {
     $externals = explode("\n", $externals);
-    foreach ($externals AS $external) {
-        echo "<link rel='stylesheet' href='" . $external . "' type='text/css' media='all'>";
+    foreach ($externals as $external) {
+        echo "<link rel='stylesheet' href='" . esc_url($external) . "' type='text/css' media='all'>";
     }
 }
 
@@ -58,9 +58,11 @@ $this->renderForm();
 ?>
 
 <div class="n2_slider_preview_area">
-    <div class="n2_slider_preview_area__inner">
+    <div class="n2_slider_preview_area__inner" style="width:100%;max-width:<?php echo esc_attr($frontendSlider->features->responsive->sizes['desktopPortrait']['width']); ?>px;">
         <?php
-        echo $sliderHTML;
+
+        // PHPCS - Content already escaped
+        echo $sliderHTML; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         ?>
     </div>
 </div>

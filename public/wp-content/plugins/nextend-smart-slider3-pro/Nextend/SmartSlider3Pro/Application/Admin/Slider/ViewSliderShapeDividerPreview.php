@@ -52,6 +52,9 @@ class ViewSliderShapeDividerPreview extends AbstractView {
         $this->sliderData = $sliderData;
     }
 
+    /**
+     * @return string contains escaped html data
+     */
     public function renderSlider() {
 
         $locale = setlocale(LC_NUMERIC, 0);

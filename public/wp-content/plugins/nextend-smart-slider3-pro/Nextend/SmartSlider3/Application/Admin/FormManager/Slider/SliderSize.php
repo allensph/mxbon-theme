@@ -300,8 +300,8 @@ class SliderSize extends AbstractSliderTab {
 
         new OnOff($row2, 'responsive-breakpoint-global', n2_('Global breakpoints'), 0, array(
             'tipLabel'       => n2_('Global breakpoints'),
-            'tipDescription' => sprintf(n2_('You can use the global breakpoints, or adjust them locally here. You can configure the Global breakpoints at <a href="%1$s" target="_blank">Global settings</a> > General > Breakpoints'), $this->form->getMVCHelper()
-                                                                                                                                                                                                                                                   ->getUrlSettingsDefault())
+            'tipDescription' => sprintf(n2_('You can use the global breakpoints, or adjust them locally here. You can configure the Global breakpoints at %1$sGlobal settings%2$s > General > Breakpoints'), sprintf('<a href="%s" target="_blank">', $this->form->getMVCHelper()
+                                                                                                                                                                                                                                                                 ->getUrlSettingsDefault()), '</a>')
         ));
         new Breakpoint($row2, 'breakpoints', array(
             'desktoplandscape-portrait'  => 'sliderresponsive-breakpoint-desktop-portrait',
@@ -350,6 +350,9 @@ class SliderSize extends AbstractSliderTab {
 
     protected function customSize() {
 
+        /**
+         * Used for field removal: /size/override-slider-size
+         */
         $table = new ContainerTable($this->tab, 'override-slider-size', n2_('Custom size'));
 
         new OnOff($table->getFieldsetLabel(), 'slider-size-override', '', 0, array(
@@ -359,7 +362,7 @@ class SliderSize extends AbstractSliderTab {
         ));
 
         $row1         = $table->createRow('size-1');
-        $instructions = sprintf(n2_('Use this option to customize the aspect ratio for each device. %1$s Read more in the documentation%2$s. <b>Beware:</b> This option is rarely needed and might be hard to set properly!'), '<a href="https://smartslider.helpscoutdocs.com/article/1774-slider-settings-size#custom-size" target="_blank">', '</a>');
+        $instructions = sprintf(n2_('Use this option to customize the aspect ratio for each device. %1$s Read more in the documentation%2$s. %3$sBeware:%4$s This option is rarely needed and might be hard to set properly!'), '<a href="https://smartslider.helpscoutdocs.com/article/1774-slider-settings-size#custom-size" target="_blank">', '</a>', '<b>', '</b>');
         new Notice($row1, 'instructions', n2_('Instruction'), $instructions);
 
         $overrideEditorSize = $table->createRowGroup('override-slider-size', false);

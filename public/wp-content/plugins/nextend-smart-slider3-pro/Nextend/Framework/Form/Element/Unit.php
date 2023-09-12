@@ -25,7 +25,7 @@ class Unit extends AbstractFieldHidden {
         $html .= Html::openTag('div', array(
             'class' => 'n2_field_unit__units'
         ));
-        foreach ($this->units AS $unit) {
+        foreach ($this->units as $unit) {
             $values[] = $unit;
 
             $html .= Html::tag('div', array(

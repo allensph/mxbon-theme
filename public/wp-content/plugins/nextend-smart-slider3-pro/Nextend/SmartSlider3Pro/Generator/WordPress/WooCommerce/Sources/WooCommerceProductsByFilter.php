@@ -295,22 +295,41 @@ class WooCommerceProductsByFilter extends AbstractGenerator {
 
             if ($product) {
                 $product_id   = $product->get_id();
+                $productTitle = $product->get_title();
                 $thumbnail_id = get_post_thumbnail_id($product_id);
-                $image        = wp_get_attachment_url($thumbnail_id);
-                $thumbnail    = wp_get_attachment_image_src($thumbnail_id);
-                if ($thumbnail[0] != null) {
-                    $thumbnail = $thumbnail[0];
-                } else {
-                    $thumbnail = $image;
+
+                if (!empty($thumbnail_id)) {
+                    $image     = wp_get_attachment_url($thumbnail_id);
+                    $thumbnail = wp_get_attachment_image_src($thumbnail_id);
+                    if (!empty($thumbnail[0])) {
+                        $thumbnail = $thumbnail[0];
+                    } else {
+                        $thumbnail = $image;
+                    }
+
+                    $imageAlt = get_post_meta($thumbnail_id, "_wp_attachment_image_alt", true);
+                    if (empty($imageAlt)) {
+                        $imageAlt = $productTitle;
+                    }
                 }
+
                 $rating   = $product->get_average_rating();
                 $data[$i] = array(
-                    'title'                  => $product->get_title(),
-                    'url'                    => $product->get_permalink(),
-                    'description'            => get_post($product_id)->post_content,
-                    'short_description'      => get_post($product_id)->post_excerpt,
-                    'image'                  => ResourceTranslator::urlToResource($image),
-                    'thumbnail'              => ResourceTranslator::urlToResource($thumbnail),
+                    'title'             => $productTitle,
+                    'url'               => $product->get_permalink(),
+                    'description'       => get_post($product_id)->post_content,
+                    'short_description' => get_post($product_id)->post_excerpt
+                );
+
+                if (!empty($thumbnail_id)) {
+                    $data[$i] += array(
+                        'image'     => ResourceTranslator::urlToResource($image),
+                        'thumbnail' => ResourceTranslator::urlToResource($thumbnail),
+                        'image_alt' => $imageAlt,
+                    );
+                }
+
+                $data[$i] += array(
                     'price'                  => $product->get_price_html(),
                     'price_without_currency' => $product->get_price(),
                     'regular_price'          => wc_price($product->get_regular_price()),
@@ -320,13 +339,15 @@ class WooCommerceProductsByFilter extends AbstractGenerator {
                     'tags'                   => wc_get_product_tag_list($product_id)
                 );
 
-                $image_sizes = get_intermediate_image_sizes();
-                foreach ($image_sizes as $image_size) {
-                    $image_data = wp_get_attachment_image_src($thumbnail_id, $image_size);
-                    $image_size = str_replace('-', '', $image_size);
-                    $data[$i]   += array(
-                        'image_' . $image_size => ResourceTranslator::urlToResource($image_data[0])
-                    );
+                if (!empty($thumbnail_id)) {
+                    $image_sizes = get_intermediate_image_sizes();
+                    foreach ($image_sizes as $image_size) {
+                        $image_data = wp_get_attachment_image_src($thumbnail_id, $image_size);
+                        $image_size = str_replace('-', '', $image_size);
+                        $data[$i]   += array(
+                            'image_' . $image_size => ResourceTranslator::urlToResource($image_data[0])
+                        );
+                    }
                 }
 
                 $seller = get_user_by("id", $posts[$j]->post_author);
@@ -494,6 +515,12 @@ class WooCommerceProductsByFilter extends AbstractGenerator {
                         $data[$i]['category' . $k . 'link']        = get_term_link($catId, 'product_cat');
                         $data[$i]['category' . $k . 'description'] = $category->description;
                         $data[$i]['category' . $k . 'ID']          = $catId;
+
+                        if (isset($data[$i]['meta_yoast_wpseo_primary_product_cat']) && $catId == $data[$i]['meta_yoast_wpseo_primary_product_cat']) {
+                            $data[$i]['primary_category']             = $data[$i]['category' . $k];
+                            $data[$i]['primary_category_link']        = $data[$i]['category' . $k . 'link'];
+                            $data[$i]['primary_category_description'] = $data[$i]['category' . $k . 'description'];
+                        }
                         $k++;
                     }
                 }
@@ -523,6 +550,15 @@ class WooCommerceProductsByFilter extends AbstractGenerator {
                     }
                 }
 
+                $attributes = $product->get_attributes();
+                foreach ($attributes as $attribute) {
+                    $attribute_taxonomy = $attribute->get_taxonomy();
+                    $terms              = wp_get_post_terms($product_id, $attribute_taxonomy);
+                    for ($k = 0; $k < count($terms); $k++) {
+                        $data[$i][$this->clearName($attribute_taxonomy) . ($k + 1)] = $terms[$k]->name;
+                    }
+                }
+
                 $i++;
             }
         }
@@ -538,15 +574,15 @@ class WooCommerceProductsByFilter extends AbstractGenerator {
             $prefix = $prefix . "_";
         }
         foreach ($sizes as $size => $image) {
-            $imageSrc                                               = wp_get_attachment_image_src($thumbnail_id, $size);
-            $data[$prefix . 'image_' . $this->clearSizeName($size)] = $imageSrc[0];
+            $imageSrc                                           = wp_get_attachment_image_src($thumbnail_id, $size);
+            $data[$prefix . 'image_' . $this->clearName($size)] = $imageSrc[0];
         }
 
         return $data;
     }
 
-    protected function clearSizeName($size) {
-        return str_replace('-', '_', $size);
+    protected function clearName($name) {
+        return str_replace('-', '_', $name);
     }
 
     protected function getACFType($key, $post_id) {

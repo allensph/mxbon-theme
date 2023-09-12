@@ -30,7 +30,7 @@ class SliderTypeShowcaseCss extends AbstractSliderTypeCss {
         $width  = intval($this->context['width']);
         $height = intval($this->context['height']);
 
-        $this->context['sliderwidth']  = $width . 'px';
+        $this->context['sliderwidth'] = $width . 'px';
 
         $this->context['backgroundSize']       = $params->getIfEmpty('background-size', 'inherit');
         $this->context['backgroundAttachment'] = $params->get('background-fixed') ? 'fixed' : 'scroll';
@@ -53,10 +53,9 @@ class SliderTypeShowcaseCss extends AbstractSliderTypeCss {
         $slideBorderWidth                  = max(0, $params->get('slide-border-width', 0));
         $this->context['slideborderwidth'] = $slideBorderWidth . 'px';
 
-        $rgba = Color::hex2rgba($params->get('slide-border-color'));
-        if ($rgba) {
-            $this->context['slidebordercolor'] = 'RGBA(' . $rgba[0] . ',' . $rgba[1] . ',' . $rgba[2] . ',' . round($rgba[3] / 127, 2) . ')';
-        }
+        $rgba                              = Color::hex2rgba($params->get('slide-border-color'));
+        $this->context['slidebordercolor'] = 'RGBA(' . $rgba[0] . ',' . $rgba[1] . ',' . $rgba[2] . ',' . round($rgba[3] / 127, 2) . ')';
+
 
         $slideWidth  = min($width, max(50, intval($params->get('slide-width'))));
         $slideHeight = min($height, max(50, intval($params->get('slide-height'))));
@@ -77,10 +76,10 @@ class SliderTypeShowcaseCss extends AbstractSliderTypeCss {
 
 
         $this->base = array(
-            'sliderWidth'      => $width,
-            'sliderHeight'     => $height,
-            'slideWidth'       => $slideWidth,
-            'slideHeight'      => $slideHeight
+            'sliderWidth'  => $width,
+            'sliderHeight' => $height,
+            'slideWidth'   => $slideWidth,
+            'slideHeight'  => $slideHeight
         );
     }
 }

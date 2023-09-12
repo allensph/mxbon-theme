@@ -3,6 +3,7 @@
 namespace Nextend\SmartSlider3Pro\Renderable\Item\AnimatedHeading;
 
 use Nextend\Framework\Parser\Color;
+use Nextend\Framework\Sanitize;
 use Nextend\Framework\View\Html;
 use Nextend\SmartSlider3\Renderable\AbstractRenderableOwner;
 use Nextend\SmartSlider3\Renderable\Item\AbstractItemFrontend;
@@ -24,14 +25,14 @@ class ItemAnimatedHeadingFrontend extends AbstractItemFrontend {
 
         $heading = array();
 
-        $beforeText = $owner->fill($this->data->get('before-text', ''));
+        $beforeText = Sanitize::filter_allowed_html($owner->fill($this->data->get('before-text', '')));
         if (!empty($beforeText)) {
-            $heading[] = Html::tag('div', array(
-                'class' => 'n2-ss-animated-heading-before'
-            ), $beforeText . '&nbsp;');
+            $heading[] = Html::tag('ss-text', array(
+                    'class' => 'n2-ss-animated-heading-before'
+                ), $beforeText) . ' ';
         }
 
-        $animatedText = preg_split('/\r\n|\r|\n/', $owner->fill($this->data->get('animated-text', '')));
+        $animatedText = preg_split('/\r\n|\r|\n/', Sanitize::filter_allowed_html($owner->fill($this->data->get('animated-text', ''))));
         if (!empty($animatedText)) {
 
 
@@ -91,15 +92,15 @@ class ItemAnimatedHeadingFrontend extends AbstractItemFrontend {
             if (!empty($href) && $href != '#') {
                 $heading[] = $this->getLink($animatedInner, $attributes);
             } else {
-                $heading[] = Html::tag('div', $attributes, $animatedInner);
+                $heading[] = Html::tag('ss-text', $attributes, $animatedInner);
             }
         }
 
-        $afterText = $owner->fill($this->data->get('after-text', ''));
+        $afterText = Sanitize::filter_allowed_html($owner->fill($this->data->get('after-text', '')));
         if (!empty($afterText)) {
-            $heading[] = Html::tag('div', array(
-                'class' => 'n2-ss-animated-heading-after'
-            ), '&nbsp;' . $afterText);
+            $heading[] = ' ' . Html::tag('ss-text', array(
+                    'class' => 'n2-ss-animated-heading-after'
+                ), $afterText);
         }
 
 
@@ -113,7 +114,7 @@ class ItemAnimatedHeadingFrontend extends AbstractItemFrontend {
     }
 
     private function heading($type, $attributes, $content) {
-        if ($type > 0) {
+        if (is_numeric($type) && $type > 0) {
             return Html::tag("h{$type}", $attributes, $content);
         }
 

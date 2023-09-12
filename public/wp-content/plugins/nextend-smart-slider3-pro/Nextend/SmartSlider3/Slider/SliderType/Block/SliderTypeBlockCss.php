@@ -14,9 +14,9 @@ class SliderTypeBlockCss extends AbstractSliderTypeCss {
         $width  = intval($this->context['width']);
         $height = intval($this->context['height']);
 
-        $borderWidth             = $params->getIfEmpty('border-width', 0);
-        $borderColor             = $params->get('border-color');
-        $this->context['border'] = $borderWidth . 'px';
+        $borderWidth                 = $params->getIfEmpty('border-width', 0);
+        $borderColor                 = $params->get('border-color');
+        $this->context['border']     = $borderWidth . 'px';
         $rgba                        = Color::hex2rgba($borderColor);
         $this->context['borderrgba'] = 'RGBA(' . $rgba[0] . ',' . $rgba[1] . ',' . $rgba[2] . ',' . round($rgba[3] / 127, 2) . ')';
 

@@ -4,6 +4,8 @@ namespace Nextend\SmartSlider3Pro\Generator\Common\Flickr\api;
 
 use Nextend\Framework\Misc\Base64;
 use Nextend\Framework\Notification\Notification;
+use Nextend\Framework\Request\Request;
+use WP_HTTP_Proxy;
 
 /**
  * Flickr API Kit with support for OAuth 1.0a for PHP >= 5.3.0. Requires curl.
@@ -225,8 +227,8 @@ class DPZFlickr {
 
     public function authenticateStep2() {
         if ($this->getOauthData(self::IS_AUTHENTICATING)) {
-            $oauthToken    = @$_GET['oauth_token'];
-            $oauthVerifier = @$_GET['oauth_verifier'];
+            $oauthToken    = Request::$GET->getVar('oauth_token');
+            $oauthVerifier = Request::$GET->getVar('oauth_verifier');
 
             if (!empty($oauthToken) && !empty($oauthVerifier)) {
                 // Looks like we're in the callback
@@ -475,7 +477,9 @@ class DPZFlickr {
         sort($keys, SORT_STRING);
         $keyValuePairs = array();
         foreach ($keys as $k) {
-            array_push($keyValuePairs, rawurlencode($k) . "=" . rawurlencode($parameters[$k]));
+            if ($parameters[$k] !== null) {
+                array_push($keyValuePairs, rawurlencode($k) . "=" . rawurlencode($parameters[$k]));
+            }
         }
 
         return implode("&", $keyValuePairs);
@@ -648,7 +652,7 @@ class DPZFlickr {
             // Assume GET
             curl_setopt($curl, CURLOPT_URL, "$url?" . $this->joinParameters($parameters));
         }
-        $proxy = new \WP_HTTP_Proxy();
+        $proxy = new WP_HTTP_Proxy();
 
         if ($proxy->is_enabled() && $proxy->send_through_proxy($url)) {
 

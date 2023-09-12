@@ -61,7 +61,7 @@ class ViewHelpIndex extends AbstractView {
                 'label' => 'Layer animation & Event tutorials'
             ),
             array(
-                'url'   => 'https://smartslider.helpscoutdocs.com/article/1774-slider-settings-size',
+                'url'   => 'https://smartslider.helpscoutdocs.com/article/1980-how-to-hide-the-slider-on-mobile',
                 'label' => 'How to hide the slider on moble?'
             )
         );
@@ -69,11 +69,15 @@ class ViewHelpIndex extends AbstractView {
 
         return array_merge($arr, array(
             array(
+                'url'   => 'https://smartslider.helpscoutdocs.com/article/1916-slide-editing-in-smart-slider-3#why-is-the-slider-so-tall-on-mobile',
+                'label' => 'Why is the slider tall on mobile?'
+            ), 
+            array(
                 'url'   => 'https://smartslider.helpscoutdocs.com/article/1916-slide-editing-in-smart-slider-3',
                 'label' => 'Slide editing in Smart Slider 3'
             ),
             array(
-                'url'   => 'https://smartslider.helpscoutdocs.com/article/1809-slider-settings-slides#slides-design',
+                'url'   => 'https://smartslider.helpscoutdocs.com/article/1922-how-to-set-your-background-image#cropped',
                 'label' => 'Why are my images cropped?'
             ),
             array(

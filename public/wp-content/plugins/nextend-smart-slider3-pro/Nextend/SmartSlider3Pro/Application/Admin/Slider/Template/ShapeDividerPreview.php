@@ -16,15 +16,15 @@ JS::addGlobalInline('document.documentElement.classList.add("n2_html--slider-pre
 
 $slider = $this->renderSlider();
 
-$externals = Settings::get('external-css-files');
+$externals = esc_attr(Settings::get('external-css-files'));
 if (!empty($externals)) {
     $externals = explode("\n", $externals);
     foreach ($externals as $external) {
-        echo "<link rel='stylesheet' href='" . $external . "' type='text/css' media='all'>";
+        echo "<link rel='stylesheet' href='" . esc_attr($external) . "' type='text/css' media='all'>";
     }
 }
-
-echo $slider;
+// PHPCS - Content already escaped
+echo $slider; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
 
 <script>

@@ -28,7 +28,7 @@ Js::addInline('new _N2.DashboardInfo();');
         <div class="n2_dashboard_info__row_content n2_dashboard_info__row_content_version">
             Smart Slider
             <?php
-            echo SmartSlider3Info::$version . '-' . SmartSlider3Info::$plan;
+            echo esc_html(SmartSlider3Info::$version . '-' . SmartSlider3Info::$plan);
             ?>
         </div>
         <div class="n2_dashboard_info__row_action n2_dashboard_info__row_action_version">
@@ -50,7 +50,7 @@ Js::addInline('new _N2.DashboardInfo();');
             <?php n2_e('Check for update'); ?>
         </div>
         <div class="n2_dashboard_info__row_action n2_dashboard_info__row_action_check_update">
-            <a target="_blank" href="<?php echo $checkForUpdateUrl; ?>"><?php n2_e('Check') ?></a>
+            <a target="_blank" href="<?php echo esc_url($checkForUpdateUrl); ?>"><?php n2_e('Check') ?></a>
         </div>
 
         <?php
@@ -63,7 +63,7 @@ Js::addInline('new _N2.DashboardInfo();');
             <?php n2_e('Your license is active'); ?>
         </div>
         <div class="n2_dashboard_info__row_action n2_dashboard_info__row_action_activated">
-            <a href="<?php echo $this->getUrlDeauthorizeLicense(); ?>"><?php n2_e('Deactivate license') ?></a>
+            <a href="<?php echo esc_url($this->getUrlDeauthorizeLicense()); ?>"><?php n2_e('Deactivate license') ?></a>
         </div>
 
         <div class="n2_dashboard_info__row_icon n2_dashboard_info__row_icon_activate">

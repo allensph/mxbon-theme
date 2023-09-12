@@ -8,7 +8,6 @@ use Nextend\Framework\Asset\Js\Js;
 use Nextend\Framework\Font\FontRenderer;
 use Nextend\Framework\Font\FontSettings;
 use Nextend\Framework\Font\ModelFont;
-use Nextend\Framework\Localization\Localization;
 use Nextend\Framework\Visual\AbstractBlockVisual;
 use Nextend\SmartSlider3\Application\Admin\Layout\Block\Forms\Button\BlockButtonApply;
 use Nextend\SmartSlider3\Application\Admin\Layout\Block\Forms\Button\BlockButtonCancel;

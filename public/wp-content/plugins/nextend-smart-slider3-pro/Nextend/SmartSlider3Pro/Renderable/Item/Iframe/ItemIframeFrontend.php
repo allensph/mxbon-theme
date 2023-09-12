@@ -35,7 +35,7 @@ class ItemIframeFrontend extends AbstractItemFrontend {
             "sandbox"     => 'allow-modals allow-forms allow-popups allow-scripts allow-same-origin'
         );
 
-        $title = $this->data->get('title', '');
+        $title = strip_tags($this->data->get('title', ''));
         if (!empty($title)) {
             $attributes['title'] = $title;
         }

@@ -45,8 +45,8 @@ class ParticleSkin extends Skin {
                 $this->options[$pathInfo['filename']] = array(
                     'label'    => $labels[$pathInfo['filename']],
                     'settings' => array(
-                        'color'      => substr($jsProp['particles']["color"]["value"], 1) . str_pad(dechex($jsProp['particles']["opacity"]["value"] * 255), 2, "0", STR_PAD_LEFT),
-                        'line-color' => substr($jsProp['particles']["line_linked"]["color"], 1) . str_pad(dechex($jsProp['particles']["line_linked"]["opacity"] * 255), 2, "0", STR_PAD_LEFT),
+                        'color'      => substr($jsProp['particles']["color"]["value"], 1) . str_pad(dechex(intval($jsProp['particles']["opacity"]["value"] * 255)), 2, "0", STR_PAD_LEFT),
+                        'line-color' => substr($jsProp['particles']["line_linked"]["color"], 1) . str_pad(dechex(intval($jsProp['particles']["line_linked"]["opacity"] * 255)), 2, "0", STR_PAD_LEFT),
                         'hover'      => $jsProp['interactivity']["events"]["onhover"]['enable'] ? $jsProp['interactivity']["events"]["onhover"]['mode'] : 0,
                         'click'      => $jsProp['interactivity']["events"]["onclick"]['enable'] ? $jsProp['interactivity']["events"]["onclick"]['mode'] : 0,
                         'number'     => $jsProp['particles']["number"]["value"],

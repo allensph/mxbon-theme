@@ -4,6 +4,7 @@
 namespace Nextend\SmartSlider3\Application\Admin\FormManager\Slider;
 
 use Nextend\Framework\Form\Container\ContainerTable;
+use Nextend\Framework\Form\Element\Message\Warning;
 use Nextend\Framework\Form\Element\OnOff;
 use Nextend\Framework\Form\Element\Select;
 use Nextend\Framework\Form\Element\Text\Number;
@@ -57,7 +58,8 @@ class SliderAutoplay extends AbstractSliderTab {
             'relatedFieldsOn'  => array(
                 'table-rows-autoplay',
                 'table-widget-autoplay',
-                'table-widget-indicator'
+                'table-widget-indicator',
+                'autoplay-single-slide-notice'
             )
         ));
 
@@ -86,6 +88,9 @@ class SliderAutoplay extends AbstractSliderTab {
          * Used for field injection: /autoplay/autoplay/row-finish/autoplayfinish
          */
         new AutoplayPicker($rowFinish, 'autoplayfinish', n2_('Finish autoplay'), '1|*|loop|*|current');
+
+        new Warning($rowFinish, 'disabled-carousel-notice', n2_('The Carousel option is disabled, so the Autoplay will stop after the last slide appeared.'));
+
     
 
         $row3 = $table->createRow('row-3');

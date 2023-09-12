@@ -3,6 +3,7 @@
 namespace Nextend\Framework\Asset;
 
 
+use JHtml;
 use Nextend\Framework\Asset\Css\Css;
 use Nextend\Framework\Asset\Fonts\Google\Google;
 use Nextend\Framework\Asset\Js\Js;
@@ -27,12 +28,6 @@ class Predefined {
 
         Js::addGlobalInline('_N2._jQueryFallback=\'' . $jQueryFallback . '\';');
 
-        $family = n2_x('Montserrat', 'Default Google font family for admin');
-        foreach (explode(',', n2_x('latin', 'Default Google font charset for admin')) as $subset) {
-            Google::addSubset($subset);
-        }
-        Google::addFont($family);
-
         Js::addFirstCode("_N2.r(['AjaxHelper'],function(){_N2.AjaxHelper.addAjaxArray(" . json_encode(Form::tokenizeUrl()) . ");});");
 
         Plugin::addAction('afterApplicationContent', array(
@@ -54,10 +49,41 @@ class Predefined {
         }
     
         Js::addGlobalInline('(function(){this._N2=this._N2||{_r:[],_d:[],r:function(){this._r.push(arguments)},d:function(){this._d.push(arguments)}}}).call(window);');
+
+        /*
+         * +1px needed for Safari to fix: https://bugs.webkit.org/show_bug.cgi?id=225962
+        (function(ua){
+            if(ua.indexOf('Safari') > 0 && ua.indexOf('Chrome') === -1){
+                document.documentElement.style.setProperty('--ss-safari-fix-225962', '1px');
+            }
+        })(navigator.userAgent);
+        */
+        Js::addGlobalInline('!function(a){a.indexOf("Safari")>0&&-1===a.indexOf("Chrome")&&document.documentElement.style.setProperty("--ss-safari-fix-225962","1px")}(navigator.userAgent);');
         /**
          * WebP browser support detection
          */
-        Js::addGlobalInline('!function(){var r=!1,o=navigator.userAgent,a=o.match(/(Chrome|Firefox|Safari)\/(\d+)\./);a&&("Chrome"==a[1]?r=+a[2]>=32:"Firefox"==a[1]?r=+a[2]>=65:"Safari"==a[1]&&(r=+o.match(/Version\/(\d+)/)[1]>=14),r&&document.documentElement.classList.add("n2webp"))}();');
+        /*
+        !function (ua, match, version, r) {
+            match = ua.match(/(Chrome|Firefox|Safari)\/(\d+)\./);
+            if (match) {
+                if ("Chrome" == match[1]) {
+                    r = +match[2] >= 32;
+                } else if ("Firefox" == match[1]) {
+                    r = +match[2] >= 65;
+                } else if ("Safari" == match[1]) {
+                    version = ua.match(/Version\/(\d+)/) || ua.match(/(\d+)[0-9_ ]+ like Mac/);
+                    if (version) {
+                        r = +version[1] >= 14;
+                    }
+                }
+
+                if (r) {
+                    document.documentElement.classList.add("n2webp")
+                }
+            }
+        }(navigator.userAgent);
+        */
+        Js::addGlobalInline('!function(e,i,o,r){(i=e.match(/(Chrome|Firefox|Safari)\/(\d+)\./))&&("Chrome"==i[1]?r=+i[2]>=32:"Firefox"==i[1]?r=+i[2]>=65:"Safari"==i[1]&&(o=e.match(/Version\/(\d+)/)||e.match(/(\d+)[0-9_ ]+ like Mac/))&&(r=+o[1]>=14),r&&document.documentElement.classList.add("n2webp"))}(navigator.userAgent);');
     
 
         Js::addStaticGroup(ApplicationTypeFrontend::getAssetsPath() . "/dist/n2.min.js", 'n2');
@@ -75,3 +101,4 @@ class Predefined {
     
     }
 }
+

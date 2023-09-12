@@ -2,7 +2,6 @@
 
 namespace Nextend\SmartSlider3\Application\Admin\Sliders;
 
-use Nextend\Framework\Localization\Localization;
 use Nextend\Framework\View\AbstractView;
 use Nextend\SmartSlider3\Application\Admin\Layout\Block\Core\Banner\BlockBannerActivate;
 use Nextend\SmartSlider3\Application\Admin\Layout\Block\Dashboard\DashboardInfo\BlockDashboardInfo;
@@ -17,6 +16,7 @@ class ViewSlidersIndex extends AbstractView {
      * @var LayoutDefault
      */
     protected $layout;
+    protected $paginationIndex = 0;
 
     public function display() {
 
@@ -36,6 +36,10 @@ class ViewSlidersIndex extends AbstractView {
         $this->layout->render();
     }
 
+    public function setPaginationIndex($index) {
+        $this->paginationIndex = $index;
+    }
+
     protected function displayHeader() {
         $model = ModelLicense::getInstance();
         if (!$model->hasKey()) {
@@ -51,6 +55,7 @@ class ViewSlidersIndex extends AbstractView {
     protected function displaySliderManager() {
 
         $sliderManager = new BlockSliderManager($this);
+        $sliderManager->setPaginationIndex($this->paginationIndex);
         $this->layout->addContentBlock($sliderManager);
     }
 } 

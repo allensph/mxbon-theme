@@ -25,7 +25,7 @@ class GeneratorGroupWebdoradoPhotoGallery extends AbstractGeneratorGroup {
     }
 
     public function isInstalled() {
-        return is_plugin_active('photo-gallery/photo-gallery.php');
+        return class_exists('BWG');
     }
 
 }

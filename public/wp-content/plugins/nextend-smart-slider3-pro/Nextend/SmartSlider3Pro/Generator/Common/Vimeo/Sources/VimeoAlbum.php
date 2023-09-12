@@ -23,7 +23,7 @@ class VimeoAlbum extends AbstractGenerator {
 
         $filter = $filterGroup->createRow('filter');
 
-        new VimeoAlbums($filter, 'album', 'Album', '', array(
+        new VimeoAlbums($filter, 'album', 'Showcase', '', array(
             'api' => $this->group->getConfiguration()
                                  ->getApi()
         ));
@@ -68,19 +68,20 @@ class VimeoAlbum extends AbstractGenerator {
             if ($response['status'] == 200) {
                 $videos = array_slice($response['body']['data'], $startIndex, $count);
 
-                foreach ($videos AS $video) {
+                foreach ($videos as $video) {
                     $record = array();
 
                     $record['title']       = $video['name'];
                     $record['description'] = $video['description'];
                     $record['id']          = str_replace('/videos/', '', $video['uri']);
-                    $record['url']         = 'https://vimeo.com/' . $record['id'];
-                    $record['link']        = $video['link'];
+                    $record['url']         = $record['link'] = $video['link'];
 
-                    foreach ($video['pictures']['sizes'] AS $picture) {
+                    foreach ($video['pictures']['sizes'] as $picture) {
                         $record['image' . $picture['width'] . 'x' . $picture['height']]     = $picture['link'];
                         $record['imageplay' . $picture['width'] . 'x' . $picture['height']] = $picture['link_with_play_button'];
                     }
+
+                    $record['image'] = $record['image1920x1080'];
 
                     $data[] = &$record;
                     unset($record);

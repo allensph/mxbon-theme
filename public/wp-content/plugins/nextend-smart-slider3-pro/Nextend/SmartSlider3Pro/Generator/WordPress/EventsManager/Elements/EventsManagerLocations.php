@@ -31,7 +31,7 @@ class EventsManagerLocations extends Select {
         $this->options['0'] = n2_('All');
 
         if (count($venues)) {
-            foreach ($venues AS $option) {
+            foreach ($venues as $option) {
                 $title = ' - ' . $option->post_title;
                 $town  = get_post_meta($option->ID, '_location_town', true);
                 if (!empty($town)) {

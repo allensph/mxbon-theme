@@ -61,6 +61,7 @@ class ItemVimeo extends AbstractItem {
     public function getValues() {
         return parent::getValues() + array(
                 'vimeourl'         => '75251217',
+                'privateid'        => '',
                 'image'            => '$ss3-frontend$/images/placeholder/video.png',
                 'aspect-ratio'     => '16:9',
                 'autoplay'         => 0,
@@ -93,12 +94,14 @@ class ItemVimeo extends AbstractItem {
         parent::prepareExport($export, $data);
 
         $export->addImage($data->get('image'));
+        $export->addImage($data->get('playbuttonimage'));
     }
 
     public function prepareImport($import, $data) {
         $data = parent::prepareImport($import, $data);
 
         $data->set('image', $import->fixImage($data->get('image')));
+        $data->set('playbuttonimage', $import->fixImage($data->get('playbuttonimage')));
 
         return $data;
     }
@@ -211,12 +214,6 @@ class ItemVimeo extends AbstractItem {
         ));
     
 
-        new OnOff($misc, 'privateurl', n2_('Private video'), 0, array(
-                'tipLabel'          => n2_('Private video'),
-                'tipDescription'    => n2_('Turn it on to remove the admin warning that your video is not accessible.'),
-                'tipLink'           => 'https://smartslider.helpscoutdocs.com/article/1847-vimeo-layer#private-video'
-            ));
-
         new OnOff($misc, 'reset', n2_('Restart on slide change'), 0, array(
             'tipLabel'       => n2_('Restart on slide change'),
             'tipDescription' => n2_('Starts the video from the beginning when the slide is viewed again.')
@@ -224,37 +221,37 @@ class ItemVimeo extends AbstractItem {
 
         $display = new Fieldset\LayerWindow\FieldsetLayerWindow($container, 'item-youtube-display', n2_('Display'));
         new Color($display, 'color', n2_('Color'), 0, array(
-                'tipLabel'          => n2_('Color'),
-                'tipDescription'    => n2_('Only works on videos of Vimeo Pro users.')
-            ));
-        new OnOff($display, 'background', n2_('Remove controls'), 0, array(
-            'tipLabel'          => n2_('Remove controls'),
-            'tipDescription'    => n2_('Removes the controls of the video, but it only works on videos of Vimeo Pro users.')
+            'tipLabel'       => n2_('Color'),
+            'tipDescription' => n2_('Only works on videos of Vimeo Pro users.')
         ));
-    
+
+        new OnOff($display, 'background', n2_('Remove controls'), 0, array(
+            'tipLabel'       => n2_('Remove controls'),
+            'tipDescription' => n2_('Removes the controls of the video, but it only works on videos of Vimeo Pro users.')
+        ));
 
         new OnOff($display, 'title', n2_('Title'), 1, array(
-                'tipLabel'          => n2_('Title'),
-                'tipDescription'    => n2_('Hides the title of the video, but only if video owner allows it.')
-            ));
+            'tipLabel'       => n2_('Title'),
+            'tipDescription' => n2_('Hides the title of the video, but only if video owner allows it.')
+        ));
         new OnOff($display, 'byline', n2_('Users byline'), 1, array(
-                'tipLabel'          => n2_('Users byline'),
-                'tipDescription'    => n2_('Hides the user\'s byline of the video, but only if video owner allows it.')
-            ));
+            'tipLabel'       => n2_('Users byline'),
+            'tipDescription' => n2_('Hides the user\'s byline of the video, but only if video owner allows it.')
+        ));
         new OnOff($display, 'portrait', n2_('Portrait'), 1, array(
-                'tipLabel'          => n2_('Portrait'),
-                'tipDescription'    => n2_('Hides the profile image of the author, but only if video owner allows it. ')
-            ));
+            'tipLabel'       => n2_('Portrait'),
+            'tipDescription' => n2_('Hides the profile image of the author, but only if video owner allows it. ')
+        ));
         new Select($display, 'quality', n2_('Quality'), '-1', array(
-            'options' => array(
+            'options'        => array(
                 '270p'  => '270p',
                 '360p'  => '360p',
                 '720p'  => '720p',
                 '1080p' => '1080p',
                 '-1'    => n2_('Default')
             ),
-            'tipLabel'          => n2_('Quality'),
-            'tipDescription'    => n2_('Only works on videos of Vimeo Pro users.')
+            'tipLabel'       => n2_('Quality'),
+            'tipDescription' => n2_('Only works on videos of Vimeo Pro users.')
         ));
         $playButton = new Fieldset\LayerWindow\FieldsetLayerWindow($container, 'item-vimeo-playbutton', n2_('Play button'));
         new OnOff($playButton, 'playbutton', n2_('Play button'), 1);

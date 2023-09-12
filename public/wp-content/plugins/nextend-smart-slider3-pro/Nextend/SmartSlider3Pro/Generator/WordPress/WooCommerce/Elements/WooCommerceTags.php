@@ -27,7 +27,7 @@ class WooCommerceTags extends Select {
 
         $this->options['0'] = n2_('All');
         if (count($tags)) {
-            foreach ($tags AS $tag) {
+            foreach ($tags as $tag) {
                 $this->options[$tag->cat_ID] = $tag->name;
             }
         }

@@ -2,6 +2,7 @@
 
 namespace Nextend\SmartSlider3Pro\Generator\Common\Flickr;
 
+use Exception;
 use Nextend\Framework\Data\Data;
 use Nextend\Framework\Form\Container\ContainerTable;
 use Nextend\Framework\Form\Element\Message\Notice;
@@ -95,8 +96,9 @@ class ConfigurationFlickr extends AbstractGeneratorGroupConfiguration {
         $callBackUrl = $this->getCallbackUrl($MVCHelper->getRouter());
 
         if (substr($callBackUrl, 0, 8) !== 'https://') {
+            $url = "https://www.wpbeginner.com/wp-tutorials/how-to-add-ssl-and-https-in-wordpress/";
             $warning     = $table->createRow('flickr-warning');
-            $warningText = sprintf(n2_('%1$s allows HTTPS Redirect URIs only! You must move your site to HTTPS in order to use this generator! - %2$s How to get SSL for my WordPress site? %3$s'), 'Flickr', '<a href="https://www.wpbeginner.com/wp-tutorials/how-to-add-ssl-and-https-in-wordpress/" target="_blank" rel="nofollow noopener noreferrer">', '</a>');
+            $warningText = sprintf(n2_('%1$s allows HTTPS Redirect URIs only! You must move your site to HTTPS in order to use this generator!'), 'Flickr') . ' - <a href="' . $url . '" target="_blank" rel="nofollow noopener noreferrer">' . n2_('How to get SSL for my website?') . '</a>';
             new Warning($warning, 'warning', $warningText);
         } else {
             $instruction     = $table->createRow('flickr-instruction');
@@ -120,7 +122,7 @@ class ConfigurationFlickr extends AbstractGeneratorGroupConfiguration {
             Notification::error(n2_('The key and secret is not valid!'));
         }
 
-        echo $form->render();
+        $form->render();
     }
 
     public function startAuth($MVCHelper) {

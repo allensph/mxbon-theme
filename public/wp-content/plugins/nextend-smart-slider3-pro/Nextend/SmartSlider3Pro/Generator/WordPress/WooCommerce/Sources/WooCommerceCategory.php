@@ -33,6 +33,12 @@ class WooCommerceCategory extends AbstractGenerator {
                 '5' => 5
             )
         ));
+        new Select($filter, 'hide-empty-categories', n2_('Hide empty categories'), '1', array(
+            'options' => array(
+                '0' => n2_('No'),
+                '1' => n2_('Yes')
+            )
+        ));
     }
 
     protected function resetState() {
@@ -69,7 +75,7 @@ class WooCommerceCategory extends AbstractGenerator {
         $mainCat = $this->data->get('categories', '0');
         $args    = array(
             'child_of'     => 0,
-            'hide_empty'   => 0,
+            'hide_empty'   => $this->data->get('hide-empty-categories', 1),
             'hierarchical' => 1,
             'exclude'      => '',
             'include'      => '',
@@ -83,13 +89,21 @@ class WooCommerceCategory extends AbstractGenerator {
         $this->getAllCategories($mainCat, $args, $level);
         $this->categories = array_slice($this->categories, $startIndex, $count);
         $data             = array();
-        foreach ($this->categories AS $category) {
-            $image = wp_get_attachment_url(get_term_meta($category->term_id, 'thumbnail_id', true));
+        foreach ($this->categories as $category) {
+            $thumbnail_id = get_term_meta($category->term_id, 'thumbnail_id', true);
+            $image        = wp_get_attachment_url($thumbnail_id);
             if (!$image) $image = '';
+
+            $imageAlt = get_post_meta($thumbnail_id, "_wp_attachment_image_alt", true);
+            if (empty($imageAlt)) {
+                $imageAlt = $category->name;
+            }
+
             $r = array(
                 'title'       => $category->name,
                 'description' => $category->description,
                 'image'       => $image,
+                'image_alt'   => $imageAlt,
                 'count'       => $category->count,
                 'url'         => get_category_link($category->term_id),
                 'id'          => $category->term_id
@@ -162,7 +176,7 @@ class WooCommerceCategory extends AbstractGenerator {
             if (class_exists('acf')) {
                 $fields = get_fields($category->taxonomy . '_' . $category->term_id);
                 if (is_array($fields) && !empty($fields) && count($fields)) {
-                    foreach ($fields AS $k => $v) {
+                    foreach ($fields as $k => $v) {
                         $type = $this->getACFType($k, $category->ID);
                         $k    = str_replace('-', '', $k);
 
@@ -180,7 +194,7 @@ class WooCommerceCategory extends AbstractGenerator {
                             if (isset($v['url'])) {
                                 $r[$k] = $v['url'];
                             } else if (is_array($v)) {
-                                foreach ($v AS $v_v => $k_k) {
+                                foreach ($v as $v_v => $k_k) {
                                     if (is_array($k_k) && isset($k_k['url'])) {
                                         $r[$k . $v_v] = $k_k['url'];
                                     }
@@ -212,7 +226,7 @@ class WooCommerceCategory extends AbstractGenerator {
         } else {
             $prefix = $prefix . "_";
         }
-        foreach ($sizes AS $size => $image) {
+        foreach ($sizes as $size => $image) {
             $imageSrc                                               = wp_get_attachment_image_src($thumbnail_id, $size);
             $data[$prefix . 'image_' . $this->clearSizeName($size)] = $imageSrc[0];
         }

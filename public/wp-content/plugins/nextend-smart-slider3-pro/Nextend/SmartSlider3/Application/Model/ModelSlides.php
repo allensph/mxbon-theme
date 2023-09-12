@@ -7,6 +7,7 @@ namespace Nextend\SmartSlider3\Application\Model;
 use Nextend\Framework\Data\Data;
 use Nextend\Framework\Database\Database;
 use Nextend\Framework\Misc\Base64;
+use Nextend\Framework\Misc\Str;
 use Nextend\Framework\Model\AbstractModelTable;
 use Nextend\Framework\Request\Request;
 use Nextend\SmartSlider3\Application\Helper\HelperSliderChanged;
@@ -410,7 +411,7 @@ class ModelSlides extends AbstractModelTable {
             $row['slider'] = $targetSliderId;
 
             if (!$maintainOrdering) {
-                unset($row['ordering']);
+                $row['ordering'] = 0;
             }
         }
 
@@ -554,7 +555,9 @@ class ModelSlides extends AbstractModelTable {
             $firstUsed = false;
             $i         = 1;
             foreach ($slides as $slide) {
-                $row = $slide->getRow();
+                $row                = $slide->getRow();
+                $row['title']       = Str::substr($row['title'], 0, 200);
+                $row['description'] = Str::substr($row['description'], 0, 2000);
                 // set the proper ordering
                 $row['ordering'] += $i;
                 if ($row['first']) {

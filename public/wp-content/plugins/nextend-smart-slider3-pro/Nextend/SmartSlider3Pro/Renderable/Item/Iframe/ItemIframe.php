@@ -29,7 +29,7 @@ class ItemIframe extends AbstractItem {
     }
 
     public function getTitle() {
-        return n2_('iframe');
+        return n2_('Iframe');
     }
 
     public function getIcon() {
@@ -62,9 +62,9 @@ class ItemIframe extends AbstractItem {
 
     public function renderFields($container) {
         $general = new Fieldset\LayerWindow\FieldsetLayerWindow($container, 'item-iframe', n2_('General'));
-        new Warning($general, '', n2_('Please note, that <b>we do not support</b> customized coding! The iframe layer often needs code customizations what you have to do yourself, so we only suggest using this layer if you are a developer!'));
+        new Warning($general, '', sprintf(n2_('Please note, that %1$swe do not support%2$s customized coding! The iframe layer often needs code customizations what you have to do yourself, so we only suggest using this layer if you are a developer!'), '<b>', '</b>'));
 
-        new Text($general, 'url', n2_('iframe url'), '', array(
+        new Text($general, 'url', n2_('Iframe url'), '', array(
             'style' => 'width:302px;'
         ));
 
@@ -88,7 +88,7 @@ class ItemIframe extends AbstractItem {
 
         $advanced = new Fieldset\LayerWindow\FieldsetLayerWindow($container, 'item-iframe-advanced', n2_('Advanced'));
 
-        new Text($advanced, 'title', n2_('iframe title'), '', array(
+        new Text($advanced, 'title', n2_('Iframe title'), '', array(
             'style' => 'width:302px;'
         ));
     }

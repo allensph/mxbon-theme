@@ -163,12 +163,10 @@ class SliderGeneral extends AbstractSliderTab {
 
         new Text\Video($rowBackground, 'backgroundVideoMp4', n2_('Background video'), '', array(
             'relatedFields' => array(
-                'sliderbackgroundVideoMuted',
                 'sliderbackgroundVideoLoop',
                 'sliderbackgroundVideoMode'
             )
         ));
-        new OnOff($rowBackground, 'backgroundVideoMuted', n2_('Muted'), 1);
         new OnOff($rowBackground, 'backgroundVideoLoop', n2_x('Loop', 'Video/Audio play'), 1);
         new Select($rowBackground, 'backgroundVideoMode', n2_('Fill mode'), 'fill', array(
             'options' => array(

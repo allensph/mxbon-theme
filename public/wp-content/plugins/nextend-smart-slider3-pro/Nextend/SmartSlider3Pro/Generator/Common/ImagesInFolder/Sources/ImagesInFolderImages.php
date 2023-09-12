@@ -2,17 +2,16 @@
 
 namespace Nextend\SmartSlider3Pro\Generator\Common\ImagesInFolder\Sources;
 
-use JURI;
 use Nextend\Framework\Filesystem\Filesystem;
 use Nextend\Framework\Form\Container\ContainerTable;
 use Nextend\Framework\Form\Element\MixedField\GeneratorOrder;
 use Nextend\Framework\Form\Element\OnOff;
+use Nextend\Framework\Form\Element\Text;
 use Nextend\Framework\Form\Element\Text\Folder;
 use Nextend\Framework\Notification\Notification;
 use Nextend\Framework\Parser\Common;
-use Nextend\Framework\ResourceTranslator\ResourceTranslator;
-use Nextend\Framework\Url\Url;
 use Nextend\SmartSlider3\Generator\AbstractGenerator;
+use Nextend\SmartSlider3Pro\Generator\Common\ImagesInFolder\GeneratorGroupImagesInFolder;
 
 class ImagesInFolderImages extends AbstractGenerator {
 
@@ -20,50 +19,6 @@ class ImagesInFolderImages extends AbstractGenerator {
 
     public function getDescription() {
         return sprintf(n2_('Creates slides from %1$s.'), n2_('Images in folder'));
-    }
-
-    private function trim($str, $path = true) {
-        $str = ltrim(rtrim($str, '/'), '/');
-        if ($path && strpos($str, ':') === false) {
-            $str = '/' . $str;
-        }
-
-        return $str;
-    }
-
-    private function getSiteUrl() {
-        $site_url = get_site_url();
-
-        if (empty($site_url)) {
-            $site_url = (empty($_SERVER['HTTPS']) ? "http://" : "https://") . $_SERVER['HTTP_HOST'];
-        }
-
-        return $this->trim($site_url, false);
-    }
-
-    private function getRootPath() {
-        $root = '';
-        $root = ABSPATH;
-
-        if (!empty($root)) {
-            $root = $this->trim($root);
-        }
-
-        return $root;
-    }
-
-    private function pathToUri($path, $media_folder = true) {
-        $path = $this->trim($path);
-        $root = $this->getRootPath();
-        if (!empty($root) && !$media_folder) {
-            $path = str_replace($root, '', $path);
-
-            return $this->getSiteUrl() . $path;
-        } else if ($media_folder) {
-            return ResourceTranslator::urlToResource(Url::pathToUri($path));
-        } else {
-            return Url::pathToUri($path);
-        }
     }
 
     public function renderFields($container) {
@@ -76,12 +31,25 @@ class ImagesInFolderImages extends AbstractGenerator {
 
         new OnOff($filter, 'iptc', 'EXIF', 0);
 
-        new OnOff($filter, 'remove_resize', 'Exclude resized images', 0, array(
+        $excludeGroup = $filterGroup->createRowGroup('exclude-group', n2_('Filename based exclusion'));
+
+        $excludeRow = $excludeGroup->createRow('exclude-row');
+
+        new OnOff($excludeRow, 'remove_resize', 'Exclude resized images', 0, array(
             'tipLabel'       => n2_('Remove resized images'),
             'tipDescription' => n2_('This option removes files that match the "-[number]x[number].[extension]" pattern in the end of their file names. For example, "myimage.jpg" will stay in the generator result, but "myimage-120x120.jpg" will be removed, because it\'s the same image, just in a smaller size.'),
             'tipLink'        => 'https://smartslider.helpscoutdocs.com/article/1901-images-from-folder-generator#exclude-resized-images'
         ));
 
+        new Text($excludeRow, 'includes', n2_('Filename has to contain'), '', array(
+            'tipLabel'       => n2_('Filename has to contain'),
+            'tipDescription' => n2_('Only those images will be asked down, which have the given texts within their filenames. You can write down multiple texts separated by comma.')
+        ));
+
+        new Text($excludeRow, 'excludes', n2_('Filename cannot contain'), '', array(
+            'tipLabel'       => n2_('Filename cannot contain'),
+            'tipDescription' => n2_('Only those images will be asked down, which don\'t have the given texts within their filenames. You can write down multiple texts separated by comma.')
+        ));
 
         $orderGroup = new ContainerTable($container, 'order-group', n2_('Order'));
         $order      = $orderGroup->createRow('order-row');
@@ -95,8 +63,8 @@ class ImagesInFolderImages extends AbstractGenerator {
     }
 
     protected function _getData($count, $startIndex) {
-        $root   = Filesystem::getImagesFolder();
-        $source = $this->data->get('sourcefolder', '');
+        $root   = GeneratorGroupImagesInFolder::fixSeparators(Filesystem::getImagesFolder());
+        $source = GeneratorGroupImagesInFolder::fixSeparators($this->data->get('sourcefolder', ''));
         if (substr($source, 0, 1) == '*') {
             $media_folder = false;
             $source       = substr($source, 1);
@@ -110,8 +78,11 @@ class ImagesInFolderImages extends AbstractGenerator {
         } else {
             $media_folder = true;
         }
-        $folder = Filesystem::realpath($root . '/' . ltrim(rtrim($source, '/'), '/'));
+        $folder = Filesystem::realpath($root . GeneratorGroupImagesInFolder::trim($source));
         $files  = Filesystem::files($folder);
+
+        $includes = array_map('trim', explode(',', $this->data->get('includes', '')));
+        $excludes = array_map('trim', explode(',', $this->data->get('excludes', '')));
 
         for ($i = count($files) - 1; $i >= 0; $i--) {
             $ext        = strtolower(pathinfo($files[$i], PATHINFO_EXTENSION));
@@ -123,29 +94,38 @@ class ImagesInFolderImages extends AbstractGenerator {
                 'gif',
                 'webp'
             );
-            if (!in_array($ext, $extensions)) {
+            if (!in_array($ext, $extensions) || GeneratorGroupImagesInFolder::found($includes, $files[$i]) === false || GeneratorGroupImagesInFolder::found($excludes, $files[$i]) === true) {
                 array_splice($files, $i, 1);
             }
         }
 
         $IPTC = $this->data->get('iptc', 0) && function_exists('exif_read_data');
 
-        $files = array_slice($files, $startIndex);
+        list($orderBy, $sort) = Common::parse($this->data->get('order', '0|*|asc'));
+
+        $removeResized = $this->data->get('remove_resize', 0);
+
+        if ($orderBy > 0 || $removeResized) {
+            $fileCount = 1000; //hardcoded file number limitation
+        } else {
+            $fileCount = $count;
+            $files     = array_slice($files, $startIndex);
+        }
 
         $data = array();
-        for ($i = 0; $i < $count && isset($files[$i]); $i++) {
-            $image    = $this->pathToUri($folder . '/' . $files[$i], $media_folder);
+        for ($i = 0; $i < $fileCount && isset($files[$i]); $i++) {
+            $image    = GeneratorGroupImagesInFolder::pathToUri($folder . DIRECTORY_SEPARATOR . $files[$i], $media_folder);
             $data[$i] = array(
                 'image'     => $image,
                 'thumbnail' => $image,
                 'title'     => $files[$i],
                 'name'      => preg_replace('/\\.[^.\\s]{3,4}$/', '', $files[$i]),
-                'created'   => filemtime($folder . '/' . $files[$i])
+                'created'   => filemtime($folder . DIRECTORY_SEPARATOR . $files[$i])
             );
             if ($IPTC) {
-                $properties = @exif_read_data($folder . '/' . $files[$i]);
+                $properties = @exif_read_data($folder . DIRECTORY_SEPARATOR . $files[$i]);
                 if ($properties) {
-                    foreach ($properties AS $key => $property) {
+                    foreach ($properties as $key => $property) {
                         if (!is_array($property) && $property != '' && preg_match('/^[a-zA-Z]+$/', $key)) {
                             preg_match('/([2-9][0-9]*)\/([0-9]+)/', $property, $matches);
                             if (empty($matches)) {
@@ -159,7 +139,7 @@ class ImagesInFolderImages extends AbstractGenerator {
             }
         }
 
-        if ($this->data->get('remove_resize', 0)) {
+        if ($removeResized) {
             $new = array();
             for ($i = 0; $i < count($data); $i++) {
                 if (!preg_match('/[_-]\d+x\d+(?=\.[a-z]{3,4}$)/', $data[$i]['title'], $match)) {
@@ -169,40 +149,12 @@ class ImagesInFolderImages extends AbstractGenerator {
             $data = $new;
         }
 
-        list($orderBy, $sort) = Common::parse($this->data->get('order', '0|*|asc'));
-        switch ($orderBy) {
-            case 1:
-                usort($data, array(
-                    $this,
-                    $sort
-                ));
-                break;
-            case 2:
-                usort($data, array(
-                    $this,
-                    'orderByDate_' . $sort
-                ));
-                break;
-            default:
-                break;
+        $data = GeneratorGroupImagesInFolder::order($data, $orderBy, $sort);
+
+        if ($orderBy > 0 || $removeResized) {
+            $data = array_slice($data, $startIndex, $count);
         }
 
         return $data;
-    }
-
-    public function asc($a, $b) {
-        return (strtolower($b['title']) < strtolower($a['title']) ? 1 : -1);
-    }
-
-    public function desc($a, $b) {
-        return (strtolower($a['title']) < strtolower($b['title']) ? 1 : -1);
-    }
-
-    public function orderByDate_asc($a, $b) {
-        return ($b['created'] < $a['created'] ? 1 : -1);
-    }
-
-    public function orderByDate_desc($a, $b) {
-        return ($a['created'] < $b['created'] ? 1 : -1);
     }
 }

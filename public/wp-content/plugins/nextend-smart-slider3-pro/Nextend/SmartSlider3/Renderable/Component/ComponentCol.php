@@ -48,14 +48,7 @@ class ComponentCol extends AbstractComponent {
 
         $this->attributes['style'] = '';
 
-        $devices = array(
-            'desktopportrait',
-            'desktoplandscape',
-            'tabletportrait',
-            'tabletlandscape',
-            'mobileportrait',
-            'mobilelandscape'
-        );
+        $devices = $this->owner->getAvailableDevices();
 
         $desktopportraitInnerAlign = $this->data->get('desktopportraitinneralign', 'inherit');
         $desktopPortraitMaxWidth   = intval($this->data->get('desktopportraitmaxwidth'));
@@ -65,7 +58,9 @@ class ComponentCol extends AbstractComponent {
             if ($this->data->has($device . 'padding')) {
                 $padding = $this->data->get($device . 'padding');
                 if (!empty($padding)) {
-                    $this->style->add($device, '-inner', 'padding:' . $this->spacingToCSS($padding));
+                    $paddingValues = $this->spacingToPxValue($padding);
+
+                    $this->style->add($device, '-inner', 'padding:' . implode('px ', $paddingValues) . 'px');
                 }
             }
 
@@ -78,8 +73,7 @@ class ComponentCol extends AbstractComponent {
                 }
             }
 
-
-            $innerAlign = $this->data->get($device . 'inneralign', 'inherit');
+            $innerAlign = $this->data->get($device . 'inneralign', '');
 
             if ($device == 'desktopportrait') {
                 if ($desktopportraitInnerAlign != 'inherit') {
@@ -163,7 +157,7 @@ class ComponentCol extends AbstractComponent {
                 $width[1] = 2;
                 $this->data->set('colwidth', '1/2');
             }
-            $width = round($width[0] / $width[1] * 100, 1);
+            $width = floor($width[0] / $width[1] * 1000) / 10;
         } else {
             $width = 100;
         }
@@ -189,21 +183,6 @@ class ComponentCol extends AbstractComponent {
     }
 
     protected function upgradeData() {
-
-        $devices = array(
-            'desktopportrait',
-            'desktoplandscape',
-            'tabletportrait',
-            'tabletlandscape',
-            'mobileportrait',
-            'mobilelandscape'
-        );
-        foreach ($devices as $device) {
-            $padding = $this->data->get($device . 'padding', null);
-            if ($padding !== null) {
-                $this->data->set($device . 'padding', str_replace('px+', 'px', $padding));
-            }
-        }
 
         if ($this->data->has('verticalalign')) {
             /**
@@ -274,7 +253,7 @@ class ComponentCol extends AbstractComponent {
 
             $ariaLabel = $this->data->get('aria-label');
             if (!empty($ariaLabel)) {
-                $this->attributes['aria-label'] = $ariaLabel;
+                $this->attributes['aria-label'] = $this->owner->fill($ariaLabel);
             }
 
             if (!isset($this->attributes['onclick']) && !isset($this->attributes['data-n2-lightbox'])) {
@@ -355,7 +334,7 @@ class ComponentCol extends AbstractComponent {
         $this->createProperty('opened', 1);
 
         $this->createDeviceProperty('maxwidth', '0');
-        $this->createDeviceProperty('padding', '10|*|10|*|10|*|10|*|px');
+        $this->createDeviceProperty('padding', '10|*|10|*|10|*|10');
         $this->createDeviceProperty('verticalalign', 'flex-start');
         $this->createDeviceProperty('inneralign', 'inherit');
         $this->createDeviceProperty('order');

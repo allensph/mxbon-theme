@@ -27,6 +27,6 @@ class GeneratorGroupVimeo extends AbstractGeneratorGroup {
 
     protected function loadSources() {
 
-        new VimeoAlbum($this, 'album', 'Album');
+        new VimeoAlbum($this, 'album', 'Showcase');
     }
 }

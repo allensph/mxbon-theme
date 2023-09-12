@@ -9,7 +9,7 @@
     vertical-align: top;
   }
 
-  .n2-ss-animated-heading-wrapper > div,
+  .n2-ss-animated-heading-wrapper > ss-text,
   .n2-ss-animated-heading-wrapper > a {
     vertical-align: middle;
     display: inline;
@@ -53,5 +53,9 @@
     background: #fff;
     height: 100%;
     width: 2px;
+  }
+
+  .n2-ss-animated-heading-wrapper ss-text[data-animation-type="typewriter1"] ss-word {
+      display: inline;
   }
 }

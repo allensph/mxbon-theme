@@ -11,6 +11,7 @@ use Nextend\Framework\Form\Element\Text;
 use Nextend\Framework\Parser\Common;
 use Nextend\Framework\ResourceTranslator\ResourceTranslator;
 use Nextend\SmartSlider3\Generator\AbstractGenerator;
+use Nextend\SmartSlider3\Generator\WordPress\Posts\GeneratorGroupPosts;
 use Nextend\SmartSlider3Pro\Generator\WordPress\TheEventsCalendar\Elements\TheEventsCalendarCategories;
 use Nextend\SmartSlider3Pro\Generator\WordPress\TheEventsCalendar\Elements\TheEventsCalendarMetaKeys;
 use Nextend\SmartSlider3Pro\Generator\WordPress\TheEventsCalendar\Elements\TheEventsCalendarOrganizers;
@@ -268,7 +269,7 @@ class TheEventsCalendarEvents extends AbstractGenerator {
 
         $args['order'] = $order;
 
-        $posts_array = get_posts($args);
+        $posts_array = tribe_get_events($args);
 
         //need a one level array, because of ordering with group result
         $data = array();
@@ -309,7 +310,7 @@ class TheEventsCalendarEvents extends AbstractGenerator {
             $category        = wp_get_object_terms($posts_array[$i]->ID, array('tribe_events_cat'), $event_cats_args);
             $j               = 0;
             if (is_array($category) && count($category) > 1) {
-                foreach ($category AS $cat) {
+                foreach ($category as $cat) {
                     $data[$i]['category_name_' . $j] = $cat->name;
                     $j++;
                 }
@@ -345,6 +346,8 @@ class TheEventsCalendarEvents extends AbstractGenerator {
             $data[$i]['OrganizerEmail']   = isset($organizer_post_meta['_OrganizerEmail'][0]) ? $organizer_post_meta['_OrganizerEmail'][0] : '';
             $data[$i]['OrganizerImage']   = isset($organizer_post_meta['_thumbnail_id'][0]) ? ResourceTranslator::urlToResource(wp_get_attachment_url($organizer_post_meta['_thumbnail_id'][0])) : '';
 
+            $data[$i] = array_merge($data[$i], GeneratorGroupPosts::extractPostMeta($post_meta, 'ec_'));
+            $data[$i] = array_merge($data[$i], GeneratorGroupPosts::getACFData($posts_array[$i]->ID, 'acf_'));
         }
 
         return $data;

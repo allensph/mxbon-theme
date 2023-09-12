@@ -13,7 +13,7 @@ class TheEventsCalendarMetaKeys extends Select {
         $this->options['0'] = n2_('Nothing');
 
         $metaKeys = $this->generate_meta_keys();
-        foreach ($metaKeys AS $metaKey) {
+        foreach ($metaKeys as $metaKey) {
             $this->options[$metaKey] = $metaKey;
         }
     }
@@ -25,7 +25,7 @@ class TheEventsCalendarMetaKeys extends Select {
             WHERE $wpdb->posts.post_type = 'tribe_events'";
         $meta_keys = $wpdb->get_results($query, ARRAY_A);
         $return    = array();
-        foreach ($meta_keys AS $num => $array) {
+        foreach ($meta_keys as $num => $array) {
             if (!empty($array['meta_key'])) {
                 $return[] = $array['meta_key'];
             }

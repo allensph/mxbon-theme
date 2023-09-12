@@ -6,6 +6,7 @@ namespace Nextend\SmartSlider3\Application\Admin\FormManager\Slider;
 
 use Nextend\Framework\Form\Container\ContainerTable;
 use Nextend\Framework\Form\Element\Grouping;
+use Nextend\Framework\Form\Element\Message\Notice;
 use Nextend\Framework\Form\Element\Message\Warning;
 use Nextend\Framework\Form\Element\OnOff;
 use Nextend\Framework\Form\Element\Select;
@@ -53,7 +54,7 @@ class SliderOptimize extends AbstractSliderTab {
 
         $row1 = $table->createRow('loading-1');
 
-        new Select($row1, 'loading-type', 'Loading type', '', array(
+        new Select($row1, 'loading-type', n2_('Loading type'), '', array(
             'options'            => array(
                 ''            => n2_('Instant'),
                 'afterOnLoad' => n2_('After page loaded'),
@@ -148,7 +149,8 @@ class SliderOptimize extends AbstractSliderTab {
         new OnOff($row3, 'optimize-webp', n2_('Convert to WebP'), '0', array(
             'relatedFieldsOn' => array(
                 'slideroptimize-slide-webp',
-                'slideroptimize-quality'
+                'slideroptimize-quality',
+                'slideroptimize-slide-webp-2'
             )
         ));
     
@@ -169,7 +171,8 @@ class SliderOptimize extends AbstractSliderTab {
                 'slideroptimize-slide-height-tablet',
                 'slideroptimize-slide-width-mobile',
                 'slideroptimize-slide-height-mobile',
-                'slideroptimize-slide-width-retina'
+                'slideroptimize-slide-width-retina',
+                'slideroptimize-slide-scale-notice'
             )
         ));
     
@@ -200,6 +203,10 @@ class SliderOptimize extends AbstractSliderTab {
             'wide' => 4
         ));
         new OnOff($optimizeWebp, 'optimize-slide-width-retina', n2_('Retina'), 0);
+
+        $resizeWarning = new Grouping($row3, 'optimize-slide-webp-2');
+        new Notice($resizeWarning, 'optimize-slide-scale-notice', n2_('Instruction'), n2_('If your images look blurry on small screens, use the available height option to match the aspect ratio of the slider and image on that device.'));
+
     
 
         $row4 = $table->createRow('optimize-slide-4');
@@ -277,7 +284,7 @@ class SliderOptimize extends AbstractSliderTab {
         new OnOff($optimizeWebp, 'layer-image-width-retina', n2_('Retina'), 0);
 
         $row2 = $table->createRow('optimize-layer-2');
-        new OnOff($row2, 'layer-image-base64', 'Base64 embed', '0', array(
+        new OnOff($row2, 'layer-image-base64', n2_('Base64 embed'), '0', array(
             'relatedFieldsOn' => array(
                 'sliderlayer-image-base64-size'
             ),
@@ -359,10 +366,7 @@ class SliderOptimize extends AbstractSliderTab {
         $table = new ContainerTable($this->tab, 'optimize-other', n2_('Other'));
 
         $row1 = $table->createRow('optimize-other-1');
-    
-        if (defined('JETPACK__VERSION')) {
-            new OnOff($row1, 'optimize-jetpack-photon', n2_('JetPack Photon image optimizer'), 0);
-        }
+
         new OnOff($row1, 'slides-background-video-mobile', n2_('Background video on mobile'), 1);
     
     }

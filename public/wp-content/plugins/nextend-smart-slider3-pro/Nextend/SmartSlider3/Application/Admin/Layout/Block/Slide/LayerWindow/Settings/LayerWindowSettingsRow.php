@@ -20,7 +20,6 @@ use Nextend\Framework\Form\Element\Text\HiddenText;
 use Nextend\Framework\Form\Element\Text\NumberAutoComplete;
 use Nextend\Framework\Form\Element\Text\NumberSlider;
 use Nextend\Framework\Form\Element\Text\Url;
-use Nextend\Framework\Form\Element\Unit;
 use Nextend\Framework\Form\Fieldset\LayerWindow\FieldsetLayerWindowLabelFields;
 use Nextend\Framework\Form\Fieldset\LayerWindow\FieldsetLayerWindowStyleMode;
 use Nextend\SmartSlider3\Form\Element\Columns;
@@ -76,7 +75,12 @@ class LayerWindowSettingsRow extends AbstractLayerWindowSettings {
             'tipDescription' => n2_('Breaks the columns to the given amount of rows.')
         ));
 
-        new OnOff($rowGeneral, 'row-fullwidth', n2_('Full width'), 1);
+        new OnOff($rowGeneral, 'row-fullwidth', n2_('Full width'), 1, array(
+            'relatedFieldsOn' => array(
+                'layerrow-wrap-after'
+            )
+        ));
+
         new OnOff($rowGeneral, 'row-stretch', n2_('Stretch'), 0, array(
             'tipLabel'       => n2_('Stretch'),
             'tipDescription' => n2_('Makes the row fill the available vertical space')
@@ -225,11 +229,12 @@ class LayerWindowSettingsRow extends AbstractLayerWindowSettings {
 
         $spacing = new FieldsetLayerWindowLabelFields($container, 'fields-row-spacing', n2_('Spacing'));
 
-        $padding = new MarginPadding($spacing, 'row-padding', n2_('Padding'), '10|*|10|*|10|*|10|*|px', array(
+        $padding = new MarginPadding($spacing, 'row-padding', n2_('Padding'), '10|*|10|*|10|*|10', array(
             'rowAttributes' => array(
                 'data-devicespecific' => ''
             )
         ));
+        $padding->setUnit('px');
 
         for ($i = 1; $i < 5; $i++) {
             new NumberAutoComplete($padding, 'row-padding-' . $i, false, '', array(
@@ -243,11 +248,5 @@ class LayerWindowSettingsRow extends AbstractLayerWindowSettings {
                 'style'  => 'width: 22px;'
             ));
         }
-
-        new Unit($padding, 'row-padding-5', '', '', array(
-            'units' => array(
-                'px' => 'px'
-            )
-        ));
     }
 }

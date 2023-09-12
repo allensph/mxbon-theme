@@ -41,7 +41,7 @@ class Radio extends AbstractFieldHidden {
 
         $html = '';
         $i    = 0;
-        foreach ($this->options AS $value => $label) {
+        foreach ($this->options as $value => $label) {
             $html .= Html::tag('div', array(
                 'class' => 'n2_field_radio__option' . ($this->isSelected($value) ? ' n2_field_radio__option--selected' : '')
             ), Html::tag('div', array(

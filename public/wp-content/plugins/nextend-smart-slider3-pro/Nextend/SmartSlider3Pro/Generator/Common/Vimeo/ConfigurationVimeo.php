@@ -2,6 +2,7 @@
 
 namespace Nextend\SmartSlider3Pro\Generator\Common\Vimeo;
 
+use Exception;
 use Nextend\Framework\Data\Data;
 use Nextend\Framework\Form\Container\ContainerTable;
 use Nextend\Framework\Form\Element\Message\Notice;
@@ -105,7 +106,7 @@ class ConfigurationVimeo extends AbstractGeneratorGroupConfiguration {
         new Notice($settings, 'callback', n2_('Callback url'), $this->getCallbackUrl($MVCHelper->getRouter()));
         new Token($settings);
 
-        echo $form->render();
+        $form->render();
 
         if ($this->data->get('client_id') != '' && $this->data->get('client_secret') != '') {
             try {
@@ -117,7 +118,7 @@ class ConfigurationVimeo extends AbstractGeneratorGroupConfiguration {
                         Notification::error($response['body']['error']);
                     }
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 Notification::error($e->getMessage());
             }
         }
@@ -148,7 +149,7 @@ class ConfigurationVimeo extends AbstractGeneratorGroupConfiguration {
         if (session_id() == "") {
             session_start();
         }
-        if (isset($_REQUEST['state']) && isset($_SESSION['vimeostate']) && $_REQUEST['state'] == $_SESSION['vimeostate']) {
+        if (Request::$REQUEST->getInt('state') !== 0 && isset($_SESSION['vimeostate']) && Request::$REQUEST->getInt('state') == $_SESSION['vimeostate']) {
             $this->addData($_SESSION['data'], false);
             unset($_SESSION['data']);
             unset($_SESSION['vimeostate']);
@@ -162,7 +163,7 @@ class ConfigurationVimeo extends AbstractGeneratorGroupConfiguration {
                     )
                 ));
 
-                $response = $client->accessToken($_REQUEST['code'], $FinishAuthUrl);
+                $response = $client->accessToken(Request::$REQUEST->getVar('code'), $FinishAuthUrl);
 
                 if ($response['status'] == 200) {
                     $this->data->set('access_token', $response['body']['access_token']);
@@ -173,7 +174,7 @@ class ConfigurationVimeo extends AbstractGeneratorGroupConfiguration {
                 } else {
                     return $client->response['body']['error_description'];
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 return $e->getMessage();
             }
         } else {

@@ -75,14 +75,14 @@ class IconTab extends AbstractFieldHidden {
 
     public function renderOptions() {
         $html = '';
-        foreach ($this->options AS $option => $icon) {
+        foreach ($this->options as $option => $icon) {
             $class = 'n2_field_icon_tab__option';
             if ($option == $this->defaultValue) {
                 $class .= ' n2_field_icon_tab__option--selected';
             }
 
             $element = array(
-                "class"       => $class,
+                "class"         => $class,
                 "data-ssoption" => $option
             );
 

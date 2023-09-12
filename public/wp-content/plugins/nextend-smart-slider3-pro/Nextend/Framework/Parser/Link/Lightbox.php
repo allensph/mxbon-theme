@@ -8,6 +8,7 @@ namespace Nextend\Framework\Parser\Link;
 use Nextend\Framework\Asset\Predefined;
 use Nextend\Framework\Platform\Platform;
 use Nextend\Framework\ResourceTranslator\ResourceTranslator;
+use Nextend\SmartSlider3\Settings;
 
 class Lightbox implements ParserInterface {
 
@@ -34,7 +35,7 @@ class Lightbox implements ParserInterface {
                 }
             
 
-                $argument = ResourceTranslator::toUrl(array_shift($data['urls']));
+                $attributes['data-n2-lightbox'] = ResourceTranslator::toUrl(array_shift($data['urls']));
                 if (!empty($data['titles'][0])) {
                     $attributes['data-title'] = array_shift($data['titles']);
                 }
@@ -59,9 +60,9 @@ class Lightbox implements ParserInterface {
 
             } else {
 
-                $urls     = explode(',', $argument);
-                $parts    = explode(';', array_shift($urls), 2);
-                $argument = ResourceTranslator::toUrl($parts[0]);
+                $urls                           = explode(',', $argument);
+                $parts                          = explode(';', array_shift($urls), 2);
+                $attributes['data-n2-lightbox'] = ResourceTranslator::toUrl($parts[0]);
                 if (!empty($parts[1])) {
                     $attributes['data-title'] = $parts[1];
                 }
@@ -85,7 +86,10 @@ class Lightbox implements ParserInterface {
                 }
             }
         }
+        $attributes['role'] = 'button';
 
-        return $argument;
+        $attributes['data-privacy'] = intval(Settings::get('youtube-privacy-enhanced', 0));
+
+        return '#';
     }
 }

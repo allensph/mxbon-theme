@@ -19,12 +19,12 @@ class ItemInputFrontend extends AbstractItemFrontend {
 
         $slideSubmitAction = $this->data->get('submit');
         if (!empty($slideSubmitAction)) {
-            $owner->addScript('_N2.$("#' . $this->id . '").closest(".n2-ss-slide").on("' . $this->data->get('submit') . '", function(e){_N2.$("#' . $this->id . '").trigger("submit")})');
+            $owner->addScript('(function(){var form=document.getElementById("' . $this->id . '");form.closest(".n2-ss-slide").addEventListener("' . $this->data->get('submit') . '",function(){form.submit()})})();');
         }
 
         $parameters     = explode('&', $owner->fill($this->data->get('parameters')));
         $parametersHTML = '';
-        foreach ($parameters AS $parameter) {
+        foreach ($parameters as $parameter) {
             $parameter = explode('=', $parameter);
             if (count($parameter) == 2) {
                 $parametersHTML .= Html::tag('input', array(
@@ -38,7 +38,7 @@ class ItemInputFrontend extends AbstractItemFrontend {
 
 
         $button      = '';
-        $buttonLabel = $owner->fill($this->data->get('buttonlabel'));
+        $buttonLabel = strip_tags($owner->fill($this->data->get('buttonlabel')));
         if (!empty($buttonLabel)) {
 
             $buttonFont  = $owner->addFont($this->data->get('buttonfont'), 'hover');
@@ -81,7 +81,7 @@ class ItemInputFrontend extends AbstractItemFrontend {
         $inputStyle = $owner->addStyle($this->data->get('inputstyle'), 'heading');
 
         $button      = '';
-        $buttonLabel = $owner->fill($this->data->get('buttonlabel'));
+        $buttonLabel = strip_tags($owner->fill($this->data->get('buttonlabel')));
         if (!empty($buttonLabel)) {
             $buttonFont  = $owner->addFont($this->data->get('buttonfont'), 'hover');
             $buttonStyle = $owner->addStyle($this->data->get('buttonstyle'), 'heading');

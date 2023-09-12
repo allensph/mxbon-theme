@@ -38,7 +38,7 @@ class ModelSplitText extends ModelVisual {
         $setsTab = new FieldsetVisualSet($form->getContainer(), 'splittextanimation-sets', n2_('Sets'));
         new Select($setsTab, 'sets', false, '');
 
-        echo $form->render();
+        $form->render();
     }
 
     public function renderForm() {

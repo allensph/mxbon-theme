@@ -6,6 +6,7 @@ namespace Nextend\SmartSlider3Pro\Renderable\Item\ImageBox;
 
 use Nextend\Framework\Icon\Icon;
 use Nextend\Framework\Parser\Color;
+use Nextend\Framework\Sanitize;
 use Nextend\Framework\View\Html;
 use Nextend\SmartSlider3\Renderable\AbstractRenderableOwner;
 use Nextend\SmartSlider3\Renderable\Component\AbstractComponent;
@@ -53,12 +54,18 @@ class ItemImageBoxFrontend extends AbstractItemFrontend {
         $icon                = $this->data->get('icon');
         $image               = $this->data->get('image');
         $imageType           = $this->data->get('imagetype', 'icon');
+        $linkAttributes      = array();
         if (!empty($icon) && $imageType == 'icon') {
             $iconData  = Icon::render($icon);
             $imageHTML .= Html::tag('i', array(
                 'class' => 'n2i ' . $iconData['class'],
                 'style' => 'color: ' . Color::colorToRGBA($this->data->get('iconcolor')) . ';font-size:' . ($this->data->get('iconsize') / 16 * 100) . '%'
             ), $iconData['ligature']);
+
+            $ariaLabel = $this->data->get('href-aria-label', '');
+            if (!empty($ariaLabel)) {
+                $linkAttributes['aria-label'] = $ariaLabel;
+            }
         } else if (!empty($image)) {
 
             if ($layout == 'top' || $layout == 'bottom') {
@@ -82,7 +89,7 @@ class ItemImageBoxFrontend extends AbstractItemFrontend {
             $html .= Html::tag('div', array(
                 'class' => 'n2-ss-item-imagebox-image',
                 'style' => $imageContainerStyle
-            ), $this->getLink($imageHTML));
+            ), $this->getLink($imageHTML, $linkAttributes));
         }
         // END IMAGE SECTION
 
@@ -93,7 +100,7 @@ class ItemImageBoxFrontend extends AbstractItemFrontend {
             'style' => 'padding:' . implode('px ', explode('|*|', $this->data->get('padding'))) . 'px'
         ));
 
-        $heading = $this->data->get('heading');
+        $heading = Sanitize::filter_allowed_html($this->data->get('heading'));
         if (!empty($heading)) {
             $font = $owner->addFont($this->data->get('fonttitle'), 'hover');
 
@@ -101,7 +108,7 @@ class ItemImageBoxFrontend extends AbstractItemFrontend {
             $html     .= $this->getLink(Html::tag($priority > 0 ? 'h' . $priority : $priority, array('class' => $font), $owner->fill($heading)));
         }
 
-        $description = $this->data->get('description');
+        $description = Sanitize::filter_allowed_html($this->data->get('description'));
         if (!empty($description)) {
             $font = $owner->addFont($this->data->get('fontdescription'), 'paragraph');
 

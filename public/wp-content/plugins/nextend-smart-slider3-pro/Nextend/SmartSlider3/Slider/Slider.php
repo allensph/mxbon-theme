@@ -10,6 +10,7 @@ use Nextend\Framework\Asset\Css\Css;
 use Nextend\Framework\Asset\Js\Js;
 use Nextend\Framework\Data\Data;
 use Nextend\Framework\Pattern\MVCHelperTrait;
+use Nextend\Framework\Settings;
 use Nextend\Framework\View\Html;
 use Nextend\SmartSlider3\Application\Model\ModelSliders;
 use Nextend\SmartSlider3\Renderable\AbstractRenderable;
@@ -43,6 +44,8 @@ class Slider extends AbstractRenderable {
     public $sliderId = 0;
 
     public $cacheId = '';
+
+    public $isFrame = false;
 
     /** @var  Data */
     public $data;
@@ -78,9 +81,14 @@ class Slider extends AbstractRenderable {
      */
     public $assets;
 
+    /**
+     * @var string contains already escaped data
+     */
     public $staticHtml = '';
 
     private $sliderRow;
+
+    private $fallbackId;
 
     public $exposeSlideData = array(
         'title'         => true,
@@ -153,8 +161,7 @@ class Slider extends AbstractRenderable {
                 $this->hasError = true;
                 throw new Exception('Slider does not exists!');
             } else {
-
-                if (!$this->isAdminArea && $sliderRow['status'] != 'published') {
+                if (!$this->isAdminArea && $sliderRow['slider_status'] != 'published') {
                     $this->hasError = true;
                     throw new Exception('Slider is not published!');
                 }
@@ -167,10 +174,10 @@ class Slider extends AbstractRenderable {
                     unset($sliderData['type']);
 
                     $this->data   = new Data($sliderRow);
-                    $this->params = new SliderParams($sliderRow['type'], $sliderData);
+                    $this->params = new SliderParams($this->sliderId, $sliderRow['type'], $sliderData);
                 } else {
                     $this->data   = new Data($sliderRow);
-                    $this->params = new SliderParams($sliderRow['type'], $sliderRow['params'], true);
+                    $this->params = new SliderParams($this->sliderId, $sliderRow['type'], $sliderRow['params'], true);
                 }
 
                 switch ($sliderRow['type']) {
@@ -209,10 +216,32 @@ class Slider extends AbstractRenderable {
         if ($this->loadState < self::LOAD_STATE_ALL) {
 
             $this->initSlides();
-
-
+            if (!$this->hasSlides() && !$this->fallbackId) {
+                $fallback = $this->params->get('fallback-slider');
+                if (!empty($fallback)) {
+                    $this->fallbackId = $this->sliderId;
+                    $this->sliderId   = $this->setSliderIDFromAlias($fallback);
+                    $this->setElementId();
+                    $this->loadState = self::LOAD_STATE_NONE;
+                    $this->initSlides();
+                }
+            }
+        
             $this->loadState = self::LOAD_STATE_ALL;
         }
+    }
+
+
+    private function setSliderIDFromAlias($slider) {
+        if (is_numeric($slider)) {
+            return $slider;
+        } else {
+            $slidersModel = new ModelSliders($this->MVCHelper);
+            $slider       = $slidersModel->getByAlias($slider);
+
+            return $slider['id'];
+        }
+
     }
 
     private function loadSlider() {
@@ -299,29 +328,19 @@ class Slider extends AbstractRenderable {
             }
         }
         if (!$this->isGroup) {
-            $slider = $this->features->translateUrl->renderSlider($slider) . HTML::tag('ss3-loader', array(), '');
+            $slider = $this->features->translateUrl->replaceUrl($slider) . HTML::tag('ss3-loader', array(), '');
 
             $slider = $this->features->align->renderSlider($slider, $this->assets->sizes['width']);
             $slider = $this->features->margin->renderSlider($slider);
 
 
-            Css::addInline($this->sliderType->getStyle(), $this->elementId);
-
-
-            $jsInlineMode = \Nextend\Framework\Settings::get('javascript-inline', 'head');
-            if (class_exists('ElementorPro\Plugin', false)) {
-                $jsInlineMode = 'body';
-            }
-        
-            switch ($jsInlineMode) {
-                case 'body':
-                    $slider .= Html::script($this->sliderType->getScript());
-                    break;
-                case 'head':
-                default:
-                    Js::addInline($this->sliderType->getScript());
-                    break;
-            }
+            Css::addInline($this->features->translateUrl->replaceUrl($this->sliderType->getStyle()), $this->elementId);
+            /**
+             * On WordPress, we need to add the slider's Inline JavaScript into the Head.
+             *
+             * @see SSDEV-3540
+             */
+            Js::addInline($this->sliderType->getScript());
         }
 
         $html = '';
@@ -338,13 +357,18 @@ class Slider extends AbstractRenderable {
 
 
         $sliderAttributes = array(
-            'class'      => implode(' ', $classes)
+            'class'     => implode(' ', $classes),
+            'data-ssid' => $this->sliderId
         );
 
+        if ($this->fallbackId) {
+            $sliderAttributes['data-fallback-for'] = $this->fallbackId;
+        }
+
         $ariaLabel = $this->params->get('aria-label', 'Slider');
-        if(!empty($ariaLabel)){
-            $sliderAttributes['tabindex'] = '0';
-            $sliderAttributes['role'] = 'region';
+        if (!empty($ariaLabel)) {
+            $sliderAttributes['tabindex']   = '0';
+            $sliderAttributes['role']       = 'region';
             $sliderAttributes['aria-label'] = $ariaLabel;
         }
 
@@ -377,9 +401,7 @@ class Slider extends AbstractRenderable {
 
         $html .= Html::tag("div", $sliderAttributes, $slider);
 
-        if (!$this->params->get('optimize-jetpack-photon', 0)) {
-            AssetManager::$image->add($this->images);
-        }
+        AssetManager::$image->add($this->images);
 
         $needDivWrap = false;
         if (!$this->isGroup && $this->features->responsive->type === 'fullpage') {
@@ -409,7 +431,12 @@ class Slider extends AbstractRenderable {
         }
 
         if ($needDivWrap) {
-            return Html::tag("div", array(), $html);
+            $attr = array();
+            if ($this->params->get('clear-both', 1)) {
+                $attr['class'] = 'n2_clear';
+            }
+
+            return Html::tag("div", $attr, $html);
         }
 
         return $html;
@@ -483,5 +510,9 @@ class Slider extends AbstractRenderable {
         $this->initSlider();
 
         return $this->isGroup;
+    }
+
+    public function isLegacyFontScale() {
+        return !!$this->params->get('legacy-font-scale', 0);
     }
 }

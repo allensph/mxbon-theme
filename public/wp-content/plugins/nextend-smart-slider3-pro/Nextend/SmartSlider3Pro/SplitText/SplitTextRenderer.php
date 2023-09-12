@@ -115,13 +115,13 @@ class SplitTextRenderer {
             'borderradius'    => '0',
             'extra'           => '',
         ), $tabs[0]);
-        foreach ($tabs AS $k => $tab) {
+        foreach ($tabs as $k => $tab) {
             $search[]  = '@tab' . $k;
             $replace[] = self::$animation->animation($tab);
         }
 
         $template = '';
-        foreach (self::$mode[$mode]['selectors'] AS $s => $animation) {
+        foreach (self::$mode[$mode]['selectors'] as $s => $animation) {
             if (!in_array($animation, $search) || !empty($replace[array_search($animation, $search)])) {
                 $template .= $s . "{" . $animation . "}";
             }

@@ -19,10 +19,10 @@ class ImageEdit {
         if (strpos($imageUrlOrPath, Filesystem::getBasePath()) === 0) {
             $imageUrl = Url::pathToUri($imageUrlOrPath);
         } else {
-            $imageUrl = ResourceTranslator::toUrl($imageUrlOrPath);
+            $imageUrl = ResourceTranslator::toUrl(ResourceTranslator::pathToResource($imageUrlOrPath));
         }
 
-        if ($targetWidth <= 0 || $targetHeight <= 0 || !function_exists('imagecreatefrompng')) {
+        if (!extension_loaded('gd') || $targetWidth <= 0 || $targetHeight <= 0) {
             return $imageUrl;
         }
 
@@ -48,8 +48,18 @@ class ImageEdit {
             }
 
             $pathInfo  = pathinfo(parse_url($imageUrl, PHP_URL_PATH));
-            $extension = self::validateGDExtension($pathInfo['extension']);
+            $extension = false;
+            if (isset($pathInfo['extension'])) {
+                $extension = self::validateGDExtension($pathInfo['extension']);
+            }
+
+            $extension = self::checkMetaExtension($originalImageUrl, $extension);
+
             if (!$extension) {
+                return $originalImageUrl;
+            }
+
+            if (strtolower($extension) === 'webp' && !function_exists('imagecreatefromwebp')) {
                 return $originalImageUrl;
             }
 
@@ -92,6 +102,12 @@ class ImageEdit {
                         return $originalImageUrl;
                     }
                     $extension = 'png';
+                    break;
+                case IMAGETYPE_WEBP:
+                    if (!function_exists('imagecreatefromwebp')) {
+                        return $originalImageUrl;
+                    }
+                    $extension = 'webp';
                     break;
             }
             if (!$extension) {
@@ -138,6 +154,9 @@ class ImageEdit {
                     $image = $rotated;
                 }
             }
+        } else if ($extension == 'webp') {
+            //@TODO: should we need to care about rotation?
+            $image = @imagecreatefromwebp($imagePath);
         }
 
         if (isset($image) && $image) {
@@ -155,6 +174,10 @@ class ImageEdit {
                         imagepng($image, $targetFile);
                     } else if ($extension == 'jpg') {
                         imagejpeg($image, $targetFile, $quality);
+                    } else if ($extension == 'webp') {
+                        imagesavealpha($image, true);
+                        imagealphablending($image, false);
+                        imagewebp($image, $targetFile, $quality);
                     }
                     imagedestroy($image);
 
@@ -162,14 +185,14 @@ class ImageEdit {
                 }
 
                 if ($originalWidth / $targetWidth > $originalHeight / $targetHeight) {
-                    $targetWidth = $originalWidth / ($originalHeight / $targetHeight);
+                    $targetWidth = round($originalWidth / ($originalHeight / $targetHeight));
                 } else {
-                    $targetHeight = $originalHeight / ($originalWidth / $targetWidth);
+                    $targetHeight = round($originalHeight / ($originalWidth / $targetWidth));
                 }
             }
             if ($rotated || $originalWidth != $targetWidth || $originalHeight != $targetHeight) {
                 $newImage = imagecreatetruecolor($targetWidth, $targetHeight);
-                if ($extension == 'png') {
+                if ($extension == 'png' || $extension == 'webp') {
                     imagesavealpha($newImage, true);
                     imagealphablending($newImage, false);
                     $transparent = imagecolorallocatealpha($newImage, 255, 255, 255, 127);
@@ -195,6 +218,8 @@ class ImageEdit {
                 imagepng($newImage, $targetFile);
             } else if ($extension == 'jpg') {
                 imagejpeg($newImage, $targetFile, $quality);
+            } else if ($extension == 'webp') {
+                imagewebp($newImage, $targetFile, $quality);
             }
             imagedestroy($newImage);
 
@@ -213,7 +238,7 @@ class ImageEdit {
             $imageUrl = ResourceTranslator::toUrl($imageUrlOrPath);
         }
 
-        if ($scale <= 0 || !function_exists('imagecreatefrompng')) {
+        if (!extension_loaded('gd') || $scale <= 0) {
             return $imageUrl;
         }
 
@@ -235,8 +260,18 @@ class ImageEdit {
             }
 
             $pathInfo  = pathinfo(parse_url($imageUrl, PHP_URL_PATH));
-            $extension = self::validateGDExtension($pathInfo['extension']);
+            $extension = false;
+            if (isset($pathInfo['extension'])) {
+                $extension = self::validateGDExtension($pathInfo['extension']);
+            }
+
+            $extension = self::checkMetaExtension($imageUrl, $extension);
+
             if (!$extension) {
+                return $originalImageUrl;
+            }
+
+            if (strtolower($extension) === 'webp' && !function_exists('imagecreatefromwebp')) {
                 return $originalImageUrl;
             }
 
@@ -263,6 +298,12 @@ class ImageEdit {
                         return $originalImageUrl;
                     }
                     $extension = 'png';
+                    break;
+                case IMAGETYPE_WEBP:
+                    if (!function_exists('imagecreatefromwebp')) {
+                        return $originalImageUrl;
+                    }
+                    $extension = 'webp';
                     break;
             }
             if (!$extension) {
@@ -303,6 +344,9 @@ class ImageEdit {
                     $image = $rotated;
                 }
             }
+        } else if ($extension == 'webp') {
+            //@TODO: should we need to care about rotation?
+            $image = @imagecreatefromwebp($imagePath);
         }
 
         if ($image) {
@@ -312,7 +356,7 @@ class ImageEdit {
             $targetHeight   = $originalHeight * $scale;
             if ((isset($rotated) && $rotated) || $originalWidth != $targetWidth || $originalHeight != $targetHeight) {
                 $newImage = imagecreatetruecolor($targetWidth, $targetHeight);
-                if ($extension == 'png') {
+                if ($extension == 'png' || $extension == 'webp') {
                     imagesavealpha($newImage, true);
                     imagealphablending($newImage, false);
                     $transparent = imagecolorallocatealpha($newImage, 255, 255, 255, 127);
@@ -334,6 +378,8 @@ class ImageEdit {
                 imagepng($newImage, $targetFile);
             } else if ($extension == 'jpg') {
                 imagejpeg($newImage, $targetFile, $quality);
+            } else if ($extension == 'webp') {
+                imagewebp($newImage, $targetFile, $quality);
             }
             imagedestroy($newImage);
 
@@ -379,12 +425,12 @@ class ImageEdit {
         $verticalRatio   = $height / $OriginalHeight;
 
         if ($horizontalRatio > $verticalRatio) {
-            $new_h = $horizontalRatio * $OriginalHeight;
-            $dst_y = ($height - $new_h) / 2 * $y / 50;
+            $new_h = round($horizontalRatio * $OriginalHeight);
+            $dst_y = round(($height - $new_h) / 2 * $y / 50);
             $dst_h = $new_h;
         } else {
-            $new_w = $verticalRatio * $originalWidth;
-            $dst_x = ($width - $new_w) / 2 * $x / 50;
+            $new_w = round($verticalRatio * $originalWidth);
+            $dst_x = round(($width - $new_w) / 2 * $x / 50);
             $dst_w = $new_w;
         }
 
@@ -406,6 +452,7 @@ class ImageEdit {
             'jpg'  => 'jpg',
             'jpeg' => 'jpg',
             'gif'  => 'gif',
+            'webp' => 'webp',
             'svg'  => 'svg'
         );
         $extension = strtolower($extension);
@@ -486,7 +533,7 @@ class ImageEdit {
             $imageUrl = ResourceTranslator::toUrl($imageUrlOrPath);
         }
 
-        if (!function_exists('imagecreatefrompng') || ($options['mode'] === 'scale' && $options['scale'] <= 0)) {
+        if (!extension_loaded('gd') || $options['mode'] === 'scale' && $options['scale'] <= 0) {
             return Filesystem::pathToAbsoluteURL($imageUrl);
         }
 
@@ -509,8 +556,14 @@ class ImageEdit {
             }
 
             $pathInfo  = pathinfo(parse_url($imageUrl, PHP_URL_PATH));
-            $extension = self::validateGDExtension($pathInfo['extension']);
-            if (!$extension) {
+            $extension = false;
+            if (isset($pathInfo['extension'])) {
+                $extension = self::validateGDExtension($pathInfo['extension']);
+            }
+
+            $extension = self::checkMetaExtension($imageUrl, $extension);
+
+            if (!$extension || (strtolower($extension) === 'webp' && !function_exists('imagecreatefromwebp')) || !ini_get('allow_url_fopen')) {
                 return $originalImageUrl;
             }
 
@@ -532,6 +585,12 @@ class ImageEdit {
                     break;
                 case IMAGETYPE_PNG:
                     $extension = 'png';
+                    break;
+                case IMAGETYPE_WEBP:
+                    if (!function_exists('imagecreatefromwebp')) {
+                        return $originalImageUrl;
+                    }
+                    $extension = 'webp';
                     break;
             }
             if (!$extension) {
@@ -582,6 +641,14 @@ class ImageEdit {
                     $image = $rotated;
                 }
             }
+        } else if ($extension == 'webp') {
+            //@TODO: should we need to care about rotation?
+            $image = @imagecreatefromwebp($imagePath);
+            if (!imageistruecolor($image)) {
+                imagepalettetotruecolor($image);
+                imagealphablending($image, true);
+                imagesavealpha($image, true);
+            }
         }
 
         if ($image) {
@@ -589,8 +656,8 @@ class ImageEdit {
             $originalHeight = imagesy($image);
             switch ($options['mode']) {
                 case 'scale':
-                    $targetWidth  = $originalWidth * $options['scale'];
-                    $targetHeight = $originalHeight * $options['scale'];
+                    $targetWidth  = round($originalWidth * $options['scale']);
+                    $targetHeight = round($originalHeight * $options['scale']);
                     break;
                 case 'resize':
                     $targetWidth  = $options['width'];
@@ -625,5 +692,18 @@ class ImageEdit {
         }
 
         throw new Exception('Unable to scale image: ' . $imagePath);
+    }
+
+    public static function checkMetaExtension($imageUrl, $originalExtension) {
+        if (strpos($imageUrl, 'dst-jpg') !== false) {
+            return 'jpg';
+        } else if (strpos($imageUrl, 'dst-png') !== false) {
+            return 'png';
+        } else if (strpos($imageUrl, 'dst-webp') !== false) {
+            return 'webp';
+        } else {
+            // not Instagram or Facebook url
+            return $originalExtension;
+        }
     }
 }

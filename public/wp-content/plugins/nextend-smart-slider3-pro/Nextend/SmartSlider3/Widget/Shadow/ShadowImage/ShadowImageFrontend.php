@@ -4,7 +4,6 @@
 namespace Nextend\SmartSlider3\Widget\Shadow\ShadowImage;
 
 
-use Nextend\Framework\Asset\Js\Js;
 use Nextend\Framework\FastImageSize\FastImageSize;
 use Nextend\Framework\ResourceTranslator\ResourceTranslator;
 use Nextend\Framework\View\Html;

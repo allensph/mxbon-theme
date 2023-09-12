@@ -63,7 +63,7 @@ class ItemAreaFrontend extends AbstractItemFrontend {
 
 
         $height = '100%';
-        
+
         $_height = intval($this->data->get('height'));
         if ($_height > 0) {
             $height = $_height . 'px';

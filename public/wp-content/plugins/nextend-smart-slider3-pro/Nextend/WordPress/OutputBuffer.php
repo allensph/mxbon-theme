@@ -84,6 +84,30 @@ class OutputBuffer {
                 ));
             });
         }
+
+        if (class_exists('Ionos\Performance\Caching')) {
+            /**
+             * @see SSDEV-3780
+             */
+            add_action('template_redirect', function () {
+                ob_start(array(
+                    $this,
+                    "outputCallback"
+                ));
+            });
+        }
+
+        if (class_exists('WP_Grid_Builder\Autoload')) {
+            /**
+             * @see SSDEV-3888
+             */
+            add_action('template_redirect', function () {
+                ob_start(array(
+                    $this,
+                    "outputCallback"
+                ));
+            });
+        }
     }
 
     /**
@@ -207,14 +231,16 @@ class OutputBuffer {
 
     public function closeOutputBuffers() {
 
-        $handlers = ob_list_handlers();
-        $callback = self::class . '::outputCallback';
-        if (in_array($callback, $handlers)) {
-            for ($i = count($handlers) - 1; $i >= 0; $i--) {
-                ob_end_flush();
+        if (!defined('WC_DOING_AJAX') || !WC_DOING_AJAX) {
+            $handlers = ob_list_handlers();
+            $callback = self::class . '::outputCallback';
+            if (in_array($callback, $handlers)) {
+                for ($i = count($handlers) - 1; $i >= 0; $i--) {
+                    ob_end_flush();
 
-                if ($handlers[$i] === $callback) {
-                    break;
+                    if ($handlers[$i] === $callback) {
+                        break;
+                    }
                 }
             }
         }

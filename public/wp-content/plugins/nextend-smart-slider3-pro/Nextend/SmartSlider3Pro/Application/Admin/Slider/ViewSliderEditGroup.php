@@ -216,7 +216,7 @@ class ViewSliderEditGroup extends AbstractView {
         new Hidden($row1, 'type', 'group');
 
 
-        echo $form->render();
+        $form->render();
     }
 
     /**

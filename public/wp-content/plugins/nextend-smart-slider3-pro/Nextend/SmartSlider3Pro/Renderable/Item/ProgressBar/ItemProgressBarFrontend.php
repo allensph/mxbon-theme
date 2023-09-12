@@ -5,6 +5,7 @@ namespace Nextend\SmartSlider3Pro\Renderable\Item\ProgressBar;
 
 
 use Nextend\Framework\Parser\Color;
+use Nextend\Framework\Sanitize;
 use Nextend\Framework\View\Html;
 use Nextend\SmartSlider3\Renderable\AbstractRenderableOwner;
 use Nextend\SmartSlider3\Renderable\Item\AbstractItemFrontend;
@@ -46,7 +47,7 @@ class ItemProgressBarFrontend extends AbstractItemFrontend {
 
 
         $labelHTML = '';
-        $label     = $owner->fill($this->data->get('label'));
+        $label     = Sanitize::filter_allowed_html($owner->fill($this->data->get('label')));
         $placement = '';
         if (!empty($label)) {
             $fontLabel = $owner->addFont($this->data->get('fontlabel'), 'simple');
@@ -81,8 +82,8 @@ class ItemProgressBarFrontend extends AbstractItemFrontend {
 
         $font = $owner->addFont($this->data->get('font'), 'simple');
 
-        $pre  = $this->data->get('pre');
-        $post = $this->data->get('post');
+        $pre  = Sanitize::filter_allowed_html($this->data->get('pre'));
+        $post = Sanitize::filter_allowed_html($this->data->get('post'));
 
         $html .= Html::tag('div', array(
             'class' => 'n2-ss-item-progressbar-counting n2-ow ' . $font

@@ -29,7 +29,15 @@ class PlacementAbsolute extends AbstractPlacement {
         $this->component->createDeviceProperty('parentalign');
         $this->component->createDeviceProperty('parentvalign');
 
-        //$attributes['style'] .= 'z-index:' . $this->index . ';';
+        $isLegacyFontScale = $this->component->getOwner()
+                                             ->getSlider()
+                                             ->isLegacyFontScale();
+        if ($isLegacyFontScale) {
+            $adaptiveFont = intval($data->get('adaptivefont', 1));
+            if ($adaptiveFont === 0) {
+                $attributes['data-adaptivefont'] = 0;
+            }
+        }
     }
 
     public function adminAttributes(&$attributes) {

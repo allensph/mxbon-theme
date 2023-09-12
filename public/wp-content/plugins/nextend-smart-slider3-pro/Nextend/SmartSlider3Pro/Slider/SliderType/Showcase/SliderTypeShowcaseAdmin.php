@@ -205,8 +205,7 @@ class SliderTypeShowcaseAdmin extends AbstractSliderTypeAdmin {
 
         new Textarea($rowSlideCSS, 'slide-css', 'Slide CSS', '', array(
             'width'  => 500,
-            'height' => 26,
-            'resize' => 'both'
+            'height' => 26
         ));
 
 
@@ -248,8 +247,7 @@ class SliderTypeShowcaseAdmin extends AbstractSliderTypeAdmin {
         ));
 
         new Textarea($rowSliderCSS, 'slider-css', 'Slider CSS', '', array(
-            'height' => 26,
-            'resize' => 'both'
+            'height' => 26
         ));
 
 
@@ -697,11 +695,14 @@ class SliderTypeShowcaseAdmin extends AbstractSliderTypeAdmin {
         $rowSettingsBehavior = new FieldsetRow($tableShowcaseAnimation, 'slider-type-showcase-settings-behavior');
 
         new OnOff($rowSettingsBehavior, 'carousel', n2_x('Carousel', 'Feature'), 1, array(
-            'tipLabel'        => n2_x('Carousel', 'Feature'),
-            'tipDescription'  => n2_('This option will create a complete round from your slides if you have enough slides. If you don\'t have enough slides, you could consider duplicating all the slides or just add more slides until you will get a carousel round.'),
-            'tipLink'         => 'https://smartslider.helpscoutdocs.com/article/1799-showcase-slider-type#carousel',
-            'relatedFieldsOn' => array(
+            'tipLabel'         => n2_x('Carousel', 'Feature'),
+            'tipDescription'   => n2_('This option will create a complete round from your slides if you have enough slides. If you don\'t have enough slides, you could consider duplicating all the slides or just add more slides until you will get a carousel round.'),
+            'tipLink'          => 'https://smartslider.helpscoutdocs.com/article/1799-showcase-slider-type#carousel',
+            'relatedFieldsOn'  => array(
                 'slidercontrolsBlockCarouselInteraction'
+            ),
+            'relatedFieldsOff' => array(
+                'sliderdisabled-carousel-notice'
             )
         ));
 
@@ -721,6 +722,8 @@ class SliderTypeShowcaseAdmin extends AbstractSliderTypeAdmin {
         $form->getElement('/size/size/size-2')
              ->remove();
         $form->getElement('/optimize/optimize-slide/optimize-slide-loading-mode/imageloadNeighborSlides')
+             ->remove();
+        $form->getElement('/size/override-slider-size')
              ->remove();
 
     }

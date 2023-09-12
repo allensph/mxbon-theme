@@ -24,7 +24,7 @@ class FlickrAlbums extends Select {
         if (isset($result['photosets']) && isset($result['photosets']['photoset'])) {
             $photoSets = $result['photosets']['photoset'];
             if (count($photoSets)) {
-                foreach ($photoSets AS $set) {
+                foreach ($photoSets as $set) {
                     $this->options[$set['id']] = $set['title']['_content'];
                 }
                 if ($this->getValue() == '') {

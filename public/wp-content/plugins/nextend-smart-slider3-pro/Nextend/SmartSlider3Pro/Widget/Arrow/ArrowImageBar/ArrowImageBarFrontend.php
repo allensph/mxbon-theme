@@ -186,7 +186,7 @@ class ArrowImageBarFrontend extends AbstractWidgetFrontend {
                 'class' => 'nextend-arrow-image'
             ), '') . Html::tag('div', array(
                 'class' => 'nextend-arrow-arrow',
-                'style' => 'background-image: URL(' . $image . ');'
+                'style' => 'background-image: url(' . $image . ');'
             ), ''));
     }
 }

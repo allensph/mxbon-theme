@@ -22,6 +22,7 @@ class ItemVideoFrontend extends AbstractItemFrontend {
         $hasImage = 0;
         $poster   = $owner->fill($this->data->get('poster'));
 
+        $coverImage = '';
         if (!empty($poster)) {
 
             $coverImage = $owner->renderImage($this, $poster, array(
@@ -133,7 +134,7 @@ class ItemVideoFrontend extends AbstractItemFrontend {
     private function setOptions($data, $id) {
         $videoOptions = array(
             'style'        => '',
-            'class'        => 'n2-ow intrinsic-ignore',
+            'class'        => 'n2-ow intrinsic-ignore data-tf-not-load n2-' . $data->get("fill-mode", 'cover'),
             'encode'       => false,
             'controlsList' => 'nodownload'
         );
@@ -143,9 +144,11 @@ class ItemVideoFrontend extends AbstractItemFrontend {
             $videoOptions['muted'] = 'muted';
         }
 
-        if ($data->get('autoplay')) {
-            $videoOptions['playsinline']        = 1;
-            $videoOptions['webkit-playsinline'] = 1;
+        $videoOptions['playsinline']        = 1;
+        $videoOptions['webkit-playsinline'] = 1;
+
+        if ($data->get('loop')) {
+            $videoOptions['loop'] = 'loop';
         }
 
 
@@ -156,9 +159,6 @@ class ItemVideoFrontend extends AbstractItemFrontend {
         } else {
             $videoOptions["style"] .= "pointer-events:none;";
         }
-
-        $fillMode              = $data->get("fill-mode", 'cover');
-        $videoOptions["style"] .= "object-fit:" . $fillMode . ";";
 
         $videoOptions["preload"] = $data->get("preload", "auto");
 

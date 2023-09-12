@@ -78,6 +78,6 @@ class BulletNumbersFrontend extends AbstractBulletFrontend {
             "class" => 'n2-ss-control-bullet n2-ow-all n2-ss-control-bullet-' . $orientation . ($fullSize ? ' n2-ss-control-bullet-fullsize' : '')
         )), Html::tag("div", array(
             "class" => $barStyle . " nextend-bullet-bar n2-bar-justify-content-" . $params->get($this->key . 'align')
-        ), ''));
+        ), '<div class="n2-bullet ' . $bulletStyle . $bulletFont . '" style="visibility:hidden;">&nbsp;</div>'));
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Nextend\SmartSlider3Pro\Generator\Common\YouTube\Sources;
 
+use Exception;
 use Nextend\Framework\Form\Container\ContainerTable;
 use Nextend\Framework\Form\Element\Text;
-use Nextend\Framework\Form\FormContainer;
 use Nextend\Framework\Notification\Notification;
 use Nextend\GoogleApi\Google_Service_YouTube_SearchListResponse;
 use Nextend\GoogleApi\Google_Service_YouTube_SearchResult;
@@ -92,7 +92,7 @@ class YouTubeBySearch extends AbstractGenerator {
 
             }
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Notification::error($e->getMessage());
         }
 

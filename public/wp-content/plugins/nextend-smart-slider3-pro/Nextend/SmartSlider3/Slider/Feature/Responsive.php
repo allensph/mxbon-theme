@@ -485,7 +485,7 @@ class Responsive {
             $portraitMinWidth  = $breakpointData['desktopLandscape']['portraitWidth'];
             $landscapeMinWidth = $breakpointData['desktopLandscape']['landscapeWidth'];
 
-            if ($portraitMinWidth == $landscapeMinWidth) {
+            if ($portraitMinWidth == $landscapeMinWidth || $this->slider->isFrame) {
                 $this->mediaQueries['desktoplandscape'] = array('(min-width: ' . $portraitMinWidth . 'px)');
 
             } else {
@@ -519,7 +519,7 @@ class Responsive {
         $landscapeMinWidth = $nextSize['landscapeWidth'] + 1;
 
         if ($portraitMaxWidth == 0 || $landscapeMaxWidth == 0) {
-            if ($portraitMinWidth == $landscapeMinWidth) {
+            if ($portraitMinWidth == $landscapeMinWidth || $this->slider->isFrame) {
                 $this->mediaQueries['desktopportrait'] = array('(min-width: ' . $portraitMinWidth . 'px)');
 
             } else {
@@ -529,7 +529,7 @@ class Responsive {
                 );
             }
         } else {
-            if ($portraitMinWidth == $landscapeMinWidth && $portraitMaxWidth == $landscapeMaxWidth) {
+            if (($portraitMinWidth == $landscapeMinWidth && $portraitMaxWidth == $landscapeMaxWidth) || $this->slider->isFrame) {
                 $this->mediaQueries['desktopportrait'] = array('(min-width: ' . $portraitMinWidth . 'px) and (max-width: ' . $portraitMaxWidth . 'px)');
 
             } else {
@@ -576,7 +576,7 @@ class Responsive {
             $landscapeMaxWidth = $breakpointData[$deviceName]['landscapeWidth'];
 
             if ($nextSize) {
-                if ($nextSize['portraitWidth'] == $nextSize['landscapeWidth'] && $portraitMaxWidth == $landscapeMaxWidth) {
+                if (($nextSize['portraitWidth'] == $nextSize['landscapeWidth'] && $portraitMaxWidth == $landscapeMaxWidth) || $this->slider->isFrame) {
                     $this->mediaQueries[$deviceNameLower] = array('(max-width: ' . $portraitMaxWidth . 'px) and (min-width: ' . ($nextSize['portraitWidth'] + 1) . 'px)');
 
                 } else {
@@ -586,7 +586,7 @@ class Responsive {
                     );
                 }
             } else {
-                if ($portraitMaxWidth == $landscapeMaxWidth) {
+                if (($portraitMaxWidth == $landscapeMaxWidth) || $this->slider->isFrame) {
                     $this->mediaQueries[$deviceNameLower] = array('(max-width: ' . $portraitMaxWidth . 'px)');
 
                 } else {
@@ -631,7 +631,7 @@ class Responsive {
         }
 
 
-        if ($this->minimumHeight) {
+        if ($this->minimumHeight > 0) {
             $this->slider->sliderType->handleSliderMinHeight($this->minimumHeight);
         }
 
@@ -641,17 +641,40 @@ class Responsive {
             }
         }
 
+        if (!$this->slider->isAdmin) {
+            if ($this->hideOnDesktopLandscape) {
+                $this->slider->addDeviceCSS('desktoplandscape', '.n2-section-smartslider[data-ssid="' . $this->slider->sliderId . '"]{display: none;}');
+            }
+            if (!SmartSlider3Info::$forceDesktop && $this->hideOnDesktopPortrait) {
+                $this->slider->addDeviceCSS('desktopportrait', '.n2-section-smartslider[data-ssid="' . $this->slider->sliderId . '"]{display: none;}');
+            }
+
+            if ($this->hideOnTabletLandscape) {
+                $this->slider->addDeviceCSS('tabletlandscape', '.n2-section-smartslider[data-ssid="' . $this->slider->sliderId . '"]{display: none;}');
+            }
+            if ($this->hideOnTabletPortrait) {
+                $this->slider->addDeviceCSS('tabletportrait', '.n2-section-smartslider[data-ssid="' . $this->slider->sliderId . '"]{display: none;}');
+            }
+
+            if ($this->hideOnMobileLandscape) {
+                $this->slider->addDeviceCSS('mobilelandscape', '.n2-section-smartslider[data-ssid="' . $this->slider->sliderId . '"]{display: none;}');
+            }
+            if ($this->hideOnMobilePortrait) {
+                $this->slider->addDeviceCSS('mobileportrait', '.n2-section-smartslider[data-ssid="' . $this->slider->sliderId . '"]{display: none;}');
+            }
+        }
+
 
         $properties['responsive'] = array(
             'mediaQueries' => $this->mediaQueries,
             'base'         => $this->slider->assets->base,
             'hideOn'       => array(
-                'desktopLandscape' => $this->hideOnDesktopLandscape,
+                'desktopLandscape' => SmartSlider3Info::$forceAllDevices ? false : $this->hideOnDesktopLandscape,
                 'desktopPortrait'  => SmartSlider3Info::$forceDesktop ? false : $this->hideOnDesktopPortrait,
-                'tabletLandscape'  => $this->hideOnTabletLandscape,
-                'tabletPortrait'   => $this->hideOnTabletPortrait,
-                'mobileLandscape'  => $this->hideOnMobileLandscape,
-                'mobilePortrait'   => $this->hideOnMobilePortrait,
+                'tabletLandscape'  => SmartSlider3Info::$forceAllDevices ? false : $this->hideOnTabletLandscape,
+                'tabletPortrait'   => SmartSlider3Info::$forceAllDevices ? false : $this->hideOnTabletPortrait,
+                'mobileLandscape'  => SmartSlider3Info::$forceAllDevices ? false : $this->hideOnMobileLandscape,
+                'mobilePortrait'   => SmartSlider3Info::$forceAllDevices ? false : $this->hideOnMobilePortrait,
             ),
 
             'onResizeEnabled'     => $this->onResizeEnabled,

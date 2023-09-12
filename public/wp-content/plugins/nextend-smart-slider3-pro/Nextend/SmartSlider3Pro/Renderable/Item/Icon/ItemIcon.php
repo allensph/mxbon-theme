@@ -128,8 +128,8 @@ class ItemIcon extends AbstractItem {
             'tipLabel'       => n2_('Rel'),
             'tipDescription' => sprintf(n2_('Enter the %1$s rel attribute %2$s that represents the relationship between the current document and the linked document. Multiple rel attributes can be separated with space. E.g. nofollow noopener noreferrer'), '<a href="https://www.w3schools.com/TAGS/att_a_rel.asp" target="_blank">', '</a>')
         ));
-        new Text($link, 'href-aria-label', n2_('Aria label'), '', array(
-            'tipLabel'       => n2_('Aria label'),
+        new Text($link, 'href-aria-label', n2_('ARIA label'), '', array(
+            'tipLabel'       => n2_('ARIA label'),
             'tipDescription' => sprintf(n2_('Enter an %1$s aria-label attribute %2$s that describes the link.'), '<a href="https://www.w3.org/TR/WCAG20-TECHS/ARIA14.html" target="_blank">', '</a>')
         ));
     }

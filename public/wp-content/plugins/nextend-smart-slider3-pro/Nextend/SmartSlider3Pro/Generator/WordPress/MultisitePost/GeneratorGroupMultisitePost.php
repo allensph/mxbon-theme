@@ -19,7 +19,7 @@ class GeneratorGroupMultisitePost extends AbstractGeneratorGroup {
 
     protected function loadSources() {
 
-        foreach (get_sites(array('number' => null)) AS $site) {
+        foreach (get_sites(array('number' => null)) as $site) {
             if ($site->blog_id == get_current_blog_id()) {
                 continue;
             }

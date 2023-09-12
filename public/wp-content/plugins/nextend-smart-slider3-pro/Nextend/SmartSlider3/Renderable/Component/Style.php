@@ -38,6 +38,14 @@ class Style {
                 $device = 'all';
             }
 
+            $this->addOnly($device, $selector, $css);
+        }
+    }
+
+    public function addOnly($device, $selector, $css) {
+
+        if (!empty($css)) {
+
             if (!isset($this->styles[$device][$selector])) {
                 $this->styles[$device][$selector] = array();
             }

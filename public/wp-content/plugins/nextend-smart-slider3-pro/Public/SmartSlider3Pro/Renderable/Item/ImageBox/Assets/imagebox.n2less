@@ -4,11 +4,6 @@
     overflow: hidden;
   }
 
-  .n2-ss-layer--auto .n2-ss-item-imagebox-container {
-    display: inline-flex;
-    vertical-align: top;
-  }
-
   .n2-ss-item-imagebox-container .n2-ss-item-imagebox-image a,
   .n2-ss-item-imagebox-container .n2-ss-item-imagebox-content > a {
     display: block;
@@ -34,16 +29,13 @@
     order: 2;
   }
 
-  .n2-ss-item-imagebox-image picture,
-  .n2-ss-item-imagebox-image img {
-    vertical-align: top;
-  }
-
-  .n2-ss-item-imagebox-image picture img {
+  .n2-ss-item-imagebox-image picture {
     display: block;
   }
 
   .n2-ss-item-imagebox-image img {
+    display: inline-block;
+    vertical-align: top;
     max-width: 100%;
   }
 

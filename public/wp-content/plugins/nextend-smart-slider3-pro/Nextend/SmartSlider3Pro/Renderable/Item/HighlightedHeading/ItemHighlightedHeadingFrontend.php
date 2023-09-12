@@ -6,6 +6,7 @@ namespace Nextend\SmartSlider3Pro\Renderable\Item\HighlightedHeading;
 
 use Nextend\Framework\Filesystem\Filesystem;
 use Nextend\Framework\Parser\Color;
+use Nextend\Framework\Sanitize;
 use Nextend\Framework\View\Html;
 use Nextend\SmartSlider3\Renderable\AbstractRenderableOwner;
 use Nextend\SmartSlider3\Renderable\Item\AbstractItemFrontend;
@@ -27,14 +28,14 @@ class ItemHighlightedHeadingFrontend extends AbstractItemFrontend {
 
         $heading = array();
 
-        $beforeText = $owner->fill($this->data->get('before-text', ''));
+        $beforeText = Sanitize::filter_allowed_html($owner->fill($this->data->get('before-text', '')));
         if (!empty($beforeText)) {
             $heading[] = Html::tag('div', array(
                 'class' => 'n2-ss-highlighted-heading-before'
             ), $beforeText);
         }
 
-        $highlightedText = $owner->fill($this->data->get('highlighted-text', ''));
+        $highlightedText = Sanitize::filter_allowed_html($owner->fill($this->data->get('highlighted-text', '')));
         if (!empty($highlightedText)) {
 
             $svg           = '';
@@ -99,7 +100,7 @@ class ItemHighlightedHeadingFrontend extends AbstractItemFrontend {
             }
         }
 
-        $afterText = $owner->fill($this->data->get('after-text', ''));
+        $afterText = Sanitize::filter_allowed_html($owner->fill($this->data->get('after-text', '')));
         if (!empty($afterText)) {
             $heading[] = Html::tag('div', array(
                 'class' => 'n2-ss-highlighted-heading-after'
@@ -119,7 +120,7 @@ class ItemHighlightedHeadingFrontend extends AbstractItemFrontend {
     }
 
     private function heading($type, $attributes, $content) {
-        if ($type > 0) {
+        if (is_numeric($type) && $type > 0) {
             return Html::tag("h{$type}", $attributes, $content);
         }
 

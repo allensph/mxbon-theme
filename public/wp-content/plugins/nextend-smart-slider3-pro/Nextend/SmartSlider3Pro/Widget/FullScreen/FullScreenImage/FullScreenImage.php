@@ -23,17 +23,17 @@ class FullScreenImage extends AbstractWidget {
         'widget-fullscreen-desktop-image-width' => 16,
         'widget-fullscreen-tablet-image-width'  => 16,
         'widget-fullscreen-mobile-image-width'  => 8,
-        'widget-fullscreen-tonormal-image'     => '',
-        'widget-fullscreen-tonormal-color'     => 'ffffffcc',
-        'widget-fullscreen-tonormal'           => '$ss$/plugins/widgetfullscreen/image/image/tonormal/full1.svg',
-        'widget-fullscreen-style'              => '{"data":[{"backgroundcolor":"000000ab","padding":"10|*|10|*|10|*|10|*|px","boxshadow":"0|*|0|*|0|*|0|*|000000ff","border":"0|*|solid|*|000000ff","borderradius":"3","extra":""},{"backgroundcolor":"000000ab"}]}',
-        'widget-fullscreen-position-mode'      => 'simple',
-        'widget-fullscreen-position-area'      => 4,
-        'widget-fullscreen-position-offset'    => 15,
-        'widget-fullscreen-mirror'             => 1,
-        'widget-fullscreen-tofull-image'       => '',
-        'widget-fullscreen-tofull-color'       => 'ffffffcc',
-        'widget-fullscreen-tofull'             => '$ss$/plugins/widgetfullscreen/image/image/tofull/full1.svg'
+        'widget-fullscreen-tonormal-image'      => '',
+        'widget-fullscreen-tonormal-color'      => 'ffffffcc',
+        'widget-fullscreen-tonormal'            => '$ss$/plugins/widgetfullscreen/image/image/tonormal/full1.svg',
+        'widget-fullscreen-style'               => '{"data":[{"backgroundcolor":"000000ab","padding":"10|*|10|*|10|*|10|*|px","boxshadow":"0|*|0|*|0|*|0|*|000000ff","border":"0|*|solid|*|000000ff","borderradius":"3","extra":""},{"backgroundcolor":"000000ab"}]}',
+        'widget-fullscreen-position-mode'       => 'simple',
+        'widget-fullscreen-position-area'       => 4,
+        'widget-fullscreen-position-offset'     => 15,
+        'widget-fullscreen-mirror'              => 1,
+        'widget-fullscreen-tofull-image'        => '',
+        'widget-fullscreen-tofull-color'        => 'ffffffcc',
+        'widget-fullscreen-tofull'              => '$ss$/plugins/widgetfullscreen/image/image/tofull/full1.svg'
     );
 
     public function renderFields($container) {

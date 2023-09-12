@@ -75,7 +75,7 @@ class ItemProgressBar extends AbstractItem {
                 'color2'            => '64c133ff',
                 'pre'               => '',
                 'post'              => '%',
-                'label'             => 'Progress',
+                'label'             => n2_('Progress'),
                 'labelplacement'    => 'before',
                 'animationduration' => 1000,
                 'animationdelay'    => 0

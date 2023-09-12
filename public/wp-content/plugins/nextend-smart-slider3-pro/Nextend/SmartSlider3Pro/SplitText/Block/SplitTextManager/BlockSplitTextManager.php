@@ -57,7 +57,7 @@ class BlockSplitTextManager extends AbstractBlockVisual {
         SplitTextRenderer::$sets[] = $sets[0]['id'];
 
         $animations = array();
-        foreach (array_unique(SplitTextRenderer::$sets) AS $setId) {
+        foreach (array_unique(SplitTextRenderer::$sets) as $setId) {
             $animations[$setId] = $model->getVisuals($setId);
         }
 

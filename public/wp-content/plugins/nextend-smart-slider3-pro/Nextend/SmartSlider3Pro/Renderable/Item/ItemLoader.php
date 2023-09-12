@@ -9,9 +9,11 @@ use Nextend\SmartSlider3\Renderable\Item\ItemFactory;
 use Nextend\SmartSlider3Pro\Renderable\Item\AnimatedHeading\ItemAnimatedHeading;
 use Nextend\SmartSlider3Pro\Renderable\Item\Area\ItemArea;
 use Nextend\SmartSlider3Pro\Renderable\Item\Audio\ItemAudio;
+use Nextend\SmartSlider3Pro\Renderable\Item\BeforeAfter\ItemBeforeAfter;
 use Nextend\SmartSlider3Pro\Renderable\Item\Caption\ItemCaption;
 use Nextend\SmartSlider3Pro\Renderable\Item\CircleCounter\ItemCircleCounter;
 use Nextend\SmartSlider3Pro\Renderable\Item\Counter\ItemCounter;
+use Nextend\SmartSlider3Pro\Renderable\Item\Countdown\ItemCountdown;
 use Nextend\SmartSlider3Pro\Renderable\Item\HighlightedHeading\ItemHighlightedHeading;
 use Nextend\SmartSlider3Pro\Renderable\Item\Html\ItemHtml;
 use Nextend\SmartSlider3Pro\Renderable\Item\HtmlList\ItemHtmlList;
@@ -46,6 +48,7 @@ class ItemLoader {
         new ItemCaption($factory);
         new ItemCircleCounter($factory);
         new ItemCounter($factory);
+        new ItemCountdown($factory);
         new ItemHighlightedHeading($factory);
         new ItemHtml($factory);
         new ItemIcon($factory);
@@ -57,5 +60,6 @@ class ItemLoader {
         new ItemProgressBar($factory);
         new ItemTransition($factory);
         new ItemVideo($factory);
+        new ItemBeforeAfter($factory);
     }
 }

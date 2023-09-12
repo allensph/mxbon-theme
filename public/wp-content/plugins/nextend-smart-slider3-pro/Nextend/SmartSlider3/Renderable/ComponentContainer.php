@@ -42,7 +42,7 @@ class ComponentContainer {
                 $componentsData = array_reverse($componentsData);
             }
 
-            foreach ($componentsData AS $componentData) {
+            foreach ($componentsData as $componentData) {
                 $this->addComponent($componentData);
             }
         }
@@ -83,7 +83,7 @@ class ComponentContainer {
                 break;
             case 'group':
                 $componentData['layers'] = array_reverse($componentData['layers']);
-                foreach ($componentData['layers'] AS $subComponentData) {
+                foreach ($componentData['layers'] as $subComponentData) {
                     $this->addComponent($subComponentData);
                 }
                 break;

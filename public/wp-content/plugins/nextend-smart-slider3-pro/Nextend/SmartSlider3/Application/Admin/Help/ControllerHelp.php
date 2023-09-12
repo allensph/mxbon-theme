@@ -8,6 +8,7 @@ use Nextend\Framework\Api;
 use Nextend\Framework\Model\StorageSectionManager;
 use Nextend\Framework\Notification\Notification;
 use Nextend\SmartSlider3\Application\Admin\AbstractControllerAdmin;
+use WP_HTTP_Proxy;
 
 class ControllerHelp extends AbstractControllerAdmin {
 
@@ -36,7 +37,7 @@ class ControllerHelp extends AbstractControllerAdmin {
         $out       = fopen($errorFile, "w");
         curl_setopt($ch, CURLOPT_VERBOSE, true);
         curl_setopt($ch, CURLOPT_STDERR, $out);
-        $proxy = new \WP_HTTP_Proxy();
+        $proxy = new WP_HTTP_Proxy();
 
         if ($proxy->is_enabled() && $proxy->send_through_proxy(Api::getApiUrl())) {
 
@@ -70,7 +71,7 @@ class ControllerHelp extends AbstractControllerAdmin {
         }
 
         if (strpos($output, 'ACTION_MISSING') === false) {
-            Notification::error(sprintf(n2_('Unable to connect to the API (%s).') . '<br>' . n2_('See <b>Debug Information</b> for more details!'), Api::getApiUrl()));
+            Notification::error(sprintf(n2_('Unable to connect to the API (%1$s). %2$s See %3$sDebug Information%4$s for more details!'), Api::getApiUrl(), '<br>', '<b>', '</b>'));
         } else {
             Notification::notice(n2_('Successful connection with the API.'));
         }

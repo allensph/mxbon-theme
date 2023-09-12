@@ -80,8 +80,6 @@
     border-radius: @slideBorderRadius;
     border: @slideborderwidth solid @slidebordercolor;
     box-sizing: border-box;
-
-    backface-visibility: hidden;
   }
 
   &.n2-ss-showcase-vertical .n2-ss-slide {

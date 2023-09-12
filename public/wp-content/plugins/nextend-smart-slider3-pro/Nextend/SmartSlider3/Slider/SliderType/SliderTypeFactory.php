@@ -11,7 +11,7 @@ use Nextend\SmartSlider3\Slider\Slider;
 
 class SliderTypeFactory {
 
-    use SingletonTrait, PluggableTrait;
+    use SingletonTrait, PluggableTrait, OrderableTrait;
 
     /**
      * @var AbstractSliderType[]
@@ -60,14 +60,14 @@ class SliderTypeFactory {
     public static function getAdminTypes() {
         $adminTypes = array();
 
-        foreach (self::$types AS $name => $type) {
+        foreach (self::$types as $name => $type) {
             $admin = $type->createAdmin();
             if ($admin) {
                 $adminTypes[$name] = $admin;
             }
         }
 
-        OrderableTrait::uasort($adminTypes);
+        self::uasort($adminTypes);
 
         return $adminTypes;
     }

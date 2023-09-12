@@ -9,7 +9,6 @@ use Nextend\Framework\Platform\Platform;
 use Nextend\Framework\Plugin;
 use Nextend\SmartSlider3\Application\Helper\HelperSliderChanged;
 use Nextend\SmartSlider3\Application\Model\ModelGenerator;
-use Nextend\SmartSlider3\Settings;
 use Nextend\SmartSlider3\SmartSlider3Info;
 
 class CacheSlider extends Manifest {
@@ -79,17 +78,17 @@ class CacheSlider extends Manifest {
         if (count($generators)) {
             $generatorModel = new ModelGenerator($this->parameters['slider']);
 
-            foreach ($generators AS $generator) {
+            foreach ($generators as $generator) {
                 list($group, $type, $params) = $generator;
 
                 $generatorGroup = $generatorModel->getGeneratorGroup($group);
                 if (!$generatorGroup) {
-                    echo n2_('Slider error! Generator group not found: ' . $group);
+                    echo esc_html(n2_('Slider error! Generator group not found: ') . $group);
                 } else {
 
                     $generatorSource = $generatorGroup->getSource($type);
                     if (!$generatorSource) {
-                        echo n2_('Slider error! Generator source not found: ' . $type);
+                        echo esc_html(n2_('Slider error! Generator source not found: ') . $type);
                     } else {
 
                         $fileName .= call_user_func(array(

@@ -75,7 +75,7 @@ class BarHorizontalFrontend extends AbstractWidgetFrontend {
         $slider->sliderType->addJSDependency('SmartSliderWidgetBarHorizontal');
 
         return Html::tag("div", Html::mergeAttributes($attributes, $displayAttributes, array(
-            "class" => "nextend-bar nextend-bar-horizontal n2-ow-all",
+            "class" => "nextend-bar nextend-bar-horizontal n2-ss-widget-hidden n2-ow-all",
             "style" => $style
         )), Html::tag("div", array(
             "class" => $styleClass,

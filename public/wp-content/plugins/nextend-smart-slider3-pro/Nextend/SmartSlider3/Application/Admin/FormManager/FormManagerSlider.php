@@ -56,7 +56,7 @@ class FormManagerSlider extends AbstractFormManager {
 
         $this->slider = $slider;
 
-        $sliderParams = new SliderParams($slider['type'], $slider['params'], true);
+        $sliderParams = new SliderParams($slider['id'], $slider['type'], $slider['params'], true);
 
         $data              = $sliderParams->toArray();
         $data['title']     = $slider['title'];

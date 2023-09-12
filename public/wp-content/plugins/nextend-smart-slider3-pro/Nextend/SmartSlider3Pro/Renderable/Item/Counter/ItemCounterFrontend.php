@@ -4,6 +4,7 @@
 namespace Nextend\SmartSlider3Pro\Renderable\Item\Counter;
 
 
+use Nextend\Framework\Sanitize;
 use Nextend\Framework\View\Html;
 use Nextend\SmartSlider3\Renderable\Item\AbstractItemFrontend;
 
@@ -43,7 +44,7 @@ class ItemCounterFrontend extends AbstractItemFrontend {
             $fromPercent = $toPercent = 0;
         }
 
-        $label     = $owner->fill($this->data->get('label'));
+        $label     = Sanitize::filter_allowed_html($owner->fill($this->data->get('label')));
         $placement = '';
         if (!empty($label)) {
 
@@ -63,8 +64,8 @@ class ItemCounterFrontend extends AbstractItemFrontend {
 
         $font = $owner->addFont($this->data->get('font'), 'simple');
 
-        $pre             = $this->data->get('pre');
-        $post            = $this->data->get('post');
+        $pre             = Sanitize::filter_allowed_html($this->data->get('pre'));
+        $post            = Sanitize::filter_allowed_html($this->data->get('post'));
         $countingDivHTML = Html::tag('div', array(
             'class' => 'n2-ss-item-counter-counting-div n2-ow ' . $font
         ), $pre . round($min + $fromPercent * ($total - $min)) . $post);

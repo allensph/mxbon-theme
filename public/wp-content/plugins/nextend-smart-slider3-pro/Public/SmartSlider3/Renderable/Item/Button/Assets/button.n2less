@@ -4,8 +4,8 @@
     display: block;
   }
 
-  .n2-ss-layer--auto .n2-ss-button-container,
-  .n2-ss-layer--auto .n2-ss-button-container a {
+  .n2-ss-button-container--non-full-width,
+  .n2-ss-button-container--non-full-width a {
     display: inline-block;
   }
 

@@ -168,6 +168,6 @@ class ViewSliderParticle extends AbstractView {
 
         new Notice($notice, 'instructions', 'Instructions', 'You can generate at <a target="_blank" href="http://vincentgarreau.com/particles.js/">http://vincentgarreau.com/particles.js/</a> Then <i>Download current config (json)</i> and paste content into the field.');
 
-        echo $form->render();
+        $form->render();
     }
 }

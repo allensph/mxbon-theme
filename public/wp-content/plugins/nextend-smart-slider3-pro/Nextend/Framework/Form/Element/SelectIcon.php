@@ -27,7 +27,7 @@ class SelectIcon extends AbstractFieldHidden {
             'class' => 'n2_field_select_icon'
         ));
 
-        foreach ($this->options AS $value => $option) {
+        foreach ($this->options as $value => $option) {
 
             $classes = array('n2_field_select_icon__option');
             if ($currentValue == $value) {

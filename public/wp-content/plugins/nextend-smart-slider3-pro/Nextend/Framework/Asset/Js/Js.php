@@ -4,9 +4,6 @@ namespace Nextend\Framework\Asset\Js;
 
 use Nextend\Framework\Asset\AssetManager;
 use Nextend\Framework\Filesystem\Filesystem;
-use Nextend\Framework\Platform\Platform;
-use Nextend\Framework\Settings;
-use Nextend\SmartSlider3\Application\Frontend\ApplicationTypeFrontend;
 
 class Js {
 

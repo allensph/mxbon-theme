@@ -5,6 +5,7 @@ namespace Nextend\SmartSlider3Pro\Generator\Common\YouTube\googleclient\IO;
 use Nextend\Framework\Misc\HttpClient;
 use Nextend\SmartSlider3Pro\Generator\Common\YouTube\googleclient\Google_Client;
 use Nextend\SmartSlider3Pro\Generator\Common\YouTube\googleclient\Http\Google_Http_Request;
+use WP_HTTP_Proxy;
 
 /**
  * Curl based implementation of Google_IO.
@@ -68,7 +69,7 @@ class Google_IO_Curl extends Google_IO_Abstract {
         if ($request->canGzip()) {
             curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
         }
-        $proxy = new \WP_HTTP_Proxy();
+        $proxy = new WP_HTTP_Proxy();
 
         if ($proxy->is_enabled() && $proxy->send_through_proxy($request->getUrl())) {
 

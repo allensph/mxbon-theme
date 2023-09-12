@@ -67,30 +67,15 @@ class ViewSettingsFramework extends AbstractViewSettings {
 
         new Text($row1, 'scriptattributes', n2_('Script attributes'), '');
 
-        new Select($row1, 'javascript-inline', n2_('Slider\'s inline JavaScript'), 'head', array(
-            'options' => array(
-                'head' => n2_('Head'),
-                'body' => n2_('Into the slider')
-            )
-        ));
-
         $table = new ContainerTable($form->getContainer(), 'css', 'CSS');
 
         $row1 = $table->createRow('css-1');
-        new OnOff($row1, 'async-non-primary-css', n2_('Async non-primary CSS '), 0, array(
+        new OnOff($row1, 'async-non-primary-css', n2_('Async non-primary CSS'), 0, array(
             'tipLabel'       => n2_('Async non-primary CSS'),
             'tipDescription' => n2_('Google Fonts, icon and lightbox CSS are loaded in a non-blocking way. Disable if you see missing icons, fonts or styles.')
         ));
         new OnOff($row1, 'icon-fa', n2_('Load Font Awesome 4'), 1);
     
-
-        $table = new ContainerTable($form->getContainer(), 'requests', n2_('API requests'));
-
-        $row1 = $table->createRow('requests-1');
-
-        new OnOff($row1, 'curl', sprintf(n2_x('Use %s', 'Curl'), 'Curl'), 1);
-
-        new OnOff($row1, 'curl-clean-proxy', sprintf(n2_x('Clean %s', 'curl proxy'), 'curl proxy'), 0);
 
 
         $form->render();

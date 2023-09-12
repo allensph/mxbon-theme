@@ -351,7 +351,7 @@ class EventsManagerEvents extends AbstractGenerator {
             $data[$i]['excerpt']     = $post->post_excerpt;
             $data[$i]['image']       = ResourceTranslator::urlToResource(wp_get_attachment_url(get_post_thumbnail_id($post->ID)));
             $thumbnail               = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID, 'thumbnail'));
-            if ($thumbnail[0]) {
+            if (!empty($thumbnail[0])) {
                 $data[$i]['thumbnail'] = ResourceTranslator::urlToResource($thumbnail[0]);
             } else {
                 $data[$i]['thumbnail'] = $data[$i]['image'];

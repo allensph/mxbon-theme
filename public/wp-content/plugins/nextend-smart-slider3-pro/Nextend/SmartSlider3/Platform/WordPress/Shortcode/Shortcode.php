@@ -2,9 +2,13 @@
 
 namespace Nextend\SmartSlider3\Platform\WordPress\Shortcode;
 
+use AMP_Options_Manager;
+use AMP_Theme_Support;
+use AmpProject\AmpWP\Option;
 use Nextend\Framework\Asset\Builder\BuilderJs;
 use Nextend\Framework\Localization\Localization;
 use Nextend\Framework\Request\Request;
+use Nextend\Framework\Sanitize;
 use Nextend\Framework\View\Html;
 use Nextend\SmartSlider3\Application\ApplicationSmartSlider3;
 use Nextend\SmartSlider3\Application\Frontend\ApplicationTypeFrontend;
@@ -93,6 +97,16 @@ class Shortcode {
         ), 0);
 
         /**
+         * Remove sliders from the news feed of Yandex.News Feed by Teplitsa
+         * @url https://wordpress.org/plugins/yandexnews-feed-by-teplitsa/
+         */
+        add_filter('layf_content_feed', function ($content) {
+            Shortcode::shortcodeModeToNoop();
+
+            return $content;
+        }, 1);
+
+        /**
          * Sliders are not available over REST API! Fixes Gutenberg save problems.
          */
         add_action('rest_api_init', array(
@@ -125,7 +139,7 @@ class Shortcode {
                  * Fix for reader mode
                  */
                 if (class_exists('AMP_Theme_Support', false) && class_exists('AMP_Options_Manager', false)) {
-                    if (\AMP_Options_Manager::get_option(\AmpProject\AmpWP\Option::THEME_SUPPORT) === \AMP_Theme_Support::READER_MODE_SLUG) {
+                    if (AMP_Options_Manager::get_option(Option::THEME_SUPPORT) === AMP_Theme_Support::READER_MODE_SLUG) {
                         Shortcode::shortcodeModeToNoop();
                     }
                 }
@@ -169,7 +183,33 @@ class Shortcode {
                     'shortcodeModeToNormal'
                 ), 11);
             }
+
+
+            if (class_exists('Themeco\Theme\Theme')) {
+                /**
+                 * @see SSDEV-3244
+                 */
+                remove_action('wp_head', array(
+                    self::class,
+                    'headStart'
+                ), -10000);
+            }
         });
+
+        /**
+         * @see SSDEV-3871
+         */
+        add_filter('render_block_nextend/smartslider3', function ($block_content, $parsed_block) {
+            if (!empty($parsed_block['attrs']['slider'])) {
+                if (Request::$GET->getVar('customize_changeset_uuid') !== null) {
+                    return self::renderIframe($parsed_block['attrs']['slider']);
+                } else {
+                    return self::render(array('slider' => $parsed_block['attrs']['slider']));
+                }
+            }
+
+            return '';
+        }, 10, 2);
 
     }
 
@@ -208,6 +248,11 @@ class Shortcode {
         return self::render($parameters);
     }
 
+    /**
+     * @param $sliderIDorAlias
+     *
+     * @return string contains escaped data
+     */
     public static function renderIframe($sliderIDorAlias) {
 
         $path = ApplicationTypeFrontend::getAssetsPath() . '/dist/iframe.min.js';
@@ -322,12 +367,12 @@ class Shortcode {
                     $slideTo = intval($parameters['slide']);
                 }
 
-                if ($parameters['get'] !== null && !empty($_GET[$parameters['get']])) {
-                    $slideTo = intval($_GET[$parameters['get']]);
+                if ($parameters['get'] !== null) {
+                    $slideTo = Request::$GET->getInt($parameters['get']);
                 }
 
-                if ($slideTo) {
-                    echo "<script>window['ss" . $parameters['slider'] . "'] = " . ($slideTo - 1) . ";</script>";
+                if ($slideTo && is_numeric($parameters['slider']) && intval($parameters['slider']) > 0) {
+                    echo wp_kses("<script>window['ss" . intval($parameters['slider']) . "'] = " . ($slideTo - 1) . ";</script>", Sanitize::$assetTags);
                 }
 
                 $applicationTypeFrontend = ApplicationSmartSlider3::getInstance()

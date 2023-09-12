@@ -202,7 +202,7 @@ class ArrowRevealFrontend extends AbstractWidgetFrontend {
                 'class' => $fontClass . ' nextend-arrow-title n2-ow'
             ), '') : '') . Html::tag('div', array(
                 'class' => 'nextend-arrow-arrow n2-ow',
-                'style' => 'background-image: URL(' . $image . ');'
+                'style' => 'background-image: url(' . $image . ');'
             ), ''));
     }
 }

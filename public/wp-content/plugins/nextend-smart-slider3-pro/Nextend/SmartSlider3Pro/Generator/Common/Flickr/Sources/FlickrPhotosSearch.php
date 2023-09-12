@@ -76,7 +76,7 @@ class FlickrPhotosSearch extends AbstractGenerator {
         }
 
         $data = array();
-        foreach ($photos AS $photo) {
+        foreach ($photos as $photo) {
             if (!isset($ow)) {
                 $ow = $client->people_getInfo($photo['owner']);
             }
