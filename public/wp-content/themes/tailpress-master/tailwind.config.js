@@ -40,18 +40,27 @@ module.exports = {
                 'radio-checked': 'inset 0 0 0 1px #DA2127, inset 0 0 0 3px #FFFFFF, inset 0 0 0 9px #DA2127'
             },
             colors: tailpress.colorMapper(tailpress.theme('settings.color.palette', theme)),
+            dropShadow: {
+                'fab': [
+                    '0px 4px 6px rgba(0, 0, 0, 0.05)',
+                    '0px 10px 15px rgba(0, 0, 0, 0.10)'
+                ],
+            },
             fontSize: tailpress.fontSizeMapper(tailpress.theme('settings.typography.fontSizes', theme)),
             fontFamily: {
                 'sans': ['Noto Sans TC', 'sans-serif'],
                 'raj': ['Rajdhani', 'sans-serif'],
-                'awesome': '"Font Awesome 6 Free"'
+                'awesome': '"Font Awesome 6 Free"',
+                'swiper-icons': '"swiper-icons"',
             },
             maxWidth: {
                 '8xl': '1440px',
                 '9xl': '1536px',
+                '10xl': '1920px',
             },
             transitionProperty: {
                 'bg': 'background',
+                'spacing': 'margin, padding',
             },
             transitionTimingFunction: {
                 'out-quad': 'cubic-bezier(0.250, 0.460, 0.450, 0.940)',

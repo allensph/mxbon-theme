@@ -7,6 +7,15 @@
 
 <?php do_action( 'tailpress_content_after' ); ?>
 
+<div class="site-fabs-wrapper">
+	<ul class="site-fabs">
+		<li class="float-action-button facebook"><a href="https://www.facebook.com/mxbontw/" title="find us on facebook"><i class="fa-brands fa-facebook-f"></i></a></li>
+		<li class="float-action-button phone"><a href="tel:+886-5-220-3715" title="make a phone call"><i class="fa-solid fa-phone"></i></a></li>
+		<li class="float-action-button email"><a href="mailto:sales@mxbon.com" title="contact with email"><i class="fa-solid fa-envelope"></i></a></li>
+		<li class="float-action-button scroll-top"><a href="#site-header" title="scroll to top"><i class="fa-solid fa-chevron-up"></i></a></li>
+	</ul>
+</div>
+
 <footer id="colophon" class="site-footer" role="contentinfo">
 	<?php do_action( 'tailpress_footer' ); ?>
 

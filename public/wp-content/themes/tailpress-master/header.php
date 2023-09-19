@@ -17,7 +17,7 @@
 
 	<?php do_action( 'tailpress_header' ); ?>
 
-	<header x-data="{ menu: false, search: false, nav: 0 }">
+	<header id="site-header" x-data="{ menu: false, search: false, nav: 0 }">
 
 		<div class="container">
 

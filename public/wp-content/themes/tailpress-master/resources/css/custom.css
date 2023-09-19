@@ -140,6 +140,7 @@ article > *:not(.entry-content),
 
 /* Header mobile effect */ 
 body {
+    @apply scroll-smooth;
     &.search-active, &.toggle-active {
         @apply h-full xl:h-auto overflow-hidden xl:overflow-auto;
         .site-content {
@@ -163,7 +164,7 @@ body {
 header {
     @apply relative z-50;
     .container {
-        @apply h-16 lg:h-[90px] mx-auto max-w-full flex flex-row justify-end px-0;
+        @apply h-16 lg:h-[90px] mx-auto max-w-10xl flex flex-row justify-end px-0;
         .wrapper {
             @apply relative z-10 bg-white flex justify-start items-center lg:justify-between p-0 lg:px-4 xl:px-6 lg:py-0 flex-1;
 
@@ -308,6 +309,9 @@ header {
                         }                  
                     }
                 }
+                &:before {
+                    @apply absolute -z-10 content-[''] w-0.5 h-[calc(64px+147px)] lg:h-[calc(90px+186px)] bg-white right-0 lg:right-[unset] lg:-left-0.5;
+                }
             }
             .form-wrapper {
                 @apply absolute z-0 p-4 w-full h-[calc(100vh-64px)] lg:h-[300px] left-0 top-16 lg:top-[90px] opacity-0 -translate-y-1/4 lg:-translate-y-full bg-zinc-900/75 backdrop-blur-[8px] transition-all duration-500 flex justify-center items-center pointer-events-none;
@@ -391,6 +395,33 @@ body {
 }
 .site-content {
     @apply relative z-10;
+}
+
+.site-fabs-wrapper {
+    @apply fixed z-50 w-full max-w-10xl self-center h-screen pointer-events-none;
+    .site-fabs {
+        @apply absolute right-0 bottom-0 flex flex-col px-3 lg:px-4 py-4 pointer-events-auto;
+        .float-action-button {
+            @apply block w-16 h-16 my-1 hover:my-2 transition-spacing duration-300;
+            a {
+                @apply flex justify-center items-center mx-auto h-16 w-[calc(64px*0.866)] clip-path-hexagon bg-mxbon-red/75 hover:bg-mxbon-red transition-bg duration-300 drop-shadow-fab;
+                i {
+                    @apply text-white text-2xl leading-none;
+                    &.fa-phone {
+                        @apply text-lg;
+                    }
+                    &.fa-envelope {
+                        @apply text-[22px];
+                    }
+                }
+            }
+            &.scroll-top {
+                a {
+                    @apply bg-zinc-600/75 hover:bg-zinc-600;
+                }
+            }
+        }
+    }
 }
 
 footer {
