@@ -13,11 +13,14 @@
 
 <?php do_action( 'tailpress_site_before' ); ?>
 
-<div id="page" class="min-h-screen flex flex-col">
+<div id="page" class="min-h-screen flex flex-col" 
+	x-data="{ menu: false, search: false, nav: 0, topScreen: false }"
+	@scroll.window="topScreen = false"
+	@scroll.window.debounce.2000ms="topScreen = (window.pageYOffset < 90) ? false: true">
 
 	<?php do_action( 'tailpress_header' ); ?>
 
-	<header id="site-header" x-data="{ menu: false, search: false, nav: 0 }">
+	<header id="site-header">
 
 		<div class="container">
 

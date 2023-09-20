@@ -400,7 +400,7 @@ body {
 .site-fabs-wrapper {
     @apply fixed z-50 w-full max-w-10xl self-center h-screen pointer-events-none;
     .site-fabs {
-        @apply absolute right-0 bottom-0 flex flex-col px-3 lg:px-4 py-4 pointer-events-auto;
+        @apply absolute right-0 bottom-0 flex flex-col px-3 lg:px-4 py-4 opacity-0 translate-y-16 transition-all duration-700 delay-0;
         .float-action-button {
             @apply block w-16 h-16 my-1 hover:my-2 transition-spacing duration-300;
             a {
@@ -420,6 +420,11 @@ body {
                     @apply bg-zinc-600/75 hover:bg-zinc-600;
                 }
             }
+        }
+    }
+    &.active {
+        .site-fabs {
+            @apply pointer-events-auto opacity-100 translate-y-0;
         }
     }
 }

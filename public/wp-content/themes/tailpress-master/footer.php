@@ -7,7 +7,7 @@
 
 <?php do_action( 'tailpress_content_after' ); ?>
 
-<div class="site-fabs-wrapper">
+<div class="site-fabs-wrapper" :class="{ 'active': topScreen }">
 	<ul class="site-fabs">
 		<li class="float-action-button facebook"><a href="https://www.facebook.com/mxbontw/" title="find us on facebook"><i class="fa-brands fa-facebook-f"></i></a></li>
 		<li class="float-action-button phone"><a href="tel:+886-5-220-3715" title="make a phone call"><i class="fa-solid fa-phone"></i></a></li>
