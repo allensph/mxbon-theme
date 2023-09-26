@@ -1,3 +1,10 @@
+.home .search-toggle:before {
+    @apply absolute -z-10 content-[''] w-0.5 h-[calc(64px+147px)] lg:h-[calc(90px+186px)] bg-white right-0 lg:right-[unset] lg:-left-0 translate-x-full md:-translate-x-full transition-opacity duration-500 pointer-events-none;
+}
+.home.search-active .search-toggle:before, 
+.home.toggle-active .search-toggle:before {
+    @apply opacity-0;
+}
 section {
     @apply font-sans overflow-hidden;
     .container {
@@ -16,34 +23,8 @@ section {
         }
     }
     .section-title {
-        @apply relative z-10 title font-sans text-zinc-800 mb-12 lg:mb-16;
-
-        &:after {
-            @apply absolute content-[''] bg-mxbon-red;
-        }
-        .sub {
-            @apply block uppercase font-raj font-bold text-8xl leading-[0.6458];
-        }
-        &.center {
-            @apply mx-auto pb-4 w-fit;
-            &:after {
-                @apply w-32 h-2 bottom-0 left-1/2 -translate-x-1/2;
-            }
-            .sub {
-                @apply absolute -z-10 bottom-[52px] left-1/2 -translate-x-1/2;
-            }
-        }
-        &.side {
-            @apply mr-auto pt-10 pl-6;
-            &:after {
-                @apply w-2 h-16 left-0 top-1/2 -translate-y-1/2;
-            }
-            .sub {
-                @apply absolute -z-10 top-0 left-6;
-            }
-        }
         .swiper-button-prev, .swiper-button-next {
-            @apply w-10 h-10 flex justify-center items-center text-white after:text-base bg-zinc-800 opacity-25 hover:opacity-100 transition-opacity duration-300;
+            @apply w-10 h-10 flex justify-center items-center text-white after:text-base bg-zinc-800 opacity-25 hover:opacity-100 transition-opacity;
         }
         .swiper-button-prev {
             @apply after:content-['prev'];
@@ -106,9 +87,6 @@ section.products {
     @apply pt-20 pb-10;
     .section-title {
         @apply pt-10;
-        .sub {
-            @apply text-zinc-100;
-        }
     }
     .section-swiper {
         @apply relative px-12 xl:px-[88px] pb-[72px];
@@ -238,7 +216,7 @@ section.news {
     .section-title {
         @apply pt-[122px] md:pt-10;
         .sub {
-            @apply text-zinc-100 leading-[0.85] md:leading-[0.6458] h-fit md:whitespace-nowrap;
+            @apply leading-[0.85] md:leading-[0.6458] h-fit md:whitespace-nowrap;
         }
     }
     .posts {
@@ -260,7 +238,7 @@ section.news {
                     }
                 }
                 .title {
-                    @apply subtitle text-zinc-800 transition-colors duration-300 line-clamp-2 mb-4;
+                    @apply subtitle text-zinc-800 transition-colors line-clamp-2 mb-4;
                 }
                 time {
                     @apply font-raj text-base leading-ext-tight tracking-[1.25px] text-zinc-400;

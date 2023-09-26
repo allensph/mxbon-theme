@@ -32,6 +32,7 @@ module.exports = {
                 'caret-down-focus': 'url("/wp-content/themes/tailpress-master/resources/images/caret-down-focus.svg")',
                 'industries-section': 'url("/wp-content/themes/tailpress-master/resources/images/industries-bg.jpg")',
                 'contact-section': 'url("/wp-content/themes/tailpress-master/resources/images/contact-bg.jpg")',
+                'history-scale': 'url("/wp-content/themes/tailpress-master/resources/images/dot-line.svg")',
             },
             boxShadow: {
                 'card': '0px 7px 29px 0px rgba(100, 100, 111, 0.20)',
@@ -65,6 +66,9 @@ module.exports = {
             transitionTimingFunction: {
                 'out-quad': 'cubic-bezier(0.250, 0.460, 0.450, 0.940)',
             },
+            spacing: {
+                'unset': 'unset',
+            },
             lineHeight: {
                 'ext-tight': '120%',
             },
@@ -88,6 +92,17 @@ module.exports = {
             'xl': tailpress.theme('settings.layout.wideSize', theme),//1280
             '2xl': '1440px',
             '3xl': '1536px',
+        },
+        transitionDuration: {
+            DEFAULT: '300ms',
+            75: '75ms',
+            100: '100ms',
+            150: '150ms',
+            200: '200ms',
+            300: '300ms',
+            500: '500ms',
+            700: '700ms',
+            1000: '1000ms',
         }
     },
     plugins: [

@@ -48,7 +48,7 @@
 								'menu_class'      => '',
 								'theme_location'  => 'primary',
 								'li_class'        => '',
-								'walker'		  => new Mxbon_Primary_Menu_Walker,
+								'walker'		  => new Mxbon_Primary_Menu_Walker(),
 								'fallback_cb'     => false,
 							)
 						);
