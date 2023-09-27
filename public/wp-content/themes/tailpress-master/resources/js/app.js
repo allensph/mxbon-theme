@@ -112,7 +112,14 @@ if (window.location.pathname == '/about-us/company-overview/') {
 if (window.location.pathname == '/about-us/history/') {
 
       window.addEventListener('DOMContentLoaded', function () {
-            // Contatc section paroller.js
+            // paroller.js
             jQuery("[data-paroller-factor]").paroller();
+      })
+}
+
+if (window.location.pathname == '/about-us/history/') {
+
+      window.addEventListener('DOMContentLoaded', function () {
+
       })
 }

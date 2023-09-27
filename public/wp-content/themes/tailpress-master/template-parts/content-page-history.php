@@ -6,7 +6,7 @@
     if ( $stages ) :
     foreach ( $stages as $stage ) : ?>
         
-        <div class="stage-wrapper">
+        <div class="wrapper">
             <div class="stage">
                 <h2><?php echo $stage['title']; ?></h2>
                 <h3><?php echo $stage['subtitle']; ?></h3>

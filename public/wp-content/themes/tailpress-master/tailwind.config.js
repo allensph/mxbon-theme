@@ -33,6 +33,7 @@ module.exports = {
                 'industries-section': 'url("/wp-content/themes/tailpress-master/resources/images/industries-bg.jpg")',
                 'contact-section': 'url("/wp-content/themes/tailpress-master/resources/images/contact-bg.jpg")',
                 'history-scale': 'url("/wp-content/themes/tailpress-master/resources/images/dot-line.svg")',
+                'abstract-white': 'url("/wp-content/themes/tailpress-master/resources/images/abstract-w-bg.jpg")',
             },
             boxShadow: {
                 'card': '0px 7px 29px 0px rgba(100, 100, 111, 0.20)',

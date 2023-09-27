@@ -535,7 +535,7 @@ footer {
             }
         }
         .container {
-            @apply mx-auto flex flex-col lg:flex-row lg:max-w-full overflow-x-hidden overflow-y-auto;
+            @apply mx-auto flex flex-col lg:flex-row /*lg:max-w-full*/ overflow-x-hidden overflow-y-auto;
             .side-navigation {
                 @apply mb-12 md:mb-0 lg:px-4 py-8 lg:w-1/5 xl:w-1/6;
                 .title {
@@ -672,7 +672,7 @@ footer {
                     }
                 }
                 section.history {
-                    .stage-wrapper {
+                    .wrapper {
                         @apply flex flex-col md:flex-row gap-x-8 w-full max-w-[1120px];
                         .stage {
                             @apply relative px-6 py-8 bg-zinc-400 w-full md:w-[224px] overflow-hidden;
@@ -759,6 +759,71 @@ footer {
                                     @apply saturate-100 brightness-100;
                                 }
                             }
+                        }
+                    }
+                }
+                section.philsosphy {
+                    .wrapper {
+                        ol {
+                            @apply grid gap-x-8 gap-y-0 grid-rows-2 grid-cols-3;
+                            counter-reset: aaa;
+                            li {
+                                @apply relative list-none flex-1 ring-2 ring-zinc-200 ring-inset mt-12 last:row-span-2 last:col-start-3 bg-abstract-white bg-no-repeat bg-cover;
+                                counter-increment: aaa;
+                                &:nth-child(3), &:nth-child(4) {
+                                    @apply row-start-2;
+                                }
+                                span {
+                                    @apply relative flex flex-col items-center justify-center w-full h-full min-h-[216px] text-2xl leading-normal text-zinc-800 text-center font-medium;
+                                    &:before {
+                                        @apply absolute z-20 top-0 -translate-y-1/2 content-['0'counter(aaa)] text-mxbon-red text-5xl leading-normal font-raj font-bold w-24 h-24 flex justify-center items-center;
+                                    }
+                                    &:after {
+                                        @apply absolute z-10 top-0 content-[''] w-24 h-0.5 bg-white;
+                                    }
+                                }
+                                &:before, &:after {
+                                    @apply absolute content-[''] z-10 right-0 bottom-0 w-0 h-0 border-transparent;
+                                }
+                                &:before {
+                                    @apply border-b-zinc-200 border-b-[32px] border-l-[32px];
+                                }
+                                &:after {
+                                    @apply border-b-zinc-300 border-b-[24px] border-l-[24px];
+                                }
+                            }
+                        }
+                    }
+                }
+                section.vision {
+                    .wrapper {
+                        @apply flex flex-col md:flex-row;
+                        .content {
+                            h3 {
+
+                            }
+                            p {
+
+                            }
+                        }
+                        img {
+
+                        }
+                    }
+                }
+                section.sdgs {
+                    .wrapper {
+                        @apply flex flex-col md:flex-row;
+                        .content {
+                            h3 {
+
+                            }
+                            p {
+
+                            }
+                        }
+                        img {
+
                         }
                     }
                 }
