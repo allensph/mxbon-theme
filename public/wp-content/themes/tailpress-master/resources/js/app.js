@@ -110,7 +110,6 @@ if (window.location.pathname == '/about-us/company-overview/') {
 }
 
 if (window.location.pathname == '/about-us/history/') {
-
       window.addEventListener('DOMContentLoaded', function () {
             // paroller.js
             jQuery("[data-paroller-factor]").paroller();
@@ -118,15 +117,19 @@ if (window.location.pathname == '/about-us/history/') {
 }
 
 if (window.location.pathname == '/about-us/corporate-philsosphy/') {
-
       window.addEventListener('DOMContentLoaded', function () {
 
             // animate on scroll
-            AOS.init({
-                  once: true,
-                  easing: 'ease-in-out',
-            });
+            AOS.init({ once: true, easing: 'ease-in-out', });
+
             // paroller.js
             jQuery("[data-paroller-factor]").paroller();
+      })
+}
+
+if (window.location.pathname == '/about-us/innovation/') {
+      window.addEventListener('DOMContentLoaded', function () {
+            // animate on scroll
+            AOS.init({ once: true, easing: 'ease-in-out', });
       })
 }

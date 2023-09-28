@@ -61,7 +61,7 @@ function tailpress_enqueue_scripts() {
 		wp_enqueue_script( 'alpine', 'https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js' );
 	}
 
-	if ( is_page( 'corporate-philsosphy' ) ) {
+	if ( is_page( 'corporate-philsosphy' ) || is_page( 'innovation' ) ) {
 		wp_enqueue_style( 'aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.css' );
 		wp_enqueue_script( 'aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js' );
 	}

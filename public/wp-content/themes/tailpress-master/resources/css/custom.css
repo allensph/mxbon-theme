@@ -867,6 +867,71 @@ footer {
                         }
                     }
                 }
+                section.innovation-banner {
+                    @apply relative pt-12 pl-12 mb-20;
+                    &:before {
+                        @apply absolute z-10 left-0 top-0 w-[58.97%] h-[75.32%] content-[''] bg-zinc-100;
+                    }
+                    .content {
+                        @apply relative z-20;
+                        h2 {
+                            @apply text-zinc-800 text-[32px] leading-normal font-medium mb-12;
+                        }
+                        .image-group {
+                            @apply flex flex-row gap-x-8 items-start;
+                            .sketch {
+                                
+                            }
+                            .photo {
+                                
+                            }
+                        }
+                    }
+                }
+                section.innovation {
+                    .wrapper {
+                        @apply flex odd:flex-row even:flex-row-reverse gap-x-8 mb-20 last-of-type:mb-0;
+                        .image {
+                            @apply relative w-1/2;
+                            img {
+                                @apply w-full h-full object-cover;
+                            }
+                            &:before {
+                                @apply absolute content-[''] w-0 h-0;
+                            }
+                        }
+                        .content {
+                            @apply w-1/2 p-12;
+                            h3 {
+                                @apply relative text-zinc-800 text-2xl leading-ext-tight font-medium mb-12;
+                                &:before {
+                                    @apply content-[''] inline-block w-2 h-5 mr-4 bg-mxbon-red;
+                                }
+                                &:after {
+                                    @apply absolute content-[''] w-full h-px left-0 -bottom-6 bg-zinc-200;
+                                }
+                            }
+                            p {
+                                @apply text-zinc-600 text-lg leading-normal text-justify mb-[calc(18px*1.5)] last-of-type:mb-0;
+                            }
+                            /*
+                            p + p {
+                                @apply mt-[27px];
+                            }
+                            */
+                        }
+                        &:nth-child(even) {
+                            .image:before {
+                                @apply top-0 left-0 border-t-[93px] border-r-[96px] border-transparent border-t-white;
+                            }
+                        }
+                        &:nth-child(odd) {
+                            .image:before {
+                                @apply bottom-0 right-0 border-b-[93px] border-l-[96px] border-transparent border-b-white;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
