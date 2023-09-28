@@ -1,31 +1,59 @@
+<?php $images_uri =  get_stylesheet_directory_uri() . '/resources/images'; ?>
+
 <section class="philsosphy">
     <div class="wrapper">
-        <ol>
-            <li><span>接著劑的專家</span></li>
-            <li><span>不斷產品創新與品質提升</span></li>
-            <li><span>活力、乾淨、責任的儉樸文化</span></li>
-            <li><span>關懷社會、回饋社會</span></li>
-            <li><span>立足台灣、放眼世界</span></li>
-        </ol>
+        <?php $philsosphies = get_field('philsosphy', 'option'); ?>
+        
+        <?php if( $philsosphies ) : ?>
+            <ol>
+            <?php foreach( $philsosphies as $index => $philsosphy ) : ?>
+
+            <?php $delay = 100 + $index * 700; ?>
+
+                <li data-aos="fade" data-aos-delay="<?php echo $delay; ?>">
+                    <span></span>
+                    <h3><?php echo $philsosphy['title']; ?></h3>
+                </li>
+
+            <?php endforeach; ?>
+            </ol>
+        <?php endif; ?>
+        
     </div>
 </section>
 
-<seciton class="vision">
+<section class="vision">
     <div class="wrapper">
         <div class="content">
-            <h3>願景使命abc</h3>
-            <p>文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容</p>
+            <h3>願景使命</h3>
+            <p><?php echo get_field('vision', 'option'); ?></p>
+            <span class="vision-bg" data-paroller-factor="-0.1">
+            </span>
         </div>
-        <img src="" alt="">
+        <img src="<?php echo "{$images_uri}/vision.png"; ?>" alt="願景使命">
     </div>
-</seciton>
+</section>
 
 <section class="sdgs">
     <div class="wrapper">
         <div class="content">
             <h3>北回對SDGs的主要貢獻</h3>
-            <p>對照北回永續原則、重要利害關係人與SDGs，我們持續努力回應的永續發展重點包括目標1、 3 、4 、5、 6、 7 、8、 9 、12 、16等10個目標。</p>
+            <?php 
+                $goals = get_field('sdg_goals', 'option'); 
+                $list = implode('、', $goals);
+            ?>
+            <p>對照北回永續原則、重要利害關係人與 SDGs，我們持續努力回應的永續發展重點包括目標 <?php echo $list; ?> 等 <?php echo count($goals); ?> 個目標。</p>
         </div>
-        <img src="" alt="">
+        <div class="sdg-goals">
+            
+            <?php for ( $goal = 1; $goal <= 17 ; $goal++ ) : ?>
+                <?php
+                    $number = strlen( (string)$goal ) == 1 ? "0" . (string)$goal : (string)$goal;
+                    $class = in_array( $goal, $goals) ? ' active' : '';
+                ?>
+                <img class="goal<?php echo $class;?>" src="<?php echo "{$images_uri}/E-WEB-Goal-{$number}.png" ?>" alt="">
+
+            <?php endfor; ?>
+        </div>
     </div>
 </section>

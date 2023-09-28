@@ -153,7 +153,7 @@ section.products {
 section.industries {
     @apply relative pt-20 pb-10 overflow-hidden;
     &:after {
-        @apply absolute content-[''] w-full h-full left-0 top-0 bg-industries-section bg-cover bg-no-repeat bg-blend-luminosity saturate-0 opacity-25;
+        @apply absolute content-[''] w-full h-full left-0 top-0 bg-molecular-white bg-cover bg-no-repeat bg-blend-luminosity saturate-0 opacity-25;
     }
     .container {
         @apply relative px-4;
@@ -271,7 +271,7 @@ section.contact-us {
         @apply absolute content-[''] w-full h-full left-0 top-0 clip-path-left-triangle bg-zinc-400 z-10;
     }
     .molecular-dark, .molecular-light {
-        @apply absolute content-[''] w-full h-[115%] left-0 top-[-10%] block bg-contact-section bg-cover bg-no-repeat bg-bottom opacity-25 saturate-0 contrast-50 brightness-200 transition-all ease-out-quad duration-1000 delay-100;
+        @apply absolute content-[''] w-full h-[115%] left-0 top-[-10%] block bg-molecular-blue bg-cover bg-no-repeat bg-bottom opacity-25 saturate-0 contrast-50 brightness-200 transition-all ease-out-quad duration-1000 delay-100;
     }
     .molecular-dark {
         @apply z-20 mix-blend-color-burn;

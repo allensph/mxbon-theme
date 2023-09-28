@@ -30,8 +30,8 @@ module.exports = {
                 'lang-icon-hover': 'url("/wp-content/themes/tailpress-master/resources/images/lang-icon-hover.svg")',
                 'caret-down': 'url("/wp-content/themes/tailpress-master/resources/images/caret-down.svg")',
                 'caret-down-focus': 'url("/wp-content/themes/tailpress-master/resources/images/caret-down-focus.svg")',
-                'industries-section': 'url("/wp-content/themes/tailpress-master/resources/images/industries-bg.jpg")',
-                'contact-section': 'url("/wp-content/themes/tailpress-master/resources/images/contact-bg.jpg")',
+                'molecular-white': 'url("/wp-content/themes/tailpress-master/resources/images/molecular-white-bg.jpg")',
+                'molecular-blue': 'url("/wp-content/themes/tailpress-master/resources/images/molecular-blue-bg.jpg")',
                 'history-scale': 'url("/wp-content/themes/tailpress-master/resources/images/dot-line.svg")',
                 'abstract-white': 'url("/wp-content/themes/tailpress-master/resources/images/abstract-w-bg.jpg")',
             },
@@ -41,12 +41,18 @@ module.exports = {
                 'radio-not-checked': 'inset 0 0 0 1px #27272A',
                 'radio-checked': 'inset 0 0 0 1px #DA2127, inset 0 0 0 3px #FFFFFF, inset 0 0 0 9px #DA2127'
             },
+            brightness: {
+                '140': '1.4',
+            },
             colors: tailpress.colorMapper(tailpress.theme('settings.color.palette', theme)),
             dropShadow: {
                 'fab': [
                     '0px 4px 6px rgba(0, 0, 0, 0.05)',
                     '0px 10px 15px rgba(0, 0, 0, 0.10)'
                 ],
+            },
+            filterOrder: {
+                'sdgs': 'contrast sepia brightness saturate',
             },
             fontSize: tailpress.fontSizeMapper(tailpress.theme('settings.typography.fontSizes', theme)),
             fontFamily: {
@@ -110,5 +116,6 @@ module.exports = {
         tailpress.tailwind,
         require('tailwind-clip-path'),
         require('@neojp/tailwindcss-line-clamp-utilities'),
+        require('@joshdavenport/tailwindcss-filter-order'),
     ]
 };

@@ -61,6 +61,12 @@ function tailpress_enqueue_scripts() {
 		wp_enqueue_script( 'alpine', 'https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js' );
 	}
 
+	if ( is_page( 'corporate-philsosphy' ) ) {
+		wp_enqueue_style( 'aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.css' );
+		wp_enqueue_script( 'aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js' );
+	}
+	
+
 	wp_enqueue_script( 'paroller', 'https://cdn.jsdelivr.net/npm/paroller.js@1.4.4/dist/jquery.paroller.min.js', array('jquery') );
 	wp_enqueue_script( 'tailpress', tailpress_asset( 'js/app.js' ), array('jquery'), $theme->get( 'Version' ) );
 }

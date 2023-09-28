@@ -117,9 +117,17 @@ if (window.location.pathname == '/about-us/history/') {
       })
 }
 
-if (window.location.pathname == '/about-us/history/') {
+if (window.location.pathname == '/about-us/corporate-philsosphy/') {
 
       window.addEventListener('DOMContentLoaded', function () {
 
+            // animate on scroll
+            AOS.init({
+                  duration: 1000,
+                  delay: 1000,
+                  easing: 'ease-in-out',
+            });
+            // paroller.js
+            jQuery("[data-paroller-factor]").paroller();
       })
 }

@@ -494,3 +494,189 @@ DEBUG   |20230912 09:09:02|-- Loading filter WordPressSkipFiles
 DEBUG   |20230912 09:09:02|Loading optional filters
 DEBUG   |20230912 09:09:02|-- Loading optional filter Stack\StackErrorlogs
 DEBUG   |20230912 09:09:02|-- Loading optional filter Stack\StackHoststats
+DEBUG   |20230927 03:16:21|Fetching filter data from database
+DEBUG   |20230927 03:16:21|Loading filters
+DEBUG   |20230927 03:16:21|-- Loading filter Directories
+DEBUG   |20230927 03:16:21|-- Loading filter Extradirs
+DEBUG   |20230927 03:16:21|-- Loading filter Files
+DEBUG   |20230927 03:16:21|-- Loading filter Incremental
+DEBUG   |20230927 03:16:21|-- Loading filter Multidb
+DEBUG   |20230927 03:16:21|-- Loading filter Regexdirectories
+DEBUG   |20230927 03:16:21|-- Loading filter Regexfiles
+DEBUG   |20230927 03:16:21|-- Loading filter Regexskipdirs
+DEBUG   |20230927 03:16:21|-- Loading filter Regexskipfiles
+DEBUG   |20230927 03:16:21|-- Loading filter Regextabledata
+DEBUG   |20230927 03:16:21|-- Loading filter Regextables
+DEBUG   |20230927 03:16:21|-- Loading filter Skipdirs
+DEBUG   |20230927 03:16:21|-- Loading filter Skipfiles
+DEBUG   |20230927 03:16:21|-- Loading filter Tabledata
+DEBUG   |20230927 03:16:21|-- Loading filter Tables
+DEBUG   |20230927 03:16:21|-- Loading filter ExcludeErrorLogs
+DEBUG   |20230927 03:16:21|-- Loading filter ExcludeFiles
+DEBUG   |20230927 03:16:21|-- Loading filter HostingFolders
+DEBUG   |20230927 03:16:21|-- Loading filter InstallationDirectory
+DEBUG   |20230927 03:16:21|-- Loading filter OSThumbnailCacheFiles
+DEBUG   |20230927 03:16:21|-- Loading filter OutputSkipFiles
+DEBUG   |20230927 03:16:21|-- Loading filter OutputSkipSubdirectories
+DEBUG   |20230927 03:16:21|-- Loading filter SiteDatabase
+DEBUG   |20230927 03:16:21|-- Loading filter SiteRoot
+DEBUG   |20230927 03:16:21|-- Loading filter WordPressSkipDirs
+DEBUG   |20230927 03:16:22|-- Loading filter WordPressSkipFiles
+DEBUG   |20230927 03:16:22|Loading optional filters
+DEBUG   |20230927 03:16:22|-- Loading optional filter Stack\StackErrorlogs
+DEBUG   |20230927 03:16:22|-- Loading optional filter Stack\StackHoststats
+DEBUG   |20230927 03:16:40|Fetching filter data from database
+DEBUG   |20230927 03:16:40|Loading filters
+DEBUG   |20230927 03:16:40|-- Loading filter Directories
+DEBUG   |20230927 03:16:40|-- Loading filter Extradirs
+DEBUG   |20230927 03:16:40|-- Loading filter Files
+DEBUG   |20230927 03:16:40|-- Loading filter Incremental
+DEBUG   |20230927 03:16:40|-- Loading filter Multidb
+DEBUG   |20230927 03:16:40|-- Loading filter Regexdirectories
+DEBUG   |20230927 03:16:40|-- Loading filter Regexfiles
+DEBUG   |20230927 03:16:40|-- Loading filter Regexskipdirs
+DEBUG   |20230927 03:16:40|-- Loading filter Regexskipfiles
+DEBUG   |20230927 03:16:40|-- Loading filter Regextabledata
+DEBUG   |20230927 03:16:40|-- Loading filter Regextables
+DEBUG   |20230927 03:16:40|-- Loading filter Skipdirs
+DEBUG   |20230927 03:16:40|-- Loading filter Skipfiles
+DEBUG   |20230927 03:16:40|-- Loading filter Tabledata
+DEBUG   |20230927 03:16:40|-- Loading filter Tables
+DEBUG   |20230927 03:16:40|-- Loading filter ExcludeErrorLogs
+DEBUG   |20230927 03:16:40|-- Loading filter ExcludeFiles
+DEBUG   |20230927 03:16:40|-- Loading filter HostingFolders
+DEBUG   |20230927 03:16:40|-- Loading filter InstallationDirectory
+DEBUG   |20230927 03:16:40|-- Loading filter OSThumbnailCacheFiles
+DEBUG   |20230927 03:16:40|-- Loading filter OutputSkipFiles
+DEBUG   |20230927 03:16:40|-- Loading filter OutputSkipSubdirectories
+DEBUG   |20230927 03:16:40|-- Loading filter SiteDatabase
+DEBUG   |20230927 03:16:40|-- Loading filter SiteRoot
+DEBUG   |20230927 03:16:40|-- Loading filter WordPressSkipDirs
+DEBUG   |20230927 03:16:40|-- Loading filter WordPressSkipFiles
+DEBUG   |20230927 03:16:40|Loading optional filters
+DEBUG   |20230927 03:16:40|-- Loading optional filter Stack\StackErrorlogs
+DEBUG   |20230927 03:16:40|-- Loading optional filter Stack\StackHoststats
+DEBUG   |20230927 03:17:22|Fetching filter data from database
+DEBUG   |20230927 03:17:22|Loading filters
+DEBUG   |20230927 03:17:22|-- Loading filter Directories
+DEBUG   |20230927 03:17:22|-- Loading filter Extradirs
+DEBUG   |20230927 03:17:22|-- Loading filter Files
+DEBUG   |20230927 03:17:22|-- Loading filter Incremental
+DEBUG   |20230927 03:17:22|-- Loading filter Multidb
+DEBUG   |20230927 03:17:22|-- Loading filter Regexdirectories
+DEBUG   |20230927 03:17:22|-- Loading filter Regexfiles
+DEBUG   |20230927 03:17:22|-- Loading filter Regexskipdirs
+DEBUG   |20230927 03:17:22|-- Loading filter Regexskipfiles
+DEBUG   |20230927 03:17:22|-- Loading filter Regextabledata
+DEBUG   |20230927 03:17:22|-- Loading filter Regextables
+DEBUG   |20230927 03:17:22|-- Loading filter Skipdirs
+DEBUG   |20230927 03:17:22|-- Loading filter Skipfiles
+DEBUG   |20230927 03:17:22|-- Loading filter Tabledata
+DEBUG   |20230927 03:17:22|-- Loading filter Tables
+DEBUG   |20230927 03:17:22|-- Loading filter ExcludeErrorLogs
+DEBUG   |20230927 03:17:22|-- Loading filter ExcludeFiles
+DEBUG   |20230927 03:17:22|-- Loading filter HostingFolders
+DEBUG   |20230927 03:17:22|-- Loading filter InstallationDirectory
+DEBUG   |20230927 03:17:22|-- Loading filter OSThumbnailCacheFiles
+DEBUG   |20230927 03:17:22|-- Loading filter OutputSkipFiles
+DEBUG   |20230927 03:17:22|-- Loading filter OutputSkipSubdirectories
+DEBUG   |20230927 03:17:22|-- Loading filter SiteDatabase
+DEBUG   |20230927 03:17:22|-- Loading filter SiteRoot
+DEBUG   |20230927 03:17:22|-- Loading filter WordPressSkipDirs
+DEBUG   |20230927 03:17:22|-- Loading filter WordPressSkipFiles
+DEBUG   |20230927 03:17:22|Loading optional filters
+DEBUG   |20230927 03:17:22|-- Loading optional filter Stack\StackErrorlogs
+DEBUG   |20230927 03:17:22|-- Loading optional filter Stack\StackHoststats
+DEBUG   |20230927 03:17:31|Fetching filter data from database
+DEBUG   |20230927 03:17:31|Loading filters
+DEBUG   |20230927 03:17:31|-- Loading filter Directories
+DEBUG   |20230927 03:17:31|-- Loading filter Extradirs
+DEBUG   |20230927 03:17:31|-- Loading filter Files
+DEBUG   |20230927 03:17:31|-- Loading filter Incremental
+DEBUG   |20230927 03:17:31|-- Loading filter Multidb
+DEBUG   |20230927 03:17:31|-- Loading filter Regexdirectories
+DEBUG   |20230927 03:17:31|-- Loading filter Regexfiles
+DEBUG   |20230927 03:17:31|-- Loading filter Regexskipdirs
+DEBUG   |20230927 03:17:31|-- Loading filter Regexskipfiles
+DEBUG   |20230927 03:17:31|-- Loading filter Regextabledata
+DEBUG   |20230927 03:17:31|-- Loading filter Regextables
+DEBUG   |20230927 03:17:31|-- Loading filter Skipdirs
+DEBUG   |20230927 03:17:31|-- Loading filter Skipfiles
+DEBUG   |20230927 03:17:31|-- Loading filter Tabledata
+DEBUG   |20230927 03:17:31|-- Loading filter Tables
+DEBUG   |20230927 03:17:31|-- Loading filter ExcludeErrorLogs
+DEBUG   |20230927 03:17:31|-- Loading filter ExcludeFiles
+DEBUG   |20230927 03:17:31|-- Loading filter HostingFolders
+DEBUG   |20230927 03:17:31|-- Loading filter InstallationDirectory
+DEBUG   |20230927 03:17:31|-- Loading filter OSThumbnailCacheFiles
+DEBUG   |20230927 03:17:31|-- Loading filter OutputSkipFiles
+DEBUG   |20230927 03:17:31|-- Loading filter OutputSkipSubdirectories
+DEBUG   |20230927 03:17:31|-- Loading filter SiteDatabase
+DEBUG   |20230927 03:17:31|-- Loading filter SiteRoot
+DEBUG   |20230927 03:17:31|-- Loading filter WordPressSkipDirs
+DEBUG   |20230927 03:17:31|-- Loading filter WordPressSkipFiles
+DEBUG   |20230927 03:17:31|Loading optional filters
+DEBUG   |20230927 03:17:31|-- Loading optional filter Stack\StackErrorlogs
+DEBUG   |20230927 03:17:31|-- Loading optional filter Stack\StackHoststats
+DEBUG   |20230927 03:17:38|Fetching filter data from database
+DEBUG   |20230927 03:17:38|Loading filters
+DEBUG   |20230927 03:17:38|-- Loading filter Directories
+DEBUG   |20230927 03:17:38|-- Loading filter Extradirs
+DEBUG   |20230927 03:17:38|-- Loading filter Files
+DEBUG   |20230927 03:17:38|-- Loading filter Incremental
+DEBUG   |20230927 03:17:38|-- Loading filter Multidb
+DEBUG   |20230927 03:17:38|-- Loading filter Regexdirectories
+DEBUG   |20230927 03:17:38|-- Loading filter Regexfiles
+DEBUG   |20230927 03:17:38|-- Loading filter Regexskipdirs
+DEBUG   |20230927 03:17:38|-- Loading filter Regexskipfiles
+DEBUG   |20230927 03:17:38|-- Loading filter Regextabledata
+DEBUG   |20230927 03:17:38|-- Loading filter Regextables
+DEBUG   |20230927 03:17:38|-- Loading filter Skipdirs
+DEBUG   |20230927 03:17:38|-- Loading filter Skipfiles
+DEBUG   |20230927 03:17:38|-- Loading filter Tabledata
+DEBUG   |20230927 03:17:38|-- Loading filter Tables
+DEBUG   |20230927 03:17:38|-- Loading filter ExcludeErrorLogs
+DEBUG   |20230927 03:17:38|-- Loading filter ExcludeFiles
+DEBUG   |20230927 03:17:38|-- Loading filter HostingFolders
+DEBUG   |20230927 03:17:38|-- Loading filter InstallationDirectory
+DEBUG   |20230927 03:17:38|-- Loading filter OSThumbnailCacheFiles
+DEBUG   |20230927 03:17:38|-- Loading filter OutputSkipFiles
+DEBUG   |20230927 03:17:38|-- Loading filter OutputSkipSubdirectories
+DEBUG   |20230927 03:17:38|-- Loading filter SiteDatabase
+DEBUG   |20230927 03:17:38|-- Loading filter SiteRoot
+DEBUG   |20230927 03:17:38|-- Loading filter WordPressSkipDirs
+DEBUG   |20230927 03:17:38|-- Loading filter WordPressSkipFiles
+DEBUG   |20230927 03:17:38|Loading optional filters
+DEBUG   |20230927 03:17:38|-- Loading optional filter Stack\StackErrorlogs
+DEBUG   |20230927 03:17:38|-- Loading optional filter Stack\StackHoststats
+DEBUG   |20230927 03:17:45|Fetching filter data from database
+DEBUG   |20230927 03:17:45|Loading filters
+DEBUG   |20230927 03:17:45|-- Loading filter Directories
+DEBUG   |20230927 03:17:45|-- Loading filter Extradirs
+DEBUG   |20230927 03:17:45|-- Loading filter Files
+DEBUG   |20230927 03:17:45|-- Loading filter Incremental
+DEBUG   |20230927 03:17:45|-- Loading filter Multidb
+DEBUG   |20230927 03:17:45|-- Loading filter Regexdirectories
+DEBUG   |20230927 03:17:45|-- Loading filter Regexfiles
+DEBUG   |20230927 03:17:45|-- Loading filter Regexskipdirs
+DEBUG   |20230927 03:17:45|-- Loading filter Regexskipfiles
+DEBUG   |20230927 03:17:45|-- Loading filter Regextabledata
+DEBUG   |20230927 03:17:45|-- Loading filter Regextables
+DEBUG   |20230927 03:17:45|-- Loading filter Skipdirs
+DEBUG   |20230927 03:17:45|-- Loading filter Skipfiles
+DEBUG   |20230927 03:17:45|-- Loading filter Tabledata
+DEBUG   |20230927 03:17:45|-- Loading filter Tables
+DEBUG   |20230927 03:17:45|-- Loading filter ExcludeErrorLogs
+DEBUG   |20230927 03:17:45|-- Loading filter ExcludeFiles
+DEBUG   |20230927 03:17:45|-- Loading filter HostingFolders
+DEBUG   |20230927 03:17:45|-- Loading filter InstallationDirectory
+DEBUG   |20230927 03:17:45|-- Loading filter OSThumbnailCacheFiles
+DEBUG   |20230927 03:17:45|-- Loading filter OutputSkipFiles
+DEBUG   |20230927 03:17:45|-- Loading filter OutputSkipSubdirectories
+DEBUG   |20230927 03:17:45|-- Loading filter SiteDatabase
+DEBUG   |20230927 03:17:45|-- Loading filter SiteRoot
+DEBUG   |20230927 03:17:45|-- Loading filter WordPressSkipDirs
+DEBUG   |20230927 03:17:45|-- Loading filter WordPressSkipFiles
+DEBUG   |20230927 03:17:45|Loading optional filters
+DEBUG   |20230927 03:17:45|-- Loading optional filter Stack\StackErrorlogs
+DEBUG   |20230927 03:17:45|-- Loading optional filter Stack\StackHoststats
