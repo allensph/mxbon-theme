@@ -136,6 +136,18 @@ add_filter( 'nav_menu_submenu_css_class', 'tailpress_nav_menu_add_submenu_class'
 
 
 /**
+ * Add Admin Style
+ */
+add_action('admin_enqueue_scripts', 'tellustek_admin_enqueue_scripts');
+function tellustek_admin_enqueue_scripts($hook) {
+	//global $pagenow;
+	if ( isset( $_GET['page'] ) && $_GET['page'] == 'options-about-us' ) {
+		wp_enqueue_style( 'acf-option-page', get_stylesheet_directory_uri() . "/css/acf-option-style.css" );
+	}
+}
+
+
+/**
  * JS loading handler
  */
 add_filter( 'script_loader_tag', 'custom_loading_scripts', 10, 3 );

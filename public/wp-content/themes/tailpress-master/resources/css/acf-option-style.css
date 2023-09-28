@@ -1,0 +1,102 @@
+.acf-field-checkbox.sdgs {
+    .acf-checkbox-list.acf-bl {
+        @apply grid gap-4 grid-cols-6 grid-rows-3 w-fit before:hidden focus-within:border-none focus-within:rounded-none;
+        li {
+            label {
+                @apply block text-transparent w-[130.6667px] h-[130.6667px] bg-cover bg-no-repeat mix-blend-luminosity opacity-40 transition-all;
+                input[type="checkbox"] {
+                    @apply invisible;
+                }
+                &.selected {
+                    @apply mix-blend-normal opacity-100;
+                }
+            }
+
+            &:nth-child(1) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-01.png')];
+                }
+            }
+            &:nth-child(2) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-02.png')];
+                }
+            }
+            &:nth-child(3) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-03.png')];
+                }
+            }
+            &:nth-child(4) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-04.png')];
+                }
+            }
+            &:nth-child(5) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-05.png')];
+                }
+            }
+            &:nth-child(6) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-06.png')];
+                }
+            }
+            &:nth-child(7) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-07.png')];
+                }
+            }
+            &:nth-child(8) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-08.png')];
+                }
+            }
+            &:nth-child(9) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-09.png')];
+                }
+            }
+            &:nth-child(10) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-10.png')];
+                }
+            }
+            &:nth-child(11) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-11.png')];
+                }
+            }
+            &:nth-child(12) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-12.png')];
+                }
+            }
+            &:nth-child(13) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-13.png')];
+                }
+            }
+            &:nth-child(14) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-14.png')];
+                }
+            }
+            &:nth-child(15) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-15.png')];
+                }
+            }
+            &:nth-child(16) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-16.png')];
+                }
+            }
+            &:nth-child(17) {
+                label {
+                    @apply bg-[url('/wp-content/themes/tailpress-master/resources/images/E-WEB-Goal-17.png')];
+                }
+            }
+        }
+    }
+}

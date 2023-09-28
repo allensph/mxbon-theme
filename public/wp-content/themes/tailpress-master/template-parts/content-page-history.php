@@ -40,7 +40,12 @@
                                     <span class="remark"><?php echo $record['remark']; ?></span>
                                 <?php endif; ?>
                                 <?php if ( $record['remark_img'] ) : ?>
-                                    <img class="remark-image" src="" alt="">
+                                    <img class="remark-image" 
+                                        src="<?php echo $record['remark_img']['sizes']['medium'] ?>"
+                                        width="<?php echo $record['record_img']['sizes']['medium-width']; ?>"
+                                        height="<?php echo $record['record_img']['sizes']['medium-height']; ?>"
+                                        alt="<?php echo $record['remark']; ?>"
+                                    >
                                 <?php endif; ?>
                             </div>
 

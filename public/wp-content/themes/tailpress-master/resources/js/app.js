@@ -123,8 +123,7 @@ if (window.location.pathname == '/about-us/corporate-philsosphy/') {
 
             // animate on scroll
             AOS.init({
-                  duration: 1000,
-                  delay: 1000,
+                  once: true,
                   easing: 'ease-in-out',
             });
             // paroller.js

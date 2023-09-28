@@ -10,7 +10,7 @@
 
             <?php $delay = 100 + $index * 700; ?>
 
-                <li data-aos="fade" data-aos-delay="<?php echo $delay; ?>">
+                <li data-aos="fade" data-aos-delay="<?php echo $delay; ?>" data-aos-duration="1000">
                     <span></span>
                     <h3><?php echo $philsosphy['title']; ?></h3>
                 </li>
@@ -24,13 +24,13 @@
 
 <section class="vision">
     <div class="wrapper">
-        <div class="content">
+        <div class="content" data-aos="fade-up" data-aos-duration="500">
             <h3>願景使命</h3>
             <p><?php echo get_field('vision', 'option'); ?></p>
             <span class="vision-bg" data-paroller-factor="-0.1">
             </span>
         </div>
-        <img src="<?php echo "{$images_uri}/vision.png"; ?>" alt="願景使命">
+        <img src="<?php echo "{$images_uri}/vision.png"; ?>" alt="願景使命" data-aos="fade-up" data-aos-duration="500">
     </div>
 </section>
 
