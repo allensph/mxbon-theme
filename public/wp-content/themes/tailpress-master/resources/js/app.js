@@ -131,5 +131,80 @@ if (window.location.pathname == '/about-us/innovation/') {
       window.addEventListener('DOMContentLoaded', function () {
             // animate on scroll
             AOS.init({ once: true, easing: 'ease-in-out', });
+
+            // auto scratch card
+            const PIXEL_RATIO = (function () {
+                  const ctx = document.createElement('canvas').getContext('2d'),
+                        dpr = window.devicePixelRatio || 1,
+                        bsr = ctx.webkitBackingStorePixelRatio ||
+                              ctx.mozBackingStorePixelRatio ||
+                              ctx.msBackingStorePixelRatio ||
+                              ctx.oBackingStorePixelRatio ||
+                              ctx.backingStorePixelRatio || 1;
+
+                  return dpr / bsr;
+            })();
+
+            function parentWidth(element) {
+                  return element.parentElement.clientWidth;
+            }
+
+            console.log(window?.innnerWidth)
+
+            const WIDTH = window.innnerWidth < 1024
+                  ? parentWidth(document.getElementById('fg'))
+                  : 304;
+            const HEIGHT = window.innnerWidth < 1024
+                  ? parentWidth(document.getElementById('fg')) * 230 / 304
+                  : 230;
+
+            function initCanvas(w, h, id) {
+                  const canvas = document.getElementById(id);
+                  canvas.width = w * PIXEL_RATIO;
+                  canvas.height = h * PIXEL_RATIO;
+                  canvas.style.width = w + 'px';
+                  //canvas.style.height = h + 'px';
+                  canvas.style.height = 230 + 'px';
+                  canvas.getContext('2d').setTransform(PIXEL_RATIO, 0, 0, PIXEL_RATIO, 0, 0);
+
+                  return canvas;
+            }
+            function rand(min, max) {
+                  return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+            function initFg() {
+                  const canvas = initCanvas(WIDTH, HEIGHT, 'fg');
+                  const ctx = canvas.getContext('2d');
+                  ctx.fillStyle = '#f4f4f5';
+                  ctx.fillRect(0, 0, canvas.width, canvas.height);
+                  ctx.globalCompositeOperation = 'destination-out';
+            }
+            function scratch() {
+                  ctx.beginPath();
+                  x += rand(2, 3);
+                  ctx.ellipse(
+                        x,
+                        WIDTH / 2 + rand(-80, 80),
+                        radius * rand(1, 5) / 10,
+                        radius * rand(10, 20) / 5,
+                        rand(15, 30) * Math.PI / 180,
+                        0,
+                        2 * Math.PI
+                  );
+                  ctx.fill();
+
+                  if (i++ < 100) requestAnimationFrame(scratch);
+                  if (i > 80) canvas.classList.add('fade-out');
+            }
+
+            const canvas = document.getElementById('fg');
+            const ctx = canvas.getContext('2d');
+            let radius = WIDTH / (PIXEL_RATIO * 10), x = 0, i = 0;
+
+            initFg();
+            requestAnimationFrame(scratch);
+            canvas.onanimationend = () => {
+                  return;
+            }
       })
 }

@@ -19,6 +19,14 @@ module.exports = {
             },
         },
         extend: {
+            animation: {
+                'fade-out': 'fade-out .5s ease-in forwards',
+            },
+            keyframes: {
+                'fade-out': {
+                    '0%': { opacity: '1' }, '100%': { opacity: '0' },
+                }
+            },
             aspectRatio: {
                 'industry': '460 / 613',
             },
