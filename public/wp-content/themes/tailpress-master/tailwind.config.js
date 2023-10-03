@@ -42,6 +42,10 @@ module.exports = {
                 'molecular-blue': 'url("/wp-content/themes/tailpress-master/resources/images/molecular-blue-bg.jpg")',
                 'history-scale': 'url("/wp-content/themes/tailpress-master/resources/images/dot-line.svg")',
                 'abstract-white': 'url("/wp-content/themes/tailpress-master/resources/images/abstract-w-bg.jpg")',
+                'quality-banner': 'url("/wp-content/themes/tailpress-master/resources/images/certification-banner-1.jpg")',
+                'enviroment-banner': 'url("/wp-content/themes/tailpress-master/resources/images/certification-banner-2.jpg")',
+                'quality-deco': 'url("/wp-content/themes/tailpress-master/resources/images/certification-banner-deco-1.png")',
+                'enviroment-deco': 'url("/wp-content/themes/tailpress-master/resources/images/certification-banner-deco-2.png")',
             },
             boxShadow: {
                 'card': '0px 7px 29px 0px rgba(100, 100, 111, 0.20)',
@@ -58,6 +62,10 @@ module.exports = {
                     '0px 4px 6px rgba(0, 0, 0, 0.05)',
                     '0px 10px 15px rgba(0, 0, 0, 0.10)'
                 ],
+                'awards': [
+                    '0px 8px 16px -8px rgba(0, 0, 0, 0.30)',
+                    '0px 13px 27px -5px rgba(93, 50, 50, 0.25)'
+                ]
             },
             filterOrder: {
                 'sdgs': 'contrast sepia brightness saturate',

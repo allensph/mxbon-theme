@@ -208,3 +208,10 @@ if (window.location.pathname == '/about-us/innovation/') {
             }
       })
 }
+
+if (window.location.pathname == '/about-us/certification/') {
+      window.addEventListener('DOMContentLoaded', function () {
+            // animate on scroll
+            AOS.init({ once: true, easing: 'ease-in-out', });
+      })
+}

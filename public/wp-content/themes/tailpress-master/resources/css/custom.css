@@ -936,6 +936,77 @@ footer {
                         }
                     }
                 }
+                section.ceritfication-block {                 
+                    .content {
+                        @apply relative text-white w-full lg:w-[69.23%] h-[228px] lg:h-[288px] mb-6 lg:mb-[72px] p-6 lg:p-10 bg-cover bg-center bg-no-repeat;
+                        h2 {
+                            @apply text-2xl leading-ext-tight font-medium mb-4;
+                        }
+                        p {
+                            @apply text-lg leading-normal pb-0;
+                        }
+                        .decoration {
+                            @apply absolute hidden lg:block -z-10 content-[''] top-12 w-full h-full bg-cover bg-no-repeat;
+                        }
+                    }
+                    .certifications {
+                        @apply z-10 grid grid-cols-2 md:flex md:flex-row md:flex-wrap gap-8;
+                        li {
+                            @apply list-none w-full max-w-[164px] flex flex-col gap-y-3 items-center;
+                            img {
+                                @apply w-[120px] h-[120px];
+                            }
+                            .desc {
+                                @apply text-zinc-800 text-lg leading-normal text-center;
+                            }
+                        }
+                    }
+                    &.quality {
+                        .content {
+                            @apply bg-quality-banner;
+                            .decoration {
+                                @apply bg-quality-deco left-1/2;
+                            }
+                        }
+                        .certifications {
+                            @apply justify-start;
+                        }
+                    }
+                    &.enviroment {
+                        .content {
+                            @apply bg-enviroment-banner ml-auto text-right;
+                            .decoration {
+                                @apply bg-enviroment-deco right-1/2;
+                            }
+                        }
+                        .certifications {
+                            @apply justify-end;
+                        }
+                    }
+                }
+                section.achivement {
+                    h2 {
+                        @apply text-zinc-800 text-2xl leading-ext-tight font-medium mb-8 text-center lg:text-left;
+                        &:before {
+                            @apply content-[''] hidden lg:inline-block w-2 h-5 mr-4 bg-mxbon-red;
+                        }
+                    }
+                    .awards {
+                        @apply grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-10 lg:mb-20;
+                        li {
+                            @apply list-none;
+                            .image-wrapper {
+                                @apply relative h-0 pt-[65.30%] px-[17.50%] lg:pt-[100%] lg:px-0 mb-3;
+                                img {
+                                    @apply absolute top-0 left-0 w-full h-full object-contain object-bottom drop-shadow-awards;
+                                }
+                            }
+                            .name {
+                                @apply block text-zinc-800 text-lg font-medium text-center;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
