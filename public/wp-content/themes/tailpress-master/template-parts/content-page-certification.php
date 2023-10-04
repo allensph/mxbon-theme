@@ -21,8 +21,8 @@
         <?php foreach( $quality_items as $item ) : ?>
             <li>
                 <img src="<?php echo $item['image']['sizes']['medium']; ?>"
-                    width="<?php echo $item['image']['medium-width']; ?>"
-                    height="<?php echo $item['image']['medium-height']; ?>"
+                    width="<?php echo $item['image']['sizes']['medium-width']; ?>"
+                    height="<?php echo $item['image']['sizes']['medium-height']; ?>"
                     alt="<?php echo $item['desc']; ?>"
                     >
                 
@@ -49,8 +49,8 @@
         <?php foreach( $enviroment_items as $item ) : ?>
             <li>
                 <img src="<?php echo $item['image']['sizes']['medium']; ?>"
-                        width="<?php echo $item['image']['medium-width']; ?>"
-                        height="<?php echo $item['image']['medium-height']; ?>"
+                        width="<?php echo $item['image']['sizes']['medium-width']; ?>"
+                        height="<?php echo $item['image']['sizes']['medium-height']; ?>"
                         alt="<?php echo $item['desc']; ?>"
                         >
                 <span class="desc"><?php echo $item['desc']; ?></span>
@@ -70,8 +70,8 @@
                 <?php if( $award['image'] ) : ?>
                     <div class="image-wrapper">
                         <img src="<?php echo $award['image']['sizes']['medium']; ?>"
-                            width="<?php echo $award['image']['medium-width']; ?>"
-                            height="<?php echo $award['image']['medium-height']; ?>"
+                            width="<?php echo $award['image']['sizes']['medium-width']; ?>"
+                            height="<?php echo $award['image']['sizes']['medium-height']; ?>"
                             alt="<?php echo $award['name']; ?>">
                         <?php endif; ?>
                     </div>
