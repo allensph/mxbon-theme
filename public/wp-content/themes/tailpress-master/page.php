@@ -7,28 +7,18 @@
     </div>
 
 	<div class="container">
-        <aside class="side-navigation">
+        
+        <aside class="side-navigation" x-bind:class="collapse == true ? 'active' : ''" x-data="{ collapse: false, title: '<?php echo get_the_title(); ?>' }">
+
             <div class="title">關於我們</div>
+
+            <div class="mobile-toggle-btn" x-text="title" x-on:click="collapse = !collapse"></div>
             <?php
                 wp_nav_menu( array(
                     'theme_location'  => 'primary',
                     'sub_menu' => true
                 ) );
             ?>
-
-            <!-- <select class="mobile-menu"> -->
-            <?php
-                /*
-                $primaryMenu = array(
-                    'theme_location'  => 'primary',
-                    'echo'            => false,
-                    'walker'          => new Mxbon_Subpage_Menu_Walker(),
-                    'sub_menu' => true
-                );
-                echo strip_tags( wp_nav_menu( $primaryMenu ), '<option>' );
-                */
-            ?>
-            <!-- </select> -->
         </aside>
         
         <?php if ( have_posts() ) : ?>

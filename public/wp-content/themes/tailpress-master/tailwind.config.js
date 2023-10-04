@@ -63,8 +63,8 @@ module.exports = {
                     '0px 10px 15px rgba(0, 0, 0, 0.10)'
                 ],
                 'awards': [
-                    '0px 8px 16px -8px rgba(0, 0, 0, 0.30)',
-                    '0px 13px 27px -5px rgba(93, 50, 50, 0.25)'
+                    '0px 4px 2px rgba(0, 0, 0, 0.15)',
+                    '0px 8px 4px rgba(93, 50, 50, 0.20)'
                 ]
             },
             filterOrder: {

@@ -148,7 +148,7 @@
         }
         public function end_el( &$output, $data_object, $depth = 0, $args = null ) {
 
-            $output .= "</option>{$n}";
+            $output .= "</option>";
             
         }    
     }

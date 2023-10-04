@@ -242,7 +242,6 @@ remove_filter( 'get_the_content', 'wpautop' );
 // Custom primary menu walker
 function tellustek_custom_nav_walker_class() {
 	require_once('includes/Mxbon_Primary_Menu_Walker.class.php');
-	//require_once('includes/Mxbon_Subpage_Menu_Walker.class.php');
 }
 add_action( 'after_setup_theme', 'tellustek_custom_nav_walker_class' );
 

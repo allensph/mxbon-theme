@@ -220,7 +220,7 @@ header {
                         @apply relative block;
 
                         .menu-link-wrapper {
-                            @apply relative flex justify-between gap-x-2 lg:block;
+                            @apply relative flex justify-between gap-x-2 lg:block transition-spacing;
                             a {
                                 @apply relative block px-0.5 py-[13px] lg:py-5 lg:px-2 xl:px-3 2xl:px-4 text-lg lg:text-base xl:text-lg leading-ext-tight font-medium text-zinc-800 transition-colors;
                                 &:after {
@@ -537,28 +537,48 @@ footer {
         .container {
             @apply mx-auto flex flex-col lg:flex-row max-w-full 3xl:max-w-9xl overflow-x-hidden overflow-y-auto;
             .side-navigation {
-                @apply mb-12 md:mb-0 lg:px-4 py-8 lg:w-1/5 xl:w-1/6;
+                @apply mb-12 md:mb-0 lg:px-4 lg:py-8 lg:w-1/5 xl:w-1/6;
                 .title {
                     @apply relative hidden lg:block text-zinc-400 text-2xl leading-ext-tight font-medium p-8 mb-4;
                     &:after {
                         @apply absolute content-[''] w-full h-px -bottom-2 left-0 bg-zinc-200;
                     }
                 }
+                .mobile-toggle-btn {
+                    @apply  flex flex-row justify-between lg:hidden px-6 py-4 text-white bg-zinc-600 text-lg leading-ext-tight font-medium;
+                    &:after {
+                        @apply inline-block content-['\f0d7'] font-awesome text-xl leading-ext-tight font-black transition-transform duration-700;
+                    }
+                }
                 .menu {
+                    @apply max-h-0 lg:max-h-fit overflow-hidden transition-all duration-700;
                     .menu-item {
-                        @apply block pr-6;
+                        @apply block lg:pr-6;
                         a {
-                            @apply relative block pr-6 pl-8 py-4 text-zinc-600 hover:text-mxbon-red transition-colors text-xl leading-ext-tight font-medium;
+                            @apply relative block px-6 lg:pr-6 lg:pl-8 py-4;
+                            @apply text-zinc-600 hover:bg-zinc-100 active:bg-zinc-100 lg:hover:bg-transparent lg:active:bg-transparent lg:hover:text-mxbon-red lg:active:text-mxbon-red transition-colors text-lg lg:text-xl leading-ext-tight font-normal lg:font-medium;
                         }
                     }
                     .current_page_item {
                         a {
-                            @apply text-white bg-mxbon-red hover:text-white;
+                            @apply bg-zinc-100 lg:text-white lg:bg-mxbon-red lg:hover:text-white lg:hover:bg-mxbon-red;
                             &:after {
-                                @apply absolute content-[''] w-0 h-0 border-t-[28px] border-r-0 border-b-[28px] border-l-[24px] border-transparent border-l-mxbon-red top-0 right-0 translate-x-full;
+                                @apply hidden lg:block absolute content-[''] w-0 h-0 border-t-[28px] border-r-0 border-b-[28px] border-l-[24px] border-transparent border-l-mxbon-red top-0 right-0 translate-x-full;
                             }
                         }
                     }
+
+                }
+                &.active {
+                    .mobile-toggle-btn {
+                        &:after {
+                            @apply rotate-180;
+                        }
+                    }
+                    .menu {
+                        @apply shadow-card lg:shadow-none max-h-screen;
+                    }
+                    
                 }
             }
             article {
