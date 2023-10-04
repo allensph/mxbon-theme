@@ -537,7 +537,7 @@ footer {
         .container {
             @apply mx-auto flex flex-col lg:flex-row max-w-full 3xl:max-w-9xl overflow-x-hidden overflow-y-auto;
             .side-navigation {
-                @apply mb-12 md:mb-0 lg:px-4 lg:py-8 lg:w-1/5 xl:w-1/6;
+                @apply mb-12 lg:mb-0 lg:px-4 lg:py-8 lg:w-1/5 xl:w-1/6;
                 .title {
                     @apply relative hidden lg:block text-zinc-400 text-2xl leading-ext-tight font-medium p-8 mb-4;
                     &:after {

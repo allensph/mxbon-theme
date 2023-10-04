@@ -15,7 +15,13 @@
 	</header>
 
 	<div class="entry-content">
-		<?php get_template_part( "template-parts/content-page-{$post_name}" ); ?>
+		<?php
+			$locate = locate_template( "template-parts/content-page-{$post_name}.php" );
+			$locate 
+				? get_template_part( "template-parts/content-page-{$post_name}" )
+				: the_content();
+		?>
+		<?php //get_template_part( "template-parts/content-page-{$post_name}" ); ?>
 	</div>
 
 </article>

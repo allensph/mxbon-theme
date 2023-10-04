@@ -21,7 +21,7 @@
             <?php if( $stage['record'] ) : ?>
 
             <ul class="timeline">
-                <? foreach ( $stage['record'] as $record ) : ?>
+                <?php foreach ( $stage['record'] as $record ) : ?>
                <li class="record" x-data="{ shown: false }" x-intersect.full="shown = true">
                     <div class="record-wrapper"
                         x-show="shown"
