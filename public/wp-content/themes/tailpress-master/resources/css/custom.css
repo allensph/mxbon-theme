@@ -586,7 +586,7 @@ footer {
                 & > *:not(.entry-content) {
                     @apply max-w-full;
                 }
-                &.post-102, &.post-104 {
+                &.post-102, &.post-104, &.post-107 {
                     .entry-header {
                         .page-title.side {
                             @apply pt-[122px] md:pt-10;
@@ -1025,6 +1025,55 @@ footer {
                                 @apply block text-zinc-800 text-lg font-medium text-center;
                             }
                         }
+                    }
+                }
+                /* temp style START */
+                /*
+                g.imapsSprite-group.imapsContainer-group.imapsTooltip-group {
+                    @apply !visible !opacity-100;
+                }
+                */
+                /* temp style END */
+
+                g.imapsContainer {
+                    .imapsTooltip {
+                        .foreignObject {
+                            @apply overflow-visible;
+                        }                        
+                        .wrapper {
+                            @apply relative w-[300px] lg:w-[576px];
+                            &:before {
+                                @apply absolute -z-10 content-[''] w-full h-full left-0 top-0 bg-gradient-to-r from-transparent to-neutral-50 from-0% to-[36%];
+                            }
+                            img {
+                                @apply absolute -z-20 w-full h-[calc(100%-2px)] top-px bottom-px left-0 object-contain object-left;
+                            }
+                            .content {
+                                @apply pr-6 pl-[30%] py-4;
+                                h3 {
+                                    @apply text-zinc-800 text-2xl leading-ext-tight font-medium mb-4 text-center lg:text-left;
+                                    &:before {
+                                        @apply content-[''] hidden lg:inline-block w-2 h-5 mr-4 bg-mxbon-red;
+                                    }
+                                }
+                                strong {
+                                    @apply font-raj text-[19px];
+                                }
+                                ul {
+                                    @apply mb-0 pl-6;
+                                    li {
+                                        @apply block text-zinc-600 list-none whitespace-normal -indent-4;
+                                        i {
+                                            @apply inline-flex w-4 h-4 justify-center items-center;
+                                        }
+                                    }
+                                }
+                            }
+                            & + .wrapper {
+                                @apply mt-4;
+                            }
+                        }
+                        
                     }
                 }
             }
