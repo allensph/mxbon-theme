@@ -18,23 +18,36 @@
 
 <div class="container">
 
-    <aside class="side-navigation" x-bind:class="collapse == true ? 'active' : ''" x-data="{ collapse: false, title: '<?php echo $categories[0]->name; ?>' }">
+    <aside class="side-navigation" 
+        x-bind:class="collapse == true ? 'active' : ''"
+        x-on:scroll.window="fixed = (window.pageYOffset < 182) ? false : true"
+        x-data="{ collapse: false, current: <?php echo $categories[0]->term_id; ?>, title: '<?php echo $categories[0]->name; ?>', fixed: false }">
 
-        <div class="title">產品分類</div>
+        <div class="wrapper" x-bind:class="fixed == true ? 'aside-fixed' : ''">
 
-        <div class="mobile-toggle-btn" x-text="title" x-on:click="collapse = !collapse"></div>
-        
-        <ul class="menu">
+            <div class="title">產品分類</div>
 
-            <?php if( $categories ) : ?>
-            <?php foreach( $categories as $category) : ?>
+            <div class="mobile-toggle-btn" x-text="title" x-on:click="collapse = !collapse"></div>
+            
+            <ul class="menu">
 
-                <li class="menu-item" x-on:click="title='<?php echo $category->name; ?>'; collapse = !collapse"><a href="<?php echo "#{$category->slug}"; ?>"><?php echo $category->name; ?></a></li>
+                <?php if( $categories ) : ?>
+                <?php foreach( $categories as $category) : ?>
 
-            <?php endforeach; ?>
-            <?php endif; ?>
-        </ul>
+                    <li class="menu-item" x-bind:class="current == <?php echo $category->term_id; ?> ? 'current-menu-item' : ''"
+                        x-on:click="
+                        title='<?php echo $category->name; ?>'; 
+                        collapse = !collapse;
+                        current = <?php echo $category->term_id; ?>;
+                        ">
+                        <a href="<?php echo "#{$category->slug}"; ?>"><?php echo $category->name; ?></a>
+                    </li>
 
+                <?php endforeach; ?>
+                <?php endif; ?>
+            </ul>
+
+        </div>
     </aside>
 
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>

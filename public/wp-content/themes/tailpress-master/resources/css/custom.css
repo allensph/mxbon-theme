@@ -170,8 +170,10 @@ article > *:not(.entry-content),
 }
 
 /* Header mobile effect */ 
-body {
+html {
     @apply scroll-smooth;
+}
+body {
     &.search-active, &.toggle-active {
         @apply h-full xl:h-auto overflow-hidden xl:overflow-auto;
         .site-content {
@@ -536,47 +538,55 @@ footer {
             @apply mx-auto mt-2 md:mt-10 flex flex-col lg:flex-row max-w-full 3xl:max-w-9xl;
             .side-navigation {
                 @apply mb-12 lg:mb-0 lg:px-4 lg:py-8 lg:w-1/5 xl:w-1/6;
-                .title {
-                    @apply relative hidden lg:block text-zinc-400 text-2xl leading-ext-tight font-medium p-8 mb-4;
-                    &:after {
-                        @apply absolute content-[''] w-full h-px -bottom-2 left-0 bg-zinc-200;
+                .wrapper {
+                    &.aside-fixed {
+                        @apply lg:fixed lg:top-0 lg:w-full lg:max-w-[calc(1536px/5-32px)] xl:max-w-[calc(1536px/6-32px)];
                     }
-                }
-                .mobile-toggle-btn {
-                    @apply  flex flex-row justify-between lg:hidden px-6 py-4 text-white bg-zinc-600 text-lg leading-ext-tight font-medium;
-                    &:after {
-                        @apply inline-block content-['\f0d7'] font-awesome text-xl leading-ext-tight font-black transition-transform duration-700;
-                    }
-                }
-                .menu {
-                    @apply max-h-0 lg:max-h-fit overflow-hidden transition-all duration-700;
-                    .menu-item {
-                        @apply block lg:pr-6;
-                        a {
-                            @apply relative block px-6 lg:pr-6 lg:pl-8 py-4;
-                            @apply text-zinc-600 hover:bg-zinc-100 active:bg-zinc-100 lg:hover:bg-transparent lg:active:bg-transparent lg:hover:text-mxbon-red lg:active:text-mxbon-red transition-colors text-lg lg:text-xl leading-ext-tight font-normal lg:font-medium;
-                        }
-                    }
-                    .current_page_item {
-                        a {
-                            @apply bg-zinc-100 lg:text-white lg:bg-mxbon-red lg:hover:text-white lg:hover:bg-mxbon-red;
-                            &:after {
-                                @apply hidden lg:block absolute content-[''] w-0 h-0 border-t-[28px] border-r-0 border-b-[28px] border-l-[24px] border-transparent border-l-mxbon-red top-0 right-0 translate-x-full;
-                            }
-                        }
-                    }
-            
-                }
-                &.active {
-                    .mobile-toggle-btn {
+                    .title {
+                        @apply relative hidden lg:block text-zinc-400 text-2xl leading-ext-tight font-medium p-8 mb-4;
                         &:after {
-                            @apply rotate-180;
+                            @apply absolute content-[''] w-full h-px -bottom-2 left-0 bg-zinc-200;
+                        }
+                    }
+                    .mobile-toggle-btn {
+                        @apply  flex flex-row justify-between lg:hidden px-6 py-4 text-white bg-zinc-600 text-lg leading-ext-tight font-medium;
+                        &:after {
+                            @apply inline-block content-['\f0d7'] font-awesome text-xl leading-ext-tight font-black transition-transform duration-700;
                         }
                     }
                     .menu {
-                        @apply shadow-card lg:shadow-none max-h-screen;
+                        @apply max-h-0 lg:max-h-fit overflow-hidden transition-all duration-700;
+                        .menu-item {
+                            @apply block;
+                            a {
+                                @apply relative block px-6 lg:pr-6 lg:pl-8 py-4 whitespace-nowrap text-ellipsis overflow-hidden;
+                                @apply text-zinc-600 hover:bg-zinc-100 active:bg-zinc-100 lg:hover:bg-transparent lg:active:bg-transparent lg:hover:text-mxbon-red lg:active:text-mxbon-red transition-colors text-lg lg:text-xl leading-ext-tight font-normal lg:font-medium;
+                            }
+                        }
+                        .current-menu-item {
+                            a {
+                                @apply bg-zinc-100 lg:text-white lg:bg-transparent lg:hover:text-white lg:hover:bg-transparent;
+                                &:before {
+                                    @apply hidden lg:block absolute content-[''] w-[calc(100%-24px)] h-full bg-mxbon-red top-0 left-0 -z-10;
+                                }
+                                &:after {
+                                    @apply hidden lg:block absolute content-[''] w-0 h-0 border-t-[28px] border-r-0 border-b-[28px] border-l-[24px] border-transparent border-l-mxbon-red top-0 right-0 -z-10;
+                                }
+                            }
+                        }
+                
                     }
-                    
+                    &.active {
+                        .mobile-toggle-btn {
+                            &:after {
+                                @apply rotate-180;
+                            }
+                        }
+                        .menu {
+                            @apply shadow-card lg:shadow-none max-h-screen;
+                        }
+                        
+                    }
                 }
             }
             article {
