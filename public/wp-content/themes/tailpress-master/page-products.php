@@ -59,7 +59,7 @@
                 <div class="content">
                     <h2><?php echo $category->name; ?></h2>
                     <p><?php echo $category->description; ?></p>
-                    <a href="<?php echo get_term_link( $category->slug, 'product-category' ); ?>" class="permalink">Read more</a>
+                    <a href="<?php echo "/product/#{$category->slug}"; ?>" class="permalink">Read more</a>
                 </div>
 
             </div>

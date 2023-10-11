@@ -530,9 +530,7 @@ footer {
     }
 }
 
-/* Single page */
-
-.page {
+.page, .archive {
     main {
         .container {
             @apply mx-auto mt-2 md:mt-10 flex flex-col lg:flex-row max-w-full 3xl:max-w-9xl;
@@ -567,7 +565,7 @@ footer {
                             }
                         }
                     }
-
+            
                 }
                 &.active {
                     .mobile-toggle-btn {
@@ -586,6 +584,19 @@ footer {
                 & > *:not(.entry-content) {
                     @apply max-w-full;
                 }
+            }
+        }
+    }
+}
+
+/* Single page */
+
+.page {
+    main {
+        .container {
+
+            article {
+
                 &.post-102, &.post-104, &.post-107 {
                     .entry-header {
                         .page-title.side {
@@ -1130,6 +1141,67 @@ footer {
                         .permalink {
                             @apply block mxbon-btn-sm mxbon-btn-news ml-auto transition-colors;
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Product archive */
+
+.archive.post-type-archive-product {
+    main {
+        .container {
+            article {
+                section {
+                    @apply relative mb-32;
+                    &:after {
+                        @apply absolute content-[''] w-full h-px bg-zinc-100 top-16 -translate-y-1/2;
+                    }
+                    &.cyanoacrylate-adhesives, &.anaerobic-adhesives, &.structural-adhesives, &.primer-accelerator-activator {
+                        .section-header {
+                            .section-title.side {
+                                @apply pt-[122px] md:pt-10;
+                            }
+                        }
+                    }
+                    &.uv-adhesives {
+                        .section-header {
+                            .section-title.side {
+                                .sub {
+                                    @apply whitespace-nowrap;
+                                }
+                            }
+                        }                          
+                    }
+                    &.iso-10993-5-certified {
+                        .section-header {
+                            .section-title.side {
+                                @apply pt-[204px] md:pt-10;
+                            }
+                        }                        
+                    }
+                    .products {
+                        @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ;
+                        li {
+                            @apply block border border-zinc-200;
+                            .image-wrapper {
+                                @apply px-6;
+                                img {
+                                    @apply w-full aspect-square object-contain p-[10%];
+                                }
+                            }
+                            h3 {
+                                @apply p-6 text-zinc-800 text-xl leading-ext-tight font-medium bg-zinc-100;
+                            }
+                        }
+                    }
+                }
+                section:last-child() {
+                    @apply mb-0;
+                    &:after {
+                        @apply hidden;
                     }
                 }
             }
