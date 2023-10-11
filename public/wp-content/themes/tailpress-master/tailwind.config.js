@@ -46,6 +46,7 @@ module.exports = {
                 'enviroment-banner': 'url("/wp-content/themes/tailpress-master/resources/images/certification-banner-2.jpg")',
                 'quality-deco': 'url("/wp-content/themes/tailpress-master/resources/images/certification-banner-deco-1.png")',
                 'enviroment-deco': 'url("/wp-content/themes/tailpress-master/resources/images/certification-banner-deco-2.png")',
+                'products-banner': 'url("/wp-content/themes/tailpress-master/resources/images/products-banner-bg.png")',
             },
             boxShadow: {
                 'card': '0px 7px 29px 0px rgba(100, 100, 111, 0.20)',

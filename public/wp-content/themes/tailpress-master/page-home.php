@@ -28,7 +28,13 @@
                     <a class="swiper-slide" href="<?php echo get_term_link( $term, $terms_arg['taxonomy'] ); ?>">
                         <div class="image">
                             <div class="image-wrapper">
-                                <img src="<?php echo get_field('category_image', $term); ?>" alt="<?php echo $term->name; ?>">
+                                
+                                <?php $term_img = get_field('category_image', $term); ?>
+                                
+                                <?php if( $term_img ) : ?>
+                                    <img src="<?php echo $term_img['url'] ?>" alt="<?php echo $term->name; ?>">
+                                <?php endif; ?>
+                                
                                 <div class="hex-icon"></div>
                             </div>
                         </div>

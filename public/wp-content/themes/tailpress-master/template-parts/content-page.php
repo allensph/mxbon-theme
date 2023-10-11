@@ -21,7 +21,6 @@
 				? get_template_part( "template-parts/content-page-{$post_name}" )
 				: the_content();
 		?>
-		<?php //get_template_part( "template-parts/content-page-{$post_name}" ); ?>
 	</div>
 
 </article>

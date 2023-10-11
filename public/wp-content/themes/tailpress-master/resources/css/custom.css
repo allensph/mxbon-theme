@@ -44,7 +44,7 @@ article > *:not(.entry-content),
 /* Section title, Page title */
 
 .section-title, .page-title {
-    @apply relative z-10 title font-sans text-zinc-800 mb-12 lg:mb-16;
+    @apply relative z-10 title font-sans text-zinc-800 mb-12 lg:mb-16 w-[calc(100%+16px)] lg:w-full overflow-hidden lg:overflow-visible;
 
     &:after {
         @apply absolute content-[''] bg-mxbon-red;
@@ -53,7 +53,7 @@ article > *:not(.entry-content),
         @apply block uppercase font-raj font-bold text-8xl leading-[0.85] md:leading-[0.6458] text-zinc-100 md:whitespace-nowrap;
     }
     &.center {
-        @apply mx-auto pb-4 w-fit;
+        @apply text-center pb-4;
         &:after {
             @apply w-32 h-2 bottom-0 left-1/2 -translate-x-1/2;
         }
@@ -514,28 +514,28 @@ footer {
     }
 }
 
+.breadcrumb-wrapper {
+    @apply w-full max-w-9xl mx-auto px-4;
+    .breadcrumb {
+        @apply py-4 flex flex-row gap-x-1;
+        a, span {
+            @apply block text-base leading-ext-tight text-neutral-400;
+        }
+        a {
+            @apply hover:text-mxbon-red transition-colors;
+        }
+        .seprator {
+            @apply text-neutral-400 text-sm flex justify-center items-center w-5 h-5;
+        }
+    }
+}
+
 /* Single page */
 
-.page:not(.home) {
+.page {
     main {
-        @apply overflow-x-hidden overflow-y-auto;
-        .breadcrumb-wrapper {
-            @apply w-full max-w-9xl mx-auto mb-2 md:mb-10 px-4;
-            .breadcrumb {
-                @apply py-4 flex flex-row gap-x-1;
-                a, span {
-                    @apply block text-base leading-ext-tight text-neutral-400;
-                }
-                a {
-                    @apply hover:text-mxbon-red transition-colors;
-                }
-                .seprator {
-                    @apply text-neutral-400 text-sm flex justify-center items-center w-5 h-5;
-                }
-            }
-        }
         .container {
-            @apply mx-auto flex flex-col lg:flex-row max-w-full 3xl:max-w-9xl overflow-x-hidden overflow-y-auto;
+            @apply mx-auto mt-2 md:mt-10 flex flex-col lg:flex-row max-w-full 3xl:max-w-9xl;
             .side-navigation {
                 @apply mb-12 lg:mb-0 lg:px-4 lg:py-8 lg:w-1/5 xl:w-1/6;
                 .title {
@@ -1074,6 +1074,62 @@ footer {
                             }
                         }
                         
+                    }
+                }   
+            }
+        }
+        section.products-banner {
+            .wrapper {
+                @apply bg-products-banner bg-cover bg-center bg-no-repeat mb-12 md:mb-24 lg:mb-[202px];
+                .container {
+                    @apply mt-0 gap-x-8;
+                    .content {
+                        @apply mt-12 lg:my-12 lg:p-12 lg:pl-0 flex-1;
+                        .entry-header {
+                            .title {
+                                @apply mb-12
+                            }
+                        }
+                        .description {
+                            @apply text-zinc-600 text-lg leading-normal pl-6;
+                        }
+                    }
+                    .image {
+                        @apply relative lg:w-[57.45%] ;
+                        img {
+                            @apply lg:absolute lg:top-0;
+                        }
+                    }
+                }
+            }
+        }
+        section.products-categories {
+            @apply mb-10 lg:mb-20;
+            .container {
+                @apply grid gap-8 grid-cols-1 lg:grid-cols-4 px-4;
+                .card {
+                    @apply relative flex flex-col justify-end border-l border-b border-zinc-200 overflow-hidden;
+                    
+                    &:before {
+                        @apply absolute content-[''] w-full left-0 h-[73.5px] top-0 border-t border-r border-zinc-200 skew-x-[45deg] origin-bottom-right pointer-events-none;
+                    }
+                    &:after {
+                        @apply absolute content-[''] w-full left-0 h-[calc(100%-73.5px)] bottom-0 border-r border-zinc-200 pointer-events-none;
+                    }
+                    .image {
+                        @apply px-6 flex-1 object-contain object-center;
+                    }
+                    .content {
+                        @apply p-6 bg-zinc-100;
+                        h2 {
+                            @apply text-zinc-800 text-2xl leading-ext-tight font-medium mb-4;
+                        }
+                        p {
+                            @apply text-zinc-600 text-base leading-normal line-clamp-2 mb-4;
+                        }
+                        .permalink {
+                            @apply block mxbon-btn-sm mxbon-btn-news ml-auto transition-colors;
+                        }
                     }
                 }
             }
