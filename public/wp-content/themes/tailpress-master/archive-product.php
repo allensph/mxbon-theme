@@ -17,13 +17,22 @@
 </div>
 
 <div class="container">
-
     <aside class="side-navigation" 
-        x-bind:class="collapse == true ? 'active' : ''"
-        x-on:scroll.window="fixed = (window.pageYOffset < 182) ? false : true"
-        x-data="{ collapse: false, current: <?php echo $categories[0]->term_id; ?>, title: '<?php echo $categories[0]->name; ?>', fixed: false }">
+        x-bind:class="{ 'dropdown-collapse': collapse, 'wrapper-fixed': fixed, 'wrapper-bottom': bottom }"
+        x-init="fixed = (window.pageYOffset < 182) ? false : true"
+        x-on:scroll.window="
+            fixed = (window.pageYOffset < 182) ? false : true;
+            bottom = document.querySelector('aside').getBoundingClientRect().bottom > document.querySelector('aside .wrapper').clientHeight ? false : true;
+            "
+        x-data="{ 
+            collapse: false, 
+            current: <?php echo $categories[0]->term_id; ?>, 
+            title: '<?php echo $categories[0]->name; ?>', 
+            fixed: false,
+            bottom: false
+        }">
 
-        <div class="wrapper" x-bind:class="fixed == true ? 'aside-fixed' : ''">
+        <div class="wrapper">
 
             <div class="title">產品分類</div>
 

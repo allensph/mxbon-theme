@@ -8,7 +8,7 @@
 
 	<div class="container">
         
-        <aside class="side-navigation" x-bind:class="collapse == true ? 'active' : ''" x-data="{ collapse: false, title: '<?php echo get_the_title(); ?>' }">
+        <aside class="side-navigation" x-bind:class="{ 'dropdown-collapse': collapse }" x-data="{ collapse: false, title: '<?php echo get_the_title(); ?>' }">
 
             <div class="wrapper">
                 <div class="title">關於我們</div>

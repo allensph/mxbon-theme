@@ -177,7 +177,7 @@ body {
     &.search-active, &.toggle-active {
         @apply h-full xl:h-auto overflow-hidden xl:overflow-auto;
         .site-content {
-            @apply select-none xl:select-auto;
+            @apply select-none xl:select-auto overflow-hidden;
         }
     }
     &.search-active {
@@ -535,13 +535,10 @@ footer {
 .page, .archive {
     main {
         .container {
-            @apply mx-auto mt-2 md:mt-10 flex flex-col lg:flex-row max-w-full 3xl:max-w-9xl;
+            @apply mx-auto mt-2 md:mt-10 flex flex-col lg:flex-row max-w-full 3xl:max-w-9xl px-4;
             .side-navigation {
                 @apply mb-12 lg:mb-0 lg:px-4 lg:py-8 lg:w-1/5 xl:w-1/6;
                 .wrapper {
-                    &.aside-fixed {
-                        @apply lg:fixed lg:top-0 lg:w-full lg:max-w-[calc(1536px/5-32px)] xl:max-w-[calc(1536px/6-32px)];
-                    }
                     .title {
                         @apply relative hidden lg:block text-zinc-400 text-2xl leading-ext-tight font-medium p-8 mb-4;
                         &:after {
@@ -576,7 +573,9 @@ footer {
                         }
                 
                     }
-                    &.active {
+                }
+                &.dropdown-collapse {
+                    .wrapper {
                         .mobile-toggle-btn {
                             &:after {
                                 @apply rotate-180;
@@ -585,7 +584,17 @@ footer {
                         .menu {
                             @apply shadow-card lg:shadow-none max-h-screen;
                         }
-                        
+                    }
+                }
+                &.wrapper-fixed {
+                    .wrapper {
+                        @apply lg:fixed lg:top-0 lg:w-full lg:max-w-[calc(100vw/5-32px)] xl:max-w-[calc(100vw/6-32px)] 3xl:max-w-[calc(1536px/6-32px)];
+                    }
+                }
+                &.wrapper-bottom {
+                    @apply lg:flex lg:flex-col lg:justify-end;
+                    .wrapper {
+                        @apply relative;
                     }
                 }
             }
@@ -1164,6 +1173,7 @@ footer {
     main {
         .container {
             article {
+                @apply overflow-hidden;
                 section {
                     @apply relative mb-32;
                     &:after {
