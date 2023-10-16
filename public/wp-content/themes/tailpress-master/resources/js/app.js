@@ -215,3 +215,18 @@ if (window.location.pathname == '/about-us/certification/') {
             AOS.init({ once: true, easing: 'ease-in-out', });
       })
 }
+
+if (window.location.pathname.split('/')[1] == 'product') {
+      window.addEventListener('DOMContentLoaded', function () {
+            console.log(window.location.pathname.split('/')[2]);
+            const swiper = new Swiper('section.product-banner .swiper', {
+                  slidesPerView: 1,
+                  spaceBetween: 1,
+                  setWrapperSize: true,
+                  navigation: {
+                        nextEl: 'section.product-banner .swiper-button-next',
+                        prevEl: 'section.product-banner .swiper-button-prev',
+                  },
+            })
+      })
+}

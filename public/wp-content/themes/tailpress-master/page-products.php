@@ -21,9 +21,9 @@
 </div>
 
 <section class="products-banner">
-    <div class="wrapper">
-        <div class="container">
-            
+    
+    <div class="container">
+        <div class="wrapper">
             <div class="content">
                 <header class="entry-header">
                     <h1 class="page-title side">
@@ -33,14 +33,15 @@
                         </span>
                     </h1>
                 </header>
-                <p class="description">文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容。</p>              
+                <p class="description">文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容。</p>
             </div>
 
             <div class="image">
                 <img src="<?php echo $images_uri; ?>/products.png" alt="">
             </div>
-        </div>
+        </div>        
     </div>
+    
 </section>
 
 <section class="products-categories">
