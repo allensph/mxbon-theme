@@ -2,9 +2,9 @@
 Contributors: carlosmoreirapt, pcarvalho, freemius
 Tags: map, interactive map, world map, travel map, us map
 Requires at least: 5.0
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.6.3
+Stable tag: 1.6.6.2
 Donate link: https://interactivegeomaps.com
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -98,6 +98,23 @@ You can visit this [article on how to use the plugin together with WP Rocket](ht
 10. Administration 04
 
 == Changelog ==
+
+= 1.6.6 =
+Fix translation path
+Update dependencies
+
+= 1.6.5 =
+Fix php error when bulk deleting maps
+Fix issue where tooltip from group wouldn't hide when select() was used
+Add new filter for Live Filter map titles
+Do not allow empty capability string, default to 'page'
+
+= 1.6.4 =
+New Feature to select existing marker for lines
+New feature for highlight legend
+Fix Errors on external dropdown
+Fix zoom on events
+Fix moving overlay elements to front
 
 = 1.6.3 =
 Update requirements

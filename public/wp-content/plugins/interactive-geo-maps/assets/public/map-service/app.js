@@ -1388,6 +1388,10 @@ iMapsManager.addMap = function (index) {
 				var seriesType = im.getTargetSeriesType(ev.target.dataItem.dataContext);
 				var target = '';
 
+				// bring this series to front
+				ev.target.dataItem.dataContext.zIndex = Number.MAX_VALUE;
+				ev.target.dataItem.dataContext.toFront();
+
 				if (seriesType === "MapImageSeries") {
 					target = ev.target.dataItem.dataContext.mapImages;
 					target.each(function (marker) {
@@ -2687,6 +2691,10 @@ iMapsManager.pushRoundMarkerSeries = function (id, data) {
 
 		}
 
+		// send to front (so on overlay they are always on top of regions)
+		markerSeries.zIndex = Number.MAX_VALUE;
+		markerSeries.toFront();
+
 		// Add data
 		markerSeries.data = data.roundMarkers; // For legend color
 
@@ -2766,6 +2774,10 @@ iMapsManager.pushImageMarkerSeries = function (id, data) {
 
 		markerSeriesTemplate.propertyFields.latitude = "latitude";
 		markerSeriesTemplate.propertyFields.longitude = "longitude"; // Add data for the three cities
+
+		// send to front (so on overlay they are always on top of regions)
+		markerSeries.zIndex = Number.MAX_VALUE;
+		markerSeries.toFront();
 
 		markerSeries.data = data.imageMarkers; // Events
 
@@ -2895,6 +2907,11 @@ iMapsManager.pushIconMarkerSeries = function (id, data) {
 		markerSeriesTemplate.propertyFields.latitude = "latitude";
 		markerSeriesTemplate.propertyFields.longitude = "longitude"; // Add data
 
+
+		// send to front (so on overlay they are always on top of regions)
+		markerSeries.zIndex = Number.MAX_VALUE;
+		markerSeries.toFront();
+
 		markerSeries.data = data.iconMarkers; // Events
 
 		markerSeriesTemplate.events.on("hit", function (ev) {
@@ -2968,6 +2985,10 @@ iMapsManager.pushLineSeries = function (id, data) {
 		});
 
 		lineSeries.data = lineData;
+
+		// bring to front
+		lineSeries.zIndex = Number.MAX_VALUE - 1;
+		lineSeries.toFront();
 
 		// enable small map
 		if (data.zoom && data.zoom.smallMap && im.bool(data.zoom.smallMap)) {
@@ -3069,8 +3090,13 @@ iMapsManager.pushLabelSeries = function (id, data) {
 
 		highlightState = label.states.create("highlight");
 		highlightState.properties.fill = data.hover;
-		highlightState.propertyFields.fill = "hover"; // Add data
+		highlightState.propertyFields.fill = "hover";
 
+		// send to front (so on overlay they are always on top of regions)
+		labelSeries.zIndex = Number.MAX_VALUE;
+		labelSeries.toFront();
+
+		// Add data
 		labelSeries.data = data.labels; // For legend color
 
 		labelSeries.fill = data.labelDefaults.fill; // Events
@@ -3478,18 +3504,28 @@ iMapsManager.zoomToRegion = function (ev, id) {
 			ev.target.series.chart.zoomToMapObject(ev.target, markerZoomLevel, true);
 		}
 	} else {
-		if (dataContext.id === "asia") {
+		if (dataContext.id === "asia" && !data.map.startsWith('continents')) {
 			ev.target.series.chart.deltaLongitudeOriginal = ev.target.series.chart.deltaLongitude;
 			ev.target.series.chart.deltaLongitude = -10;
 			ev.target.series.chart.zoomToGeoPoint({
 				latitude: 34.076842,
 				longitude: 100.693068
 			}, 1.7, true);
+		} else if (dataContext.id === "asia" && data.map.startsWith('continents')) {
+			ev.target.series.chart.zoomToGeoPoint({
+				latitude: 34.076842,
+				longitude: 100.693068
+			}, 2.2, true);
 		} else if (dataContext.id === "northAmerica" && data.map.startsWith('region/world/worldRegion')) {
 			ev.target.series.chart.zoomToGeoPoint({
 				latitude: 55.5,
 				longitude: -105.5
 			}, 3, true);
+		} else if (dataContext.id === "northAmerica" && data.map.startsWith('continents')) {
+			ev.target.series.chart.zoomToGeoPoint({
+				latitude: 55.5,
+				longitude: -105.5
+			}, 2.3, true);
 		} else if (dataContext.id === "ZA" && data.map.startsWith('world')) {
 			ev.target.series.chart.zoomToGeoPoint({
 				latitude: -28.6,
@@ -3773,7 +3809,7 @@ iMapsManager.select = function (id, elID, forceFixedTooltip, showTooltip, series
 	var im = this,
 		map = im.maps[id],
 		data = im.maps[id].data,
-		series = map.series,
+		series = map.series.slice().reverse(), // we clone and reverse so that the grouped region series are at the end, which solves a particular bug with the select() function and the tooltip
 		selected = [],
 		select,
 		group,
@@ -3915,6 +3951,8 @@ iMapsManager.select = function (id, elID, forceFixedTooltip, showTooltip, series
 
 									select.tooltipPosition = defaultTooltipPosition;
 									select.showTooltipOn = defaultTooltipShowOn;
+
+									select.selectedFromGroup = true;
 
 								} else {
 									select.isHover = true;
@@ -4547,8 +4585,9 @@ iMapsManager.getHighlighted = function (id) {
 iMapsManager.clearSelected = function (id, keepThis, skipReset) {
 	var im = this,
 		map = im.maps[id],
-		selected = map.selected || []; // to keep the state of this element
+		selected = map.selected || [];
 
+	// to keep the state of this element
 	keepThis = keepThis || false;
 	skipReset = skipReset || false;
 
@@ -4563,6 +4602,11 @@ iMapsManager.clearSelected = function (id, keepThis, skipReset) {
 				// so we added this check before hiding the tooltip
 				if (!keepThis) {
 					polygon.hideTooltip(0); // needed to hide tooltip
+				}
+
+				if (polygon.selectedFromGroup) {
+					polygon.hideTooltip(0); // needed to hide tooltip when group was selected
+					polygon.selectedFromGroup = false;
 				}
 
 				polygon.setState("default");
