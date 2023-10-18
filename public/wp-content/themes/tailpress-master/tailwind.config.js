@@ -106,6 +106,7 @@ module.exports = {
         clipPath: {
             'hexagon': 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
             'left-triangle': 'polygon(100% 0, 0 0, 0 100%)',
+            'rhombus': 'polygon(50% 100%,100% 50%,50% 0, 0 50%)',
         },
         screens: {
             'xs': '480px',

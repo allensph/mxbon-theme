@@ -1235,7 +1235,7 @@ footer {
 
 .single-product {
     section.product-banner {
-        @apply bg-products-banner bg-cover bg-center bg-no-repeat lg:mb-40;
+        @apply bg-products-banner bg-cover bg-center bg-no-repeat mb-12 lg:mb-40;
 
         .container {
             @apply pt-4 lg:pt-10;
@@ -1292,9 +1292,8 @@ footer {
     }
     section.introduction {
         .container {
-            /*@apply block mt-0;*/
             .wrapper {
-                @apply mt-0 mb-20;
+                @apply mt-0 mb-20 flex-col;
                 h2 {
                     @apply relative text-zinc-800 text-2xl leading-ext-tight font-medium mb-12;
                     &:before {
@@ -1334,8 +1333,8 @@ footer {
         }
     }
     section.series {
+        @apply mb-20;
         .container {
-            @apply block mt-0;
             h2 {
                 @apply relative text-zinc-800 text-2xl leading-ext-tight font-medium mb-12;
                 &:before {
@@ -1346,17 +1345,17 @@ footer {
                 }
             }
             ul {
-                @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+                @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
                 li {
                     @apply flex flex-col lg:flex-row gap-y-2 lg:gap-y-0;
                     .model {
-                        @apply relative font-raj text-white text-center text-2xl leading-none font-bold flex justify-center items-center h-10 pr-8 pl-6 mb-auto w-full lg:max-w-[130px] overflow-hidden;
+                        @apply relative font-raj text-white text-center text-2xl leading-none font-bold flex justify-center items-center h-10 pr-8 pl-6 mb-auto w-full max-w-[130px] overflow-hidden;
                         .path {
                             @apply absolute -z-10 content-[''] h-0 pt-[100%] w-full rotate-45 -translate-x-6;
                         }
                     }
                     .content {
-                        @apply pr-8 pl-4 py-2;
+                        @apply pr-0 pl-6 lg:pr-8 lg:pl-4 py-2;
                         .feature {
                             @apply text-zinc-800 text-xl leading-ext-tight font-medium mb-4;
                         }
@@ -1370,6 +1369,83 @@ footer {
         }
     }
     section.specialties {
-
+        @apply mb-16;
+        .container {
+            h2 {
+                @apply relative text-zinc-800 text-2xl leading-ext-tight font-medium mb-12;
+                &:before {
+                    @apply content-[''] inline-block w-2 h-5 mr-4 bg-mxbon-red;
+                }
+                &:after {
+                    @apply absolute content-[''] w-full h-px left-0 -bottom-6 bg-zinc-200;
+                }
+            }
+            table {
+                @apply mb-16 last:mb-0;
+                .fa-bottle-water {
+                    @apply text-xl font-black leading-normal mr-3;
+                }
+            }
+        }
+    }
+    section.custom-tables {
+        @apply mb-20;
+        .container {
+            h2 {
+                @apply relative text-zinc-800 text-2xl leading-ext-tight font-medium mb-12;
+                &:before {
+                    @apply content-[''] inline-block w-2 h-5 mr-4 bg-mxbon-red;
+                }
+                &:after {
+                    @apply absolute content-[''] w-full h-px left-0 -bottom-6 bg-zinc-200;
+                }
+            }
+            .table-wrapper {
+                table {
+                    @apply mb-16 last:mb-0;
+                    td:nth-child(2) {
+                        @apply text-left;
+                    }
+                    td:nth-child(3) {
+                        @apply w-[596px] min-w-[596px] text-left whitespace-normal;
+                    }
+                }
+            }
+        }
+    }
+    .table-wrapper {
+        @apply overflow-x-auto lg:overflow-hidden;
+        table {
+            @apply w-full;
+            thead {
+                tr {
+                    @apply relative font-normal;
+                    th {
+                        @apply bg-zinc-600 text-white;
+                    }
+                }
+            }
+            tbody {
+                tr{
+                    @apply relative text-zinc-600;
+                    &:nth-child(odd) {
+                        td {
+                            @apply bg-zinc-100;
+                        }
+                    }
+                    &:nth-child(even) {
+                        td {
+                            @apply bg-white;
+                        }
+                    }
+                }
+            }
+            th, td {
+                @apply text-center text-lg leading-normal p-4 whitespace-nowrap first:sticky first:left-0 lg:first:static lg:first:left-[unset] first:z-50;
+                .check {
+                    @apply w-3.5 h-5 block mx-auto clip-path-rhombus bg-[conic-gradient(var(--tw-gradient-stops))] from-zinc-600 to-zinc-600/[.15];
+                }
+            }
+        }
     }
 }
