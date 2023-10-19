@@ -170,7 +170,10 @@
                 <section class="specialties" id="specialties">
                     <div class="container">
                     <h2>產品規格</h2>
-                        <?php get_template_part( 'template-parts/single-product-specialties' ); ?>
+                        <?php 
+                            $layout_name = 'specialties';
+                            get_template_part( 'template-parts/single-product-table' );
+                        ?>
                     </div>
                 </section>
             <?php endif; ?>
@@ -180,7 +183,10 @@
         <?php if( 'custom' === $layout['acf_fc_layout'] ) : ?>
             <section class="custom-tables">
                 <div class="container">
-                    <?php get_template_part( 'template-parts/single-product-custom-table' ); ?>
+                    <?php
+                        $layout_name = 'single_table';
+                        get_template_part( 'template-parts/single-product-table' );
+                    ?>
                 </div>
             </section>
         <?php endif; ?>

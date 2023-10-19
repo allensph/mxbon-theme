@@ -1,7 +1,7 @@
 <?php
-    global $layout, $product_models, $product_colors, $images_uri;
+    global $layout, $layout_name, $product_models, $product_colors, $images_uri;
     
-    $table = $layout['specialties'];
+    $table = $layout[$layout_name];
     
     
 
@@ -15,7 +15,7 @@
 
         $table_header = array();
 
-        if( !empty( $product_colors) ) :
+        if( $layout_name === 'specialties' && !empty( $product_colors) ) :
             $table_header = array_merge(
                 array_slice($table['header'], 0, 1), 
                 array( ['c' => '外觀顏色'] ), 
@@ -78,8 +78,8 @@
                     <tr>
                         <?php foreach ( $table_header as $key => $th ) : ?>
                             <?php
-                                $colspan = $th['colspan'] ? "colspan=\"{$th['colspan']}\"" : '';
-                                $rowspan = !$th['colspan'] && $table_subheader ? "rowspan=\"2\"" : '';
+                                $colspan =  array_key_exists( 'colspan', $th) ? "colspan=\"{$th['colspan']}\"" : '';
+                                $rowspan = !array_key_exists( 'colspan', $th) && $table_subheader ? "rowspan=\"2\"" : '';
                             ?>
                             <th <?php echo $colspan . " " . $rowspan; ?>>
                                 <?php echo str_replace( "|", "<br>", $th['c'] ); ?>
@@ -104,30 +104,48 @@
 
                 <?php foreach ( $table['body'] as $tr ) : ?>
 
-                    
-                    <?php if( in_array( $tr[0]['c'], $product_models ) ) : ?>
+                    <?php if( $layout_name === 'specialties' ) : ?>
 
-                        <?php
-                            
-                            if( !empty( $product_colors) ) :
+                        <?php if( in_array( $tr[0]['c'], $product_models ) ) : ?>
+
+                            <?php
                                 
-                                $color_icon = $product_colors[$body_row_index]['hex'] 
-                                    ? "<i class=\"fa-solid fa-bottle-water\" style=\"color: {$product_colors[$body_row_index]['hex']}\"></i>"
-                                    : '';
+                                if( !empty( $product_colors) ) :
+                                    
+                                    $color_icon = $product_colors[$body_row_index]['hex'] 
+                                        ? "<i class=\"fa-solid fa-bottle-water\" style=\"color: {$product_colors[$body_row_index]['hex']}\"></i>"
+                                        : '';
 
-                                $color_content = $color_icon . $product_colors[$body_row_index]['color'];
+                                    $color_content = $color_icon . $product_colors[$body_row_index]['color'];
 
-                                $table_row = array_merge(
-                                    array_slice($tr, 0, 1),
-                                    array( [ 'c' => $color_content ] ), 
-                                    array_slice($tr, 1, null)
-                                );
-                            endif;
+                                    $table_row = array_merge(
+                                        array_slice($tr, 0, 1),
+                                        array( [ 'c' => $color_content ] ), 
+                                        array_slice($tr, 1, null)
+                                    );
+                                endif;
 
-                            $body_row_index++;
-                        ?>
+                                $body_row_index++;
+                            ?>
+                            <tr>
+                                <?php foreach ( $table_row as $key => $td ) : ?>
+                                    
+                                    <?php if( $td['c'] === 'V' ) : ?>
+                                        <td><span class="check"></span></td>
+                                    <?php elseif( !in_array( $key, $td_tobe_removed ) ) : ?>
+                                        <td><?php echo str_replace( "|", "<br>", $td['c'] ); ?></td>
+                                    <?php endif; ?>
+                                    
+                                <?php endforeach; ?>
+                            </tr>
+                            
+                        <?php endif; ?>
+
+                    <?php endif; ?>
+
+                    <?php if( $layout_name === 'single_table' ) : ?>
                         <tr>
-                            <?php foreach ( $table_row as $key => $td ) : ?>
+                            <?php foreach ( $tr as $key => $td ) : ?>
                                 
                                 <?php if( $td['c'] === 'V' ) : ?>
                                     <td><span class="check"></span></td>
@@ -137,7 +155,6 @@
                                 
                             <?php endforeach; ?>
                         </tr>
-                        
                     <?php endif; ?>
 
                 <?php endforeach; ?>
