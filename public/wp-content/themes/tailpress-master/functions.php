@@ -61,7 +61,7 @@ function tailpress_enqueue_scripts() {
 		wp_enqueue_script( 'alpine', 'https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js' );
 	}
 
-	if ( is_page( 'corporate-philsosphy' ) || is_page( 'innovation' ) || is_page( 'certification' )  ) {
+	if ( is_page( 'corporate-philsosphy' ) || is_page( 'innovation' ) || is_page( 'certification' ) || is_singular( 'product' )  ) {
 		wp_enqueue_style( 'aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.css' );
 		wp_enqueue_script( 'aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js' );
 	}
@@ -305,3 +305,21 @@ function tellustek_breadcrumb_title_swapper($title, $type, $id)
     return $title;
 }
 add_filter('bcn_breadcrumb_title', 'tellustek_breadcrumb_title_swapper', 3, 10);
+
+//ACF
+
+function my_acf_prepare_field( $field ) {
+	
+	// $field['instructions']
+
+	//preg_match( '', $field['instructions'], $matches );
+
+	/*
+	if ($matches) {
+		return do_shortcode( $matches[i] );
+	} else {
+		return $field;	
+	}
+	*/
+}
+//add_filter('acf/prepare_field/name=addition', 'my_acf_prepare_field');

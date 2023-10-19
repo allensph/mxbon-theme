@@ -30,6 +30,7 @@
 
         $table_subheader = array(); 
         $td_tobe_removed = array();
+        $match_count = 0;
 
         foreach( $table_header as $key => $th ) {
             
@@ -55,8 +56,13 @@
                     unset($table_header[$i]);
                 }
                 
+                $match_count++;
             }
         }
+
+        if( $match_count === 0 ) {
+            $table_subheader = array();
+        } 
 
     endif;
 ?>
@@ -68,7 +74,7 @@
 
             <?php if ( ! empty( $table_header ) ) : ?>
 
-                <thead>
+                <thead <?php echo $table_subheader ? 'class="span-header"' : ''; ?>>
                     <tr>
                         <?php foreach ( $table_header as $key => $th ) : ?>
                             <?php
@@ -141,3 +147,7 @@
         </table>
     </div>
 <?php endif; ?>
+
+<?php //echo "<pre>" . print_r($table_subheader, true) . "</pre>"; ?>
+
+<?php //echo empty($table_subheader) ? 'true' : 'false'; ?>

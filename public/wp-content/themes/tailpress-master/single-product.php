@@ -191,5 +191,19 @@
 
 <?php //echo "<pre>". print_r( $product_detail, true ) ."</pre>"; ?>
 
+<section class="contact-us">
+    <div class="container">
+        <div class="section-title side">
+            聯絡我們
+            <span class="sub">contact us</span>
+        </div>
+
+        <?php echo do_shortcode( '[fluentform id="1"]'); ?>
+    </div>
+    <span class="molecular-dark" data-paroller-factor="-0.1"></span>
+    <span class="molecular-light" data-paroller-factor="-0.1"></span>
+
+</section>
+
 <?php
     get_footer();

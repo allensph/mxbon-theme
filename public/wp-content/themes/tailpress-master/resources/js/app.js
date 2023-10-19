@@ -218,7 +218,11 @@ if (window.location.pathname == '/about-us/certification/') {
 
 if (window.location.pathname.split('/')[1] == 'product') {
       window.addEventListener('DOMContentLoaded', function () {
-            console.log(window.location.pathname.split('/')[2]);
+
+            // paroller.js
+            jQuery("[data-paroller-factor]").paroller();
+
+            //console.log(window.location.pathname.split('/')[2]);
             const swiper = new Swiper('section.product-banner .swiper', {
                   slidesPerView: 1,
                   spaceBetween: 1,

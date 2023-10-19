@@ -49,10 +49,11 @@ module.exports = {
                 'products-banner': 'url("/wp-content/themes/tailpress-master/resources/images/products-banner-bg.png")',
             },
             boxShadow: {
-                'card': '0px 7px 29px 0px rgba(100, 100, 111, 0.20)',
+                'card': '0px 7px 29px 0px rgba(100, 100, 111, 0.2)',
                 'border-light': 'inset 0 0 0 1px #D4D4D8',
                 'radio-not-checked': 'inset 0 0 0 1px #27272A',
-                'radio-checked': 'inset 0 0 0 1px #DA2127, inset 0 0 0 3px #FFFFFF, inset 0 0 0 9px #DA2127'
+                'radio-checked': 'inset 0 0 0 1px #DA2127, inset 0 0 0 3px #FFFFFF, inset 0 0 0 9px #DA2127',
+                'bottom-left': '-4px 4px 4px 0px rgba(0, 0, 0, 0.1)',
             },
             brightness: {
                 '140': '1.4',
