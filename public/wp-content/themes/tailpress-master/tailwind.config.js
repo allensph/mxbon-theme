@@ -67,7 +67,10 @@ module.exports = {
                 'awards': [
                     '0px 4px 2px rgba(0, 0, 0, 0.15)',
                     '0px 8px 4px rgba(93, 50, 50, 0.20)'
-                ]
+                ],
+                'text': [
+                    '0px 0px 4px rgba(0, 0, 0, 0.8)',
+                ],
             },
             filterOrder: {
                 'sdgs': 'contrast sepia brightness saturate',

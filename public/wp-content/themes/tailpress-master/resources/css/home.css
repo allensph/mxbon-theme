@@ -190,7 +190,6 @@
                         @apply scale-110;
                     }
                     &:before {
-                        background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 50.00%, rgba(0, 0, 0, 0.75) 100%);
                         @apply absolute z-20 content-[''] w-full h-full top-0 left-0 bg-gradient-to-b from-black/0 from-50% to-black/75 to-100%;
                     }
                     .info {

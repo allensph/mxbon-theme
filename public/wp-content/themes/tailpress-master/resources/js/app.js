@@ -222,14 +222,33 @@ if (window.location.pathname.split('/')[1] == 'product') {
             // paroller.js
             jQuery("[data-paroller-factor]").paroller();
 
-            //console.log(window.location.pathname.split('/')[2]);
-            const swiper = new Swiper('section.product-banner .swiper', {
+            if (window.location.pathname.split('/')[2]) {
+                  const swiper = new Swiper('section.product-banner .swiper', {
+                        slidesPerView: 1,
+                        spaceBetween: 1,
+                        setWrapperSize: true,
+                        navigation: {
+                              nextEl: 'section.product-banner .swiper-button-next',
+                              prevEl: 'section.product-banner .swiper-button-prev',
+                        },
+                  })
+            }
+      })
+}
+
+if (window.location.pathname.split('/')[1] == 'industry') {
+      window.addEventListener('DOMContentLoaded', function () {
+
+            // paroller.js
+            jQuery("[data-paroller-factor]").paroller();
+
+            const swiper = new Swiper('section.industry-banner .swiper', {
                   slidesPerView: 1,
                   spaceBetween: 1,
                   setWrapperSize: true,
                   navigation: {
-                        nextEl: 'section.product-banner .swiper-button-next',
-                        prevEl: 'section.product-banner .swiper-button-prev',
+                        nextEl: 'section.industry-banner .swiper-button-next',
+                        prevEl: 'section.industry-banner .swiper-button-prev',
                   },
             })
       })

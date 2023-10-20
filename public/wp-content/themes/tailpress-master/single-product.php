@@ -208,7 +208,6 @@
     </div>
     <span class="molecular-dark" data-paroller-factor="-0.1"></span>
     <span class="molecular-light" data-paroller-factor="-0.1"></span>
-
 </section>
 
 <?php
