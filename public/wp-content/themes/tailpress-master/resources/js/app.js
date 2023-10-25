@@ -242,6 +242,9 @@ if (window.location.pathname.split('/')[1] == 'industry') {
             // paroller.js
             jQuery("[data-paroller-factor]").paroller();
 
+            // animate on scroll
+            AOS.init({ once: true, easing: 'ease-in-out', });
+
             const swiper = new Swiper('section.industry-banner .swiper', {
                   slidesPerView: 1,
                   spaceBetween: 1,

@@ -296,8 +296,7 @@ function tellustek_sub_menu_for_wp_nav_menu_objects( $sorted_menu_items, $args )
 add_filter( 'wp_nav_menu_objects', 'tellustek_sub_menu_for_wp_nav_menu_objects', 10, 2 );
 
 // Change Homepage text in Naxvt Breabcrumbs
-function tellustek_breadcrumb_title_swapper($title, $type, $id)
-{
+function tellustek_breadcrumb_title_swapper($title, $type, $id) {
     if(in_array('home', $type))
     {
         $title = __('Home');
@@ -306,20 +305,44 @@ function tellustek_breadcrumb_title_swapper($title, $type, $id)
 }
 add_filter('bcn_breadcrumb_title', 'tellustek_breadcrumb_title_swapper', 3, 10);
 
-//ACF
+//Template function: Get paragraph
 
-function my_acf_prepare_field( $field ) {
-	
-	// $field['instructions']
+function mxbon_get_paragraph( $index ) {
+    global $post, $posts;
+    $post_content = $post->post_content;
+    $post_content = apply_filters('the_content', $post_content);
+    $post_content = str_replace('</p>', '', $post_content);
+    $paras = explode('<p>', $post_content);
+    array_shift($paras);
 
-	//preg_match( '', $field['instructions'], $matches );
-
-	/*
-	if ($matches) {
-		return do_shortcode( $matches[i] );
-	} else {
-		return $field;	
-	}
-	*/
+    return $paras[$index]; 
 }
-//add_filter('acf/prepare_field/name=addition', 'my_acf_prepare_field');
+
+//Template function: Get sidemenu title
+
+function mxbon_get_side_navigation_title() {
+	global $post;
+    $parent_item_title = '上層標題';
+
+    if( $menu_items = wp_get_nav_menu_items( 'main-nav' ) ) {
+   
+        $parent_id = 0;
+
+        foreach( $menu_items as $menu_item ) {
+
+            if($menu_item->object_id == $post->ID) {
+                $parent_id = $menu_item->menu_item_parent;
+                break;
+            }
+        }
+        if( $parent_id !== 0 ) {
+            foreach( $menu_items as $menu_item ) {
+                if($menu_item->ID == $parent_id) {
+                    $parent_item_title = get_the_title( $menu_item->object_id );
+                }
+            }
+        }
+     }
+
+	 return $parent_item_title;
+}
