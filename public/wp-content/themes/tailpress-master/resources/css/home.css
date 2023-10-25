@@ -68,6 +68,7 @@
     }
     
     section.page-banner {
+        @apply h-auto md:h-auto;
         .n2-ss-slider .mxbon-gradient-modify > .n2-ss-layer-with-background {
             --customgradient: linear-gradient(to right, RGBA(20,27,53,0) 50%,RGBA(20,27,53,0.5) 100%);
             background-image: var(--customgradient),var(--n2bgimage);

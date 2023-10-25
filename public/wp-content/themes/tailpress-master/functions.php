@@ -305,6 +305,22 @@ function tellustek_breadcrumb_title_swapper($title, $type, $id) {
 }
 add_filter('bcn_breadcrumb_title', 'tellustek_breadcrumb_title_swapper', 3, 10);
 
+
+// breadcrumb: unlinked
+add_filter('bcn_breadcrumb_linked', 'my_breadcrumb_url_stripper', 3, 10);
+function my_breadcrumb_url_stripper($linked, $type, $id) {
+    if(in_array('product-category', $type) ) {
+        return false;
+    }
+
+	$skip_linked_page = array( 101, 114 );
+    if(in_array('post-page', $type) && in_array($id, $skip_linked_page) ) {
+        return false;
+    }
+
+    return $linked;
+}
+
 //Template function: Get paragraph
 
 function mxbon_get_paragraph( $index ) {

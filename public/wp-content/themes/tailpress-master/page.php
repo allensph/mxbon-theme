@@ -39,8 +39,22 @@
 	<div class="container">
         
         <div class="wrapper">
-
-            <aside class="side-navigation" x-bind:class="{ 'dropdown-collapse': collapse }" x-data="{ collapse: false, title: '<?php echo get_the_title(); ?>' }">
+            
+            <aside class="side-navigation" 
+            x-bind:class="{ 'dropdown-collapse': collapse, 'wrapper-fixed': fixed, 'wrapper-bottom': bottom }"
+            x-init="fixed = !top"
+            x-on:scroll.window="
+                top = document.querySelector('aside').getBoundingClientRect().top < 0 ? false : true;
+                bottom = document.querySelector('aside').getBoundingClientRect().bottom > document.querySelector('aside .wrapper').clientHeight ? false : true;
+                fixed = !top;
+                "
+            x-data="{ 
+                collapse: false, 
+                title: '<?php echo get_the_title(); ?>', 
+                fixed: false,
+                top: true, 
+                bottom: false
+            }">
 
                 <div class="wrapper">
 

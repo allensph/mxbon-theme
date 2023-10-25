@@ -1142,20 +1142,23 @@ footer {
                     }
                 }
                 /* temp style START */
-                /*
+                
                 g.imapsSprite-group.imapsContainer-group.imapsTooltip-group {
-                    @apply !visible !opacity-100;
+                    /*@apply !visible !opacity-100;*/
                 }
-                */
+                
                 /* temp style END */
 
                 g.imapsContainer {
                     .imapsTooltip {
                         .foreignObject {
                             @apply overflow-visible;
-                        }                        
+                        }
+                        .marker-title {
+                            @apply block lg:hidden mb-0;
+                        }                  
                         .wrapper {
-                            @apply relative w-[300px] lg:w-[576px];
+                            @apply hidden lg:block relative w-[300px] lg:w-[576px];
                             &:before {
                                 @apply absolute -z-10 content-[''] w-full h-full left-0 top-0 bg-gradient-to-r from-transparent to-neutral-50 from-0% to-[36%];
                             }

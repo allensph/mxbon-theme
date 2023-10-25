@@ -22,16 +22,18 @@
 
         <aside class="side-navigation" 
             x-bind:class="{ 'dropdown-collapse': collapse, 'wrapper-fixed': fixed, 'wrapper-bottom': bottom }"
-            x-init="fixed = (window.pageYOffset < 182) ? false : true"
+            x-init="fixed = !top"
             x-on:scroll.window="
-                fixed = (window.pageYOffset < 182) ? false : true;
+                top = document.querySelector('aside').getBoundingClientRect().top < 0 ? false : true;
                 bottom = document.querySelector('aside').getBoundingClientRect().bottom > document.querySelector('aside .wrapper').clientHeight ? false : true;
+                fixed = !top;
                 "
             x-data="{ 
                 collapse: false, 
-                current: <?php echo $categories[0]->term_id; ?>, 
+                current: window.location.hash.replace('#', ''), 
                 title: '<?php echo $categories[0]->name; ?>', 
                 fixed: false,
+                top: true,
                 bottom: false
             }">
 
@@ -46,11 +48,11 @@
                     <?php if( $categories ) : ?>
                     <?php foreach( $categories as $category) : ?>
 
-                        <li class="menu-item" x-bind:class="current == <?php echo $category->term_id; ?> ? 'current-menu-item' : ''"
+                        <li class="menu-item" x-bind:class="current == '<?php echo $category->slug; ?>' ? 'current-menu-item' : ''"
                             x-on:click="
                             title='<?php echo $category->name; ?>'; 
                             collapse = !collapse;
-                            current = <?php echo $category->term_id; ?>;
+                            current = '<?php echo $category->slug; ?>';
                             ">
                             <a href="<?php echo "#{$category->slug}"; ?>"><?php echo $category->name; ?></a>
                         </li>
