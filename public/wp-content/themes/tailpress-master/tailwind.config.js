@@ -29,6 +29,7 @@ module.exports = {
             },
             aspectRatio: {
                 'industry': '460 / 613',
+                'activity': '736 / 552',
             },
             backgroundPosition: {
                 'caret-down-position': 'calc(100% - 12px)',

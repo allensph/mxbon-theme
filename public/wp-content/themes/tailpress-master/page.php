@@ -1,27 +1,12 @@
 <?php get_header(); ?>
 
 <?php
-    // $parent_item_title = '上層標題';
+    global $post;
+    $post_name = $post->post_name;
+    $sub_title = str_replace( '-', ' ', $post_name );
 
-    // if( $menu_items = wp_get_nav_menu_items( 'main-nav' ) ) {
-   
-    //     $parent_id = 0;
-
-    //     foreach( $menu_items as $menu_item ) {
-
-    //         if($menu_item->object_id == $post->ID) {
-    //             $parent_id = $menu_item->menu_item_parent;
-    //             break;
-    //         }
-    //     }
-    //     if( $parent_id !== 0 ) {
-    //         foreach( $menu_items as $menu_item ) {
-    //             if($menu_item->ID == $parent_id) {
-    //                 $parent_item_title = get_the_title( $menu_item->object_id );
-    //             }
-    //         }
-    //     }
-    //  }
+    $has_post_parent = has_post_parent();
+    $container_class = $has_post_parent ? 'container' : 'container full-width';
 ?>
 
     <div class="breadcrumb-wrapper">
@@ -32,14 +17,24 @@
 
     <?php if( has_post_thumbnail() ) : ?>
         <div class="page-banner">
+
+            <?php if( !has_post_parent() ) : ?>
+                <div class="section-title center">
+                    <?php echo $post->post_title; ?>
+                    <span class="sub"><?php echo $sub_title; ?></span>
+                </div>
+            <?php endif; ?>
+            
             <?php the_post_thumbnail(); ?>
         </div>
     <?php endif; ?>
     
-	<div class="container">
+	<div class="<?php echo $container_class; ?>">
         
         <div class="wrapper">
-            
+
+            <?php if( $has_post_parent ) : ?>
+
             <aside class="side-navigation" 
             x-bind:class="{ 'dropdown-collapse': collapse, 'wrapper-fixed': fixed, 'wrapper-bottom': bottom }"
             x-init="fixed = !top"
@@ -69,6 +64,8 @@
                     ?>
                 </div>
             </aside>
+
+            <?php endif; ?>
         
             <?php if ( have_posts() ) : ?>
 

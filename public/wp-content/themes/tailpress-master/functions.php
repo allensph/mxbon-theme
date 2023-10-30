@@ -47,7 +47,7 @@ function tailpress_enqueue_scripts() {
 	wp_enqueue_style( 'rajdhani', 'https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap' );
 	wp_enqueue_style( 'fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
 
-	if ( is_front_page() || is_singular( 'product' ) || is_singular( 'industry' ) ) {
+	if ( is_front_page() || is_singular( 'product' ) || is_page( 'talent-recruitment' ) ) {
 		wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css' );
 		wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js' );
 	}
@@ -61,7 +61,7 @@ function tailpress_enqueue_scripts() {
 		wp_enqueue_script( 'alpine', 'https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js' );
 	}
 
-	if ( is_page( 'corporate-philsosphy' ) || is_page( 'innovation' ) || is_page( 'certification' ) || is_singular( 'product' ) || is_singular( 'industry' ) ) {
+	if ( is_page( 'corporate-philsosphy' ) || is_page( 'innovation' ) || is_page( 'certification' ) || is_page( 'talent-recruitment' ) || is_singular( 'product' ) || is_singular( 'industry' ) ) {
 		wp_enqueue_style( 'aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.css' );
 		wp_enqueue_script( 'aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js' );
 	}
@@ -306,12 +306,14 @@ function tellustek_breadcrumb_title_swapper($title, $type, $id) {
 add_filter('bcn_breadcrumb_title', 'tellustek_breadcrumb_title_swapper', 3, 10);
 
 
-// breadcrumb: unlinked
-add_filter('bcn_breadcrumb_linked', 'my_breadcrumb_url_stripper', 3, 10);
-function my_breadcrumb_url_stripper($linked, $type, $id) {
+// breadcrumb: unlinked with parent blank page
+add_filter('bcn_breadcrumb_linked', 'tellustek_breadcrumb_url_stripper', 3, 10);
+function tellustek_breadcrumb_url_stripper($linked, $type, $id) {
+	/*
     if(in_array('product-category', $type) ) {
         return false;
     }
+	*/
 
 	$skip_linked_page = array( 101, 114 );
     if(in_array('post-page', $type) && in_array($id, $skip_linked_page) ) {
@@ -319,6 +321,17 @@ function my_breadcrumb_url_stripper($linked, $type, $id) {
     }
 
     return $linked;
+}
+
+// breadcrumb: change product category link
+
+add_filter('bcn_breadcrumb_url', 'tellustek_breadcrumb_url_changer', 3, 10);
+function tellustek_breadcrumb_url_changer($url, $type, $id)
+{
+    if(in_array('product-category', $type) ) {
+        $url = get_post_type_archive_link('product') . "#" . wp_basename( $url );
+    }
+    return $url;
 }
 
 //Template function: Get paragraph

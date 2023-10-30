@@ -256,3 +256,39 @@ if (window.location.pathname.split('/')[1] == 'industry') {
             })
       })
 }
+
+if (window.location.pathname == '/talent-recruitment/') {
+      window.addEventListener('DOMContentLoaded', function () {
+            // animate on scroll
+            AOS.init({ once: true, easing: 'ease-in-out', });
+
+            const swiper = new Swiper('section.company-activities .swiper', {
+                  slidesPerView: 1,
+                  spaceBetween: 16,
+
+                  breakpoints: {
+                        768: {
+                              slidesPerView: 2,
+                              spaceBetween: 16,
+                        },
+                        960: {
+                              slidesPerView: 3,
+                              spaceBetween: 16,
+                        },
+                        1280: {
+                              slidesPerView: 'auto',
+                              spaceBetween: 16,
+                        },
+                  },
+                  pagination: {
+                        el: 'section.company-activities .swiper-pagination',
+                        clickable: true,
+                  },
+
+                  navigation: {
+                        nextEl: 'section.company-activities .swiper-button-next',
+                        prevEl: 'section.company-activities .swiper-button-prev',
+                  },
+            })
+      })
+}

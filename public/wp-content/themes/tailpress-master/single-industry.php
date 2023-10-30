@@ -1,36 +1,10 @@
 <?php get_header(); ?>
 
 <?php
-    // $parent_item_title = '上層標題';
-
-    // if( $menu_items = wp_get_nav_menu_items( 'main-nav' ) ) {
-   
-    //     $parent_id = 0;
-
-    //     foreach( $menu_items as $menu_item ) {
-
-    //         if($menu_item->object_id == $post->ID) {
-    //             $parent_id = $menu_item->menu_item_parent;
-    //             break;
-    //         }
-    //     }
-    //     if( $parent_id !== 0 ) {
-    //         foreach( $menu_items as $menu_item ) {
-    //             if($menu_item->ID == $parent_id) {
-    //                 $parent_item_title = get_the_title( $menu_item->object_id );
-    //             }
-    //         }
-    //     }
-    //  }
-?>
-
-<?php
     $post_name = get_post_field('post_name');
     $sub_title = str_replace( '-', ' ', $post_name );
     $banner_bg = get_the_post_thumbnail_url($post);
     $products = get_field('related_products');
-
-    //echo "<pre>" . print_r( $products, true ) ."</pre>";
 ?>
 
 <div class="breadcrumb-wrapper">

@@ -30,19 +30,8 @@
                 }
             }
         }
-        .section-title {
-            .swiper-button-prev, .swiper-button-next {
-                @apply w-10 h-10 flex justify-center items-center text-white after:text-base bg-zinc-800 opacity-25 hover:opacity-100 transition-opacity;
-            }
-            .swiper-button-prev {
-                @apply after:content-['prev'];
-            }
-            .swiper-button-next {
-                @apply after:content-['next'];
-            }
-        }
     }
-    
+    /*
     .section-swiper {
         .swiper-slide {
             @apply h-auto block;
@@ -66,6 +55,7 @@
             @apply w-8;
         }
     }
+    */
     
     section.page-banner {
         @apply h-auto md:h-auto;
@@ -171,12 +161,14 @@
             .sub {
                 @apply text-white;
             }
+            /*
             .swiper-buttons {
                 @apply absolute right-0 bottom-0 flex gap-x-2;
                 .swiper-button-prev, .swiper-button-next {
                     @apply relative left-auto top-auto right-auto m-0;
                 }
             }
+            */
         }
         .section-swiper {
             @apply pb-8;

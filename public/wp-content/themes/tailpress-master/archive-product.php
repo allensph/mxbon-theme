@@ -30,7 +30,7 @@
                 "
             x-data="{ 
                 collapse: false, 
-                current: window.location.hash.replace('#', ''), 
+                current: window.location.hash.replace('#', '') ? window.location.hash.replace('#', '') : '<?php echo $categories[0]->slug; ?>' , 
                 title: '<?php echo $categories[0]->name; ?>', 
                 fixed: false,
                 top: true,
