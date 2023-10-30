@@ -143,7 +143,7 @@ class PLL_Filter_REST_Routes {
 	}
 
 	/**
-	 * Exctracts filterable REST route from an array of entity objects
+	 * Extracts filterable REST route from an array of entity objects
 	 * from a list of translatable entities (e.g. post types or taxonomies).
 	 *
 	 * @since 3.5
@@ -157,7 +157,10 @@ class PLL_Filter_REST_Routes {
 		$this->filtered_entities = array();
 		foreach ( $rest_entities as $rest_entity ) {
 			if ( in_array( $rest_entity->name, $translatable_entities, true ) ) {
-				$this->filtered_entities[ $rest_entity->name ] = "{$rest_entity->rest_namespace}/{$rest_entity->rest_base}";
+				$rest_base      = empty( $rest_entity->rest_base ) ? $rest_entity->name : $rest_entity->rest_base;
+				$rest_namespace = empty( $rest_entity->rest_namespace ) ? 'wp/v2' : $rest_entity->rest_namespace;
+
+				$this->filtered_entities[ $rest_entity->name ] = "{$rest_namespace}/{$rest_base}";
 			}
 		}
 	}
