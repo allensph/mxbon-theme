@@ -1,13 +1,13 @@
 <?php get_header(); ?>
 
 <?php
-    $categories = get_terms([
+    $categories = get_terms( array(
         'taxonomy' => 'product-category',
-        'hide_empty' => false,
+        'hide_empty' => true,
         'order' => 'ASC',
         'meta_key' => 'homepage_order',
         'orderby' => 'meta_value_num',
-    ]);
+    ) );
 ?>
 
 <div class="breadcrumb-wrapper">

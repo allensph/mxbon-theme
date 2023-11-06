@@ -72,6 +72,12 @@ module.exports = {
                 'text': [
                     '0px 0px 4px rgba(0, 0, 0, 0.8)',
                 ],
+                'fontweight': [
+                    '0px 0px 0px #27272a',
+                ],
+                'fontweight-red': [
+                    '0px 0px 0px #DA2127',
+                ],
             },
             filterOrder: {
                 'sdgs': 'contrast sepia brightness saturate',

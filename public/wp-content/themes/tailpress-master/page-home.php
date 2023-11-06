@@ -113,15 +113,18 @@
                 $posts = get_posts( $posts_arg );
             ?>
             <?php foreach ($posts as $post) : ?>
+                <?php 
+                    $thumbnail = has_post_thumbnail($post) ? get_the_post_thumbnail_url($post, 'large') : '/wp-content/themes/tailpress-master/resources/images/news-default-img.svg'; 
+                    $categories = get_the_category();
+                ?>
                 <a class="post" href="<?php echo get_permalink($post); ?>">
-                    <?php 
-                        $thumbnail = has_post_thumbnail($post) ? get_the_post_thumbnail_url($post, 'large') : '/wp-content/themes/tailpress-master/resources/images/news-default-img.svg'; 
-                    ?>
                     <div class="image-wrapper">
                         <img src="<?php echo $thumbnail; ?>" title="<?php echo $post->post_title; ?>" alt="<?php echo $post->post_title; ?>">    
                     </div>
                     <div class="info">
-                        <div class="category"><?php echo "知識交流"; ?></div>
+                        <?php if( $categories ) : ?>
+                            <div class="category"><?php echo $categories[0]->name; ?></div>
+                        <?php endif; ?>
                         <h3 class="title"><?php echo $post->post_title; ?></h3>
                         <time><?php echo get_the_date('Y/m/d', $post); ?></time>
                     </div>

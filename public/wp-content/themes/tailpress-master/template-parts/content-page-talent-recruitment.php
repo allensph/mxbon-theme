@@ -73,18 +73,7 @@
         <div class="section-swiper">
             <div class="swiper">
                 <div class="swiper-wrapper">
-                    <?php
-                        /*
-                        $posts_arg = array(
-                            'post_type' => 'industry',
-                            'posts_per_page' => -1,
-                            'order' => 'ASC',
-                            'meta_key' => 'homepage_order',
-                            'orderby' => 'meta_value_num',
-                        );
-                        $posts = get_posts( $posts_arg );
-                        */
-                    ?>
+
                     <?php foreach( $activities as $activity ) : ?>
                     <div class="swiper-slide">
                         <?php echo wp_get_attachment_image( $activity['id'], 'large'); ?>
