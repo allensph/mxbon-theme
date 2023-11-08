@@ -334,7 +334,7 @@ function tellustek_breadcrumb_url_changer($url, $type, $id)
     return $url;
 }
 
-//Template function: Get paragraph
+// Template function: Get paragraph
 
 function mxbon_get_paragraph( $index ) {
     global $post, $posts;
@@ -347,7 +347,7 @@ function mxbon_get_paragraph( $index ) {
     return $paras[$index]; 
 }
 
-//Template function: Get sidemenu title
+// Template function: Get sidemenu title
 
 function mxbon_get_side_navigation_title() {
 	global $post;
@@ -375,3 +375,11 @@ function mxbon_get_side_navigation_title() {
 
 	 return $parent_item_title;
 }
+
+// Relevanssi: change search result size to all
+
+function rlv_postsperpage($query) {
+  $query->query_vars['posts_per_page'] = -1;
+	return $query;
+}
+add_filter('relevanssi_modify_wp_query', 'rlv_postsperpage');

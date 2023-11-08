@@ -59,6 +59,11 @@ class Admin extends Core\Singleton {
 	private $filters = null;
 
 	/**
+	 *	@var BackendSearch
+	 */
+	private $backendsearch = null;
+
+	/**
 	 *	@var Ajax\AjaxHandler
 	 */
 	private $ajax_handler = null;
@@ -81,6 +86,17 @@ class Admin extends Core\Singleton {
 		// init field group admin
 		add_action( 'acf/field_group/admin_head', [ $this, 'field_group_admin_head' ] );
 
+		add_filter('acf/load_field_group', [ $this, 'load_field_group' ] );
+
+	}
+
+	/**
+	 *	@action acf/load_field_group
+	 */
+	public function load_field_group( $field_group ) {
+		return wp_parse_args( $field_group, [
+			'qef_simple_location_rules' => false,
+		]);
 	}
 
 	/**
@@ -120,11 +136,12 @@ class Admin extends Core\Singleton {
 			return;
 		}
 
-		$this->columns		= Columns::instance();
-		$this->quickedit	= Quickedit::instance();
-		$this->bulkedit		= Bulkedit::instance();
-		$this->filters		= Filters::instance();
-		$this->ajax_handler = new Ajax\AjaxHandler( 'get_acf_post_meta', [
+		$this->columns			= Columns::instance();
+		$this->quickedit		= Quickedit::instance();
+		$this->bulkedit			= Bulkedit::instance();
+		$this->filters			= Filters::instance();
+		$this->backendsearch	= BackendSearch::instance();
+		$this->ajax_handler 	= new Ajax\AjaxHandler( 'get_acf_post_meta', [
 			'public'			=> false,
 			'use_nonce'			=> true,
 			'capability'		=> false, // apply_filters( 'acf_qef_capability', 'edit_posts' ),

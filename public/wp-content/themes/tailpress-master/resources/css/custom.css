@@ -595,7 +595,7 @@ footer {
     }
 }
 
-.page, .archive, .single-product, .single-industry {
+.page, .archive, .single-product, .single-industry, .search {
     main {
         .container {
             @apply mx-auto px-4 max-w-full 3xl:max-w-9xl;
@@ -622,8 +622,11 @@ footer {
                             .menu-item {
                                 @apply block;
                                 a {
-                                    @apply relative block px-6 lg:pr-6 lg:pl-8 py-4 whitespace-nowrap text-ellipsis overflow-hidden;
+                                    @apply relative flex justify-between px-6 lg:pr-6 lg:pl-8 py-4 whitespace-nowrap text-ellipsis overflow-hidden;
                                     @apply text-zinc-600 hover:bg-zinc-100 active:bg-zinc-100 lg:hover:bg-transparent lg:active:bg-transparent lg:hover:text-mxbon-red lg:active:text-mxbon-red transition-colors text-lg lg:text-xl leading-ext-tight font-normal lg:font-medium;
+                                    .count {
+                                        @apply font-bold font-raj;
+                                    }
                                 }
                             }
                             .current-menu-item {
@@ -664,7 +667,7 @@ footer {
                         }
                     }
                 }
-                article {
+                article, .search-result {
                     /* lg:w-4/5 xl:w-5/6 */
                     @apply lg:px-4 flex-1 mb-10 md:mb-20;
                     & > *:not(.entry-content) {
@@ -1703,6 +1706,8 @@ footer {
     }
 }
 
+/* Single post type */
+
 .single-product {
     section.product-banner {
         @apply bg-products-banner bg-cover bg-center bg-no-repeat mb-12 lg:mb-40;
@@ -1988,6 +1993,28 @@ footer {
                         @apply p-6 text-zinc-800 text-xl leading-ext-tight font-medium bg-zinc-100;
                     }                    
                 }
+            }
+        }
+    }
+}
+
+/* Search */
+
+.search {
+    .search-result {
+        .description {
+            @apply text-xl leading-normal text-zinc-400 font-medium px-4 mb-12;
+        }
+        .result {
+            @apply px-4 mb-12 last:mb-0;
+            h3 {
+                @apply mb-2;
+                a {
+                    @apply text-xl leading-normal text-zinc-800 hover:text-mxbon-red;
+                }
+            }
+            .excerpt_part {
+                @apply block text-large leading-normal text-justify text-zinc-600 mb-6 last:mb-0;
             }
         }
     }
