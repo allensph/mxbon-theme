@@ -622,11 +622,8 @@ footer {
                             .menu-item {
                                 @apply block;
                                 a {
-                                    @apply relative flex justify-between px-6 lg:pr-6 lg:pl-8 py-4 whitespace-nowrap text-ellipsis overflow-hidden;
+                                    @apply relative block px-6 lg:pr-6 lg:pl-8 py-4 whitespace-nowrap text-ellipsis overflow-hidden;
                                     @apply text-zinc-600 hover:bg-zinc-100 active:bg-zinc-100 lg:hover:bg-transparent lg:active:bg-transparent lg:hover:text-mxbon-red lg:active:text-mxbon-red transition-colors text-lg lg:text-xl leading-ext-tight font-normal lg:font-medium;
-                                    .count {
-                                        @apply font-bold font-raj;
-                                    }
                                 }
                             }
                             .current-menu-item {
@@ -756,6 +753,15 @@ footer {
                     @apply text-zinc-500 leading-[0.85] md:leading-[0.6458] md:whitespace-nowrap;
                 }
             }
+        }
+    }
+}
+
+.search {
+    main .container > .wrapper .side-navigation .wrapper .menu .menu-item a {
+        @apply flex justify-between;
+        .count {
+            @apply font-bold font-raj block w-4;
         }
     }
 }

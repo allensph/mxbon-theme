@@ -38,7 +38,7 @@
                 $term_slug = implode( "", $term_slug_data );
             ?>
 
-            <h2 class="content-title subline">
+            <h2 class="content-title subline" id="<?php echo $category->slug; ?>">
                 <?php echo $category->name ?>
                 <span><?php echo $term_slug; ?></span>
             </h2>
@@ -71,8 +71,8 @@
                         <?php
                             // Find if this product have at least one model document file
                             $detail = get_field( 'detail', $product );
-
-                            $feature_key = null; $document_count = 0;
+                            $feature_key = null;
+                            $document_count = 0;
 
                             if( $detail ) {
                                 $feature_key = array_search( 'feature', array_column( $detail, 'acf_fc_layout' ) );
@@ -85,8 +85,11 @@
                         ?>
 
                         <?php if( $document_count ) : ?>
+
+                        <?php //echo "<pre>" . print_r( $product, true ) . "</pre>"; ?>
+
                         <li>
-                            <h3><?php echo $product->post_title; ?><span><?php echo $subtitle; ?></span></h3>
+                            <h3 id="<?php echo $product->post_name; ?>"><?php echo $product->post_title; ?><span><?php echo $subtitle; ?></span></h3>
                             <ul class="docs">
                                 <?php foreach( $detail[$feature_key]['series'] as $item ) : ?>
                                     <?php if( $item['document'] ) : ?>

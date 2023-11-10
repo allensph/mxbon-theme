@@ -378,8 +378,15 @@ function mxbon_get_side_navigation_title() {
 
 // Relevanssi: change search result size to all
 
-function rlv_postsperpage($query) {
+function tellustek_rlv_postsperpage($query) {
   $query->query_vars['posts_per_page'] = -1;
 	return $query;
 }
-add_filter('relevanssi_modify_wp_query', 'rlv_postsperpage');
+add_filter('relevanssi_modify_wp_query', 'tellustek_rlv_postsperpage');
+
+// ACF: change query command when meta_query in two-layer repeater
+function tellustek_replace_repeater_field( $where ) {
+  $where = str_replace( "meta_key = 'detail_\$_series_\$", "meta_key LIKE 'detail_%_series_%", $where );
+  return $where;
+}
+add_filter( 'posts_where', 'tellustek_replace_repeater_field' );

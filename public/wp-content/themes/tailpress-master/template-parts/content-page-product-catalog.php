@@ -15,7 +15,7 @@
             $category = get_term( $catalog['category'], 'product-category');
             $subtitle = strtoupper( str_replace( "-", " ", $category->slug ) );
         ?>
-        <h2 class="content-title">
+        <h2 class="content-title" id="<?php echo $category->slug; ?>">
             <?php echo $category->name; ?>
             <span><?php echo $subtitle; ?></span>
         </h2>

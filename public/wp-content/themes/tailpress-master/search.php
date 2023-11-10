@@ -1,8 +1,10 @@
 <?php get_header(); ?>
-
 <?php
 
     global $wp_query;
+
+    //echo "<pre>" . print_r( $wp_query->posts, true ) . "</pre>";
+
     $query_string = $wp_query->query['s'];
 
     $aside_output  = ""; 
@@ -28,8 +30,6 @@
             endforeach;
         endif;
     }
-
-    $total_results = $wp_query->found_posts + $terms_count;
 
     if( $terms_in_result ) {
 
@@ -100,6 +100,190 @@
             $result_output .= "</div>";
         }
     }
+
+    // Product Catalog
+    $catalogs = get_field( 'catalogs', 'option' );
+    $catalog_models = array();
+    $catalog_count = 0;
+
+    foreach( $catalogs as $catalog ) {
+        
+        $cat = get_term($catalog['category']);
+
+        if( str_contains( $cat->name, $query_string ) ) {
+            $url = get_permalink( get_page_by_path( 'information/product-catalog' ) ) . "#" . $cat->slug;
+            $catalog_output .= sprintf( '<h3><a href="%s">%s</a></h3>', $url, $cat->name );
+            $catalog_count++;
+        }
+
+        foreach( $catalog['files'] as $file ) {
+
+            if( str_contains( $file['name'], $query_string ) ) {
+                $url = get_permalink( get_page_by_path( 'information/product-catalog' ) ) . "#" . $cat->slug;
+                $catalog_output .= sprintf( '<h3><a href="%s">%s</a></h3>', $url, $file['name'] );
+                $catalog_count++;
+            }
+        }
+    }
+    if( $catalog_count ) {
+        $catalog_attributes = "x-bind:class=\"current == 'product-catalog' ? 'current-menu-item' : ''\" x-on:click.prevent=\"current = 'product-catalog'\"";
+        $aside_output .= sprintf('<li class="menu-item" %s><a href="#">%s<span class="count">%s</span></a></li>', $catalog_attributes, '產品型錄', $catalog_count );
+
+        $result_output .= "<div class=\"result product-catalog\" x-show=\"['all', 'product-catalog'].includes(current)\" x-transition.duration.500ms>";
+        $result_output .= sprintf( '<h2 class="content-title subline">%s</h2>' , '產品型錄' );
+        $result_output .= $catalog_output;
+        $result_output .= "</div>";
+    }
+
+    // Documentation
+    $document_query = array();
+    $doc_count_in_product = 0;
+    $term_count_in_taxonomy = 0;
+
+    $product_category_objs = get_terms( array( 'taxonomy'   => 'product-category', 'hide_empty' => false, ) );
+    $product_categories = array_column( $product_category_objs, 'name');
+    $terms_output = "";
+
+    foreach( $product_categories as $key => $product_category ) {
+
+        $doc_count_in_category = 0;
+
+        if( str_contains( $product_category, $query_string )) {
+            $products_args = array(
+                'post_type' => 'product',
+                'tax_query' => array(
+                    array(
+                    'taxonomy' => 'product-category',
+                    'terms' => $product_category_objs[$key]->term_id,
+                    ),
+                ),
+            );
+            $product_query = new WP_Query( $products_args );
+
+            if( $product_query->posts ) {
+
+                foreach( $product_query->posts as $product ) {
+                    $detail = get_field( 'detail', $product );
+                    $feature_key = null;
+                    $document_count = 0;
+
+                    if( $detail ) {
+
+                        $feature_key = array_search( 'feature', array_column( $detail, 'acf_fc_layout' ) );
+
+                        if( $feature_key !== null && $detail[$feature_key]['series'] ) {
+                            $document_count = count( array_filter( array_column( $detail[$feature_key]['series'], 'document' ) ) );
+                            $doc_count_in_category +=  $document_count;
+                        }
+
+                    }
+                }
+            }
+
+            if( $doc_count_in_category ) {
+                $term_count_in_taxonomy++;
+
+                $url = get_permalink( get_page_by_path( 'information/technical-documentation' ) ) . "#" . $product_category_objs[$key]->slug;
+                $term_subtitle = implode(" ", array_map( 'ucfirst', explode( "-", $product_category_objs[$key]->slug ) ) );
+                $terms_output .= sprintf( '<h3><a href="%s">%s %s</a></h3>', $url,  $product_category_objs[$key]->name, $term_subtitle );
+            }
+            
+        }
+        
+    }
+
+    $doc_count_in_product = 0;
+    $docs_output = "";
+    $product_output = "";
+
+    if( $wp_query->posts ) {        
+
+        foreach( $wp_query->posts as $item ) {
+
+            if( $item->post_type == 'product' ) {
+
+                $document_args = array(
+                    'post_type' => 'product',
+                    'p' => $item->ID,
+                    'post_status' =>  'publish',
+                    
+                    'meta_query' => array(
+                        array(
+                            'key' => 'detail_$_series_$_model',
+                            'value' => $query_string,
+                            'compare' => '=',
+                        ),
+                        array(
+                            'key' => 'detail_$_series_$_document',
+                            'value' => '',
+                            'compare' => '!=',
+                        ),
+                        'relation' => 'AND',
+                    )
+                );
+                
+                $document_query = new WP_Query($document_args);
+                $doc_count_in_product = $document_query->post_count;
+            }
+        }
+
+        if( $doc_count_in_product ) {
+
+            foreach( $document_query->posts as $item ) {
+                $url = get_permalink( get_page_by_path( 'information/technical-documentation' ) ) . "#" . $item->post_name;
+                $post_name = implode(" ", array_map( 'ucfirst', explode( "-", $item->post_name ) ) );
+                $docs_output .= sprintf( '<h3><a href="%s">%s %s</a></h3>', $url, $item->post_title, $post_name );
+            }
+
+        } else {            
+
+            foreach( $wp_query->posts as $product ) {
+                $detail = get_field( 'detail', $product );
+                $feature_key = null;
+                $document_count = 0;
+
+                if( $detail ) {
+                    
+                    $feature_key = array_search( 'feature', array_column( $detail, 'acf_fc_layout' ) );
+
+                    if( $feature_key !== null && $detail[$feature_key]['series'] ) {
+                        $document_count = count( array_filter( array_column( $detail[$feature_key]['series'], 'document' ) ) );
+
+                        if( $document_count ) {
+                            $url = get_permalink( get_page_by_path( 'information/technical-documentation' ) ) . "#" . $product->post_name;
+                            $post_name = implode(" ", array_map( 'ucfirst', explode( "-", $product->post_name ) ) );
+                            $product_output .= sprintf( '<h3><a href="%s">%s %s</a></h3>', $url, $product->post_title, $post_name );
+                            $doc_count_in_product++;
+                        }
+                    }
+
+                }
+            }
+
+        }
+        
+    }
+
+    if( $term_count_in_taxonomy || $doc_count_in_product ) {
+
+        $total_count = $term_count_in_taxonomy + $doc_count_in_product;
+
+        $docs_attributes = "x-bind:class=\"current == 'technical-documentation' ? 'current-menu-item' : ''\" x-on:click.prevent=\"current = 'technical-documentation'\"";
+        $aside_output .= sprintf('<li class="menu-item" %s><a href="#">%s<span class="count">%s</span></a></li>', $docs_attributes, '技術資料', $total_count );        
+
+        $result_output .= "<div class=\"result technical-documentation\" x-show=\"['all', 'technical-documentation'].includes(current)\" x-transition.duration.500ms>";
+        $result_output .= sprintf( '<h2 class="content-title subline">%s</h2>' , '技術資料' );
+
+        #大集合
+        $result_output .= $terms_output;
+        $result_output .= $docs_output;
+        $result_output .= $product_output;
+
+        $result_output .= "</div>";
+    }
+
+    // Total result count
+    $total_results = $wp_query->found_posts + $terms_count + $catalog_count + $doc_count_in_product + $term_count_in_taxonomy;
 ?>
 
 <div class="breadcrumb-wrapper">
@@ -164,6 +348,21 @@
 
             <?php endif; ?>
 
+            <!--
+            原始搜尋結果:
+            <pre>
+                <?php 
+                    /*
+                    if( have_posts() ) {
+                        while( have_posts() ) {
+                            the_post();
+                            echo "<h3>".get_the_title()."</h3>";
+                        }
+                    } 
+                    */
+                ?>
+            </pre>
+            -->
         </div>
     </div>
 </div>
