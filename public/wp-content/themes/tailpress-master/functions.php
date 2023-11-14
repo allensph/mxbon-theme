@@ -301,6 +301,10 @@ function tellustek_breadcrumb_title_swapper($title, $type, $id) {
     {
         $title = __('Home');
     }
+    if(in_array('404', $type))
+    {
+        $title = __('找不到符合條件的頁面');
+    }
     return $title;
 }
 add_filter('bcn_breadcrumb_title', 'tellustek_breadcrumb_title_swapper', 3, 10);

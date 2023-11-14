@@ -595,7 +595,7 @@ footer {
     }
 }
 
-.page, .archive, .single-product, .single-industry, .search {
+.page, .archive, .single-product, .single-industry, .search, .error404 {
     main {
         .container {
             @apply mx-auto px-4 max-w-full 3xl:max-w-9xl;
@@ -1312,6 +1312,7 @@ footer {
                 }
             }            
         }
+        /*
         section.products-categories {
             @apply mb-10 lg:mb-20;
             .container {
@@ -1343,6 +1344,7 @@ footer {
                 }
             }
         }
+        */
         section.location-map {
 
         }
@@ -2021,6 +2023,68 @@ footer {
             }
             .excerpt_part {
                 @apply block text-large leading-normal text-justify text-zinc-600 mb-6 last:mb-0;
+            }
+        }
+    }
+}
+
+/* Products categories */
+
+.page, .error404 {
+    main {
+        section.products-categories {
+            @apply mb-10 lg:mb-20;
+            .container {
+                @apply grid gap-8 grid-cols-1 lg:grid-cols-4 px-4;
+                .card {
+                    @apply relative flex flex-col justify-end border-l border-b border-zinc-200 overflow-hidden;
+                    
+                    &:before {
+                        @apply absolute content-[''] w-full left-0 h-[73.5px] top-0 border-t border-r border-zinc-200 skew-x-[45deg] origin-bottom-right pointer-events-none;
+                    }
+                    &:after {
+                        @apply absolute content-[''] w-full left-0 h-[calc(100%-73.5px)] bottom-0 border-r border-zinc-200 pointer-events-none;
+                    }
+                    .image {
+                        @apply px-6 flex-1 object-contain object-center;
+                    }
+                    .content {
+                        @apply p-6 bg-zinc-100;
+                        h2 {
+                            @apply text-zinc-800 text-2xl leading-ext-tight font-medium mb-4;
+                        }
+                        p {
+                            @apply text-zinc-600 text-base leading-normal line-clamp-2 mb-4;
+                        }
+                        .permalink {
+                            @apply block mxbon-btn-sm mxbon-btn-news ml-auto transition-colors;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Error 404 Page */
+
+.error404 {
+    main {
+        section.error-404-banner {
+            @apply mb-10 lg:mb-20;
+            .container {
+                .wrapper {
+                    @apply flex flex-col items-center;
+                    .logo {
+                        @apply w-full max-w-[480px] mb-8;
+                    }
+                    .description {
+                        @apply py-8;
+                    }
+                    .home-url {
+                        @apply mxbon-btn mxbon-btn-red mxbon-btn-md w-48 text-center mb-8;
+                    }
+                }
             }
         }
     }
