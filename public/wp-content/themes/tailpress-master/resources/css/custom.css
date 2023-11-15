@@ -678,8 +678,10 @@ footer {
                 }
                 .content-title {
                     @apply text-zinc-800 text-2xl leading-ext-tight font-medium mb-4;
+                    @apply flex flex-row gap-x-4 items-baseline lg:items-center;
                     &:before {
-                        @apply content-[''] inline-block w-2 h-5 mr-4 bg-mxbon-red;
+                        @apply content-[''] block w-2 h-5 bg-mxbon-red;
+                        /*@apply inline-block mr-4;*/
                     }
                     &.subline {
                         @apply relative mb-12;
@@ -1528,52 +1530,6 @@ footer {
             }
 
         }
-        section.news {
-            .content-title {
-                span {
-                    @apply inline-block ml-2 font-raj text-zinc-600;
-                }
-            }
-            .posts {
-                @apply grid grid-cols-1 lg:grid-cols-3 gap-y-8 md:gap-y-8 md:gap-x-8 mb-12 last:mb-0;
-                .post {
-                    @apply block shadow-card flex-1;
-                    .image-wrapper {
-                        @apply relative w-full h-auto aspect-video overflow-hidden mb-[18px];
-                        img {
-                            @apply w-full h-full object-cover transition-transform duration-500;
-                        }
-                    }
-                    .info {
-                        @apply relative p-6;
-                        .category {
-                            @apply absolute top-0 left-0 pr-4 pl-6 py-2 text-base leading-ext-tight font-medium text-white bg-mxbon-red -translate-y-full;
-                            &:after {
-                                @apply content-[''] w-0 h-0 border-y-[18px] border-r-0 border-l-[16px] border-transparent border-l-mxbon-red absolute top-0 right-0 translate-x-full;
-                            }
-                        }
-                        .title {
-                            @apply subtitle text-zinc-800 transition-colors line-clamp-2 mb-4;
-                        }
-                        .sub {
-                            @apply font-raj text-base leading-ext-tight tracking-[1.25px] text-zinc-400 uppercase;
-                        }
-                    }
-                    &:hover {
-                        .image-wrapper {
-                            img {
-                                @apply scale-105;
-                            }
-                        }
-                        .info {
-                            .title {
-                                @apply text-mxbon-red;
-                            }
-                        }
-                    }
-                }
-            }
-        }
         p.doc-page-desc {
             @apply text-lg leading-normal text-zinc-600 px-4;
         }
@@ -1611,7 +1567,7 @@ footer {
         section.literature-materials {
             .container {
                 .wrapper {
-                    @apply block w-full max-w-4xl;
+                    @apply block w-full max-w-5xl;
                     h2 {
                         @apply relative text-zinc-800 text-2xl leading-ext-tight font-medium mb-12;
                         &:before {
@@ -1707,6 +1663,90 @@ footer {
                     @apply mb-0;
                     &:after {
                         @apply hidden;
+                    }
+                }
+            }
+        }
+    }
+}
+.category {
+    main {
+        .posts-accordion {
+            @apply w-full max-w-5xl;
+            & > ul {
+                .post {
+                    @apply mb-4;
+                    .question {
+                        @apply text-zinc-600 transition-colors cursor-pointer;
+                    }
+                    .answer {
+                        @apply max-h-0 overflow-hidden transition-all duration-700 ease-out-quad text-lg leading-normal pl-6;
+                        p, ul, ol {
+                            @apply mb-4;
+                        }
+                        ul {
+                            @apply list-disc list-inside;
+                        }
+                        ol {
+                            @apply list-decimal list-inside;
+                        }
+                    }
+                    &.active {
+                        .question {
+                            @apply text-black;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Category archive */
+.page, .category {
+    main {
+        section.news {
+            .content-title {
+                span {
+                    @apply inline-block ml-2 font-raj text-zinc-600;
+                }
+            }
+            .posts {
+                @apply grid grid-cols-1 lg:grid-cols-3 gap-y-8 md:gap-y-8 md:gap-x-8 mb-12 last:mb-0;
+                .post {
+                    @apply block shadow-card flex-1;
+                    .image-wrapper {
+                        @apply relative w-full h-auto aspect-video overflow-hidden mb-[18px];
+                        img {
+                            @apply w-full h-full object-cover transition-transform duration-500;
+                        }
+                    }
+                    .info {
+                        @apply relative p-6;
+                        .category {
+                            @apply absolute top-0 left-0 pr-4 pl-6 py-2 text-base leading-ext-tight font-medium text-white bg-mxbon-red -translate-y-full;
+                            &:after {
+                                @apply content-[''] w-0 h-0 border-y-[18px] border-r-0 border-l-[16px] border-transparent border-l-mxbon-red absolute top-0 right-0 translate-x-full;
+                            }
+                        }
+                        .title {
+                            @apply subtitle text-zinc-800 transition-colors line-clamp-2 mb-4;
+                        }
+                        .sub {
+                            @apply font-raj text-base leading-ext-tight tracking-[1.25px] text-zinc-400 uppercase;
+                        }
+                    }
+                    &:hover {
+                        .image-wrapper {
+                            img {
+                                @apply scale-105;
+                            }
+                        }
+                        .info {
+                            .title {
+                                @apply text-mxbon-red;
+                            }
+                        }
                     }
                 }
             }

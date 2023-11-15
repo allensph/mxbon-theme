@@ -354,34 +354,58 @@ function mxbon_get_paragraph( $index ) {
 // Template function: Get sidemenu title
 
 function mxbon_get_side_navigation_title() {
-	global $post;
-    $parent_item_title = '上層標題';
+	  
+    $parent_item_title = '';
+    $parent_id = 0;
+    //echo "<pre>" . print_r( $post,true ) . "</pre>";
 
-    if( $menu_items = wp_get_nav_menu_items( 'main-nav' ) ) {
-   
-        $parent_id = 0;
-
-        foreach( $menu_items as $menu_item ) {
-
-            if($menu_item->object_id == $post->ID) {
-                $parent_id = $menu_item->menu_item_parent;
-                break;
-            }
-        }
-        if( $parent_id !== 0 ) {
+    if( $menu_items = wp_get_nav_menu_items( 'main-nav' ) ) :
+        if( is_singular() ) :
+            
+            global $post;
+            
             foreach( $menu_items as $menu_item ) {
-                if($menu_item->ID == $parent_id) {
-                    $parent_item_title = get_the_title( $menu_item->object_id );
+
+                if($menu_item->object_id == $post->ID) {
+                    $parent_id = $menu_item->menu_item_parent;
+                    break;
                 }
             }
-        }
-     }
+            
+            $key = array_search( $parent_id, array_column( $menu_items, 'ID' ) );
 
-	 return $parent_item_title;
+            if( $post->post_type === 'page' ) {
+                // Get page origin title, not the menu itme title
+                $parent_item_title = $key !== false ? get_the_title( $menu_items[$key]->object_id ) : null;
+            } else {
+                // Get the menu item title
+                $parent_item_title = $key !== false ? $menu_items[$key]->title : null;
+            }
+
+        endif;
+
+        if( is_category() ):
+
+            $category_id = get_queried_object_id();
+
+            foreach( $menu_items as $menu_item ) {
+                
+                if( $menu_item->object_id == $category_id ) {
+                    $parent_id = $menu_item->menu_item_parent;
+                    break;
+                }
+            }
+            $key = array_search( $parent_id, array_column( $menu_items, 'ID' ) );
+            $parent_item_title = $key !== false ? $menu_items[$key]->title : null;
+            
+        endif;
+
+    endif;
+
+	  return $parent_item_title;
 }
 
 // Relevanssi: change search result size to all
-
 function tellustek_rlv_postsperpage($query) {
   $query->query_vars['posts_per_page'] = -1;
 	return $query;
@@ -394,3 +418,21 @@ function tellustek_replace_repeater_field( $where ) {
   return $where;
 }
 add_filter( 'posts_where', 'tellustek_replace_repeater_field' );
+
+// Redirect: to archive if link to singular knowledge post
+function tellustek_redirect_post() {
+  if( is_singular( 'post' ) ) {
+
+      if( in_category( 'knowledge' ) ) {
+          $link = get_category_link( get_category_by_slug( 'knowledge' ) );
+          wp_redirect( $link, 301 );
+          exit;
+      }
+      if( in_category( 'knowledge-en' ) ) {
+          $link = get_category_link( get_category_by_slug( 'knowledge-en' ) );
+          wp_redirect( $link, 301 );
+          exit;
+      }
+  }
+}
+add_action( 'template_redirect', 'tellustek_redirect_post' );

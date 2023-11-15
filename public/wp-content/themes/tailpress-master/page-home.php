@@ -116,8 +116,16 @@
                 <?php 
                     $thumbnail = has_post_thumbnail($post) ? get_the_post_thumbnail_url($post, 'large') : '/wp-content/themes/tailpress-master/resources/images/news-default-img.svg'; 
                     $categories = get_the_category();
+                    $link = get_permalink( $post );
+
+                    if( in_category( 'knowledge' ) ) {
+                        $link = get_category_link( get_category_by_slug( 'knowledge' ) );
+                    }
+                    if( in_category( 'knowledge-en' ) ) {
+                        $link = get_category_link( get_category_by_slug( 'knowledge-en' ) );
+                    }
                 ?>
-                <a class="post" href="<?php echo get_permalink($post); ?>">
+                <a class="post" href="<?php echo $link; ?>">
                     <div class="image-wrapper">
                         <img src="<?php echo $thumbnail; ?>" title="<?php echo $post->post_title; ?>" alt="<?php echo $post->post_title; ?>">    
                     </div>
@@ -130,7 +138,7 @@
                     </div>
                 </a>
             <?php endforeach; ?>
-            </div>
+        </div>
         <a class="more-news mobile" href="/news">Read More</a>
     </div>
 </section>
