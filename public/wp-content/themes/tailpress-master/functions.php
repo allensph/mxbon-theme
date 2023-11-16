@@ -274,6 +274,24 @@ function tellustek_sub_menu_for_wp_nav_menu_objects( $sorted_menu_items, $args )
       }
     }
 
+    // find current post category menu item's parent
+    if ( isset( $args->news_submenu ) ) {
+      global $post;
+      $category_id = get_the_category( $post->ID )[0]->cat_ID;
+      
+      //echo "<pre>" . print_r( $sorted_menu_items, true) . "</pre>";
+      //die;
+
+      if ( $category_id ) {
+        foreach ( $sorted_menu_items as $menu_item ) {
+          if ( $menu_item->object_id == $category_id ) {
+            $root_id = $menu_item->menu_item_parent;
+            break;
+          }
+        }
+      }
+    }
+
     $menu_item_parents = array();
     foreach ( $sorted_menu_items as $key => $item ) {
       // init menu_item_parents
@@ -289,7 +307,8 @@ function tellustek_sub_menu_for_wp_nav_menu_objects( $sorted_menu_items, $args )
     }
     
     return $sorted_menu_items;
-  } else {
+  }
+  else {
     return $sorted_menu_items;
   }
 }
@@ -360,13 +379,30 @@ function mxbon_get_side_navigation_title() {
     //echo "<pre>" . print_r( $post,true ) . "</pre>";
 
     if( $menu_items = wp_get_nav_menu_items( 'main-nav' ) ) :
-        if( is_singular() ) :
+      
+        if( is_singular( 'post' ) ) : 
+
+          global $post;
+          $cat_id = get_the_category( $post->ID )[0]->cat_ID;
+
+          foreach( $menu_items as $menu_item ) {
+
+              if( $menu_item->object_id == $cat_id ) {
+                  $parent_id = $menu_item->menu_item_parent;
+                  break;
+              }
+          }
+          
+          $key = array_search( $parent_id, array_column( $menu_items, 'ID' ) );
+          $parent_item_title = $key !== false ? $menu_items[$key]->title : null;
+
+        elseif( is_singular() ) :
             
             global $post;
             
             foreach( $menu_items as $menu_item ) {
 
-                if($menu_item->object_id == $post->ID) {
+                if( $menu_item->object_id == $post->ID ) {
                     $parent_id = $menu_item->menu_item_parent;
                     break;
                 }
@@ -377,7 +413,8 @@ function mxbon_get_side_navigation_title() {
             if( $post->post_type === 'page' ) {
                 // Get page origin title, not the menu itme title
                 $parent_item_title = $key !== false ? get_the_title( $menu_items[$key]->object_id ) : null;
-            } else {
+            } 
+            if( $post->post_type === 'industry' ) {
                 // Get the menu item title
                 $parent_item_title = $key !== false ? $menu_items[$key]->title : null;
             }

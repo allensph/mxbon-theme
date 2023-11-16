@@ -3,6 +3,27 @@
 Template Name: Redirect To First Child
 */
 
+if( is_home() ) :
+    
+    global $wp_query; 
+    $blog_page_id = $wp_query->queried_object->ID;
+
+    if( $menu_items = wp_get_nav_menu_items( 'main-nav' ) ) :
+
+        $key = array_search( $blog_page_id, array_column( $menu_items, 'object_id' ) );
+        $blog_menu_item =  $key !== null ? $menu_items[$key] : null;
+
+        $key = array_search( $blog_menu_item->ID, array_column( $menu_items, 'menu_item_parent' ) );
+        $first_menu_child =  $key !== null ? $menu_items[$key] : null;
+
+        if ( $first_menu_child ) :
+            wp_redirect( get_category_link( $first_menu_child->object_id ) );
+        endif;
+
+    endif;
+
+endif;
+
 if( is_page() ) :
         
     $args = array(

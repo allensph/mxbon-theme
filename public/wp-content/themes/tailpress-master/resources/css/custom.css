@@ -595,7 +595,7 @@ footer {
     }
 }
 
-.page, .archive, .single-product, .single-industry, .search, .error404 {
+.page, .archive, .single-post, .single-product, .single-industry, .search, .error404 {
     main {
         .container {
             @apply mx-auto px-4 max-w-full 3xl:max-w-9xl;
@@ -626,7 +626,7 @@ footer {
                                     @apply text-zinc-600 hover:bg-zinc-100 active:bg-zinc-100 lg:hover:bg-transparent lg:active:bg-transparent lg:hover:text-mxbon-red lg:active:text-mxbon-red transition-colors text-lg lg:text-xl leading-ext-tight font-normal lg:font-medium;
                                 }
                             }
-                            .current-menu-item {
+                            .current-menu-item, .current-post-ancestor {
                                 a {
                                     @apply bg-zinc-100 lg:text-white lg:bg-transparent lg:hover:text-white lg:hover:bg-transparent;
                                     &:before {
@@ -2045,6 +2045,10 @@ footer {
         }
     }
 }
+.single-post {
+
+}
+
 
 /* Search */
 
