@@ -22,7 +22,7 @@
 
         <aside class="side-navigation" 
             x-bind:class="{ 'dropdown-collapse': collapse, 'wrapper-fixed': fixed, 'wrapper-bottom': bottom }"
-            x-init="fixed = !top"
+            x-init="fixed = !top ; anchor = current"
             x-on:scroll.window="
                 top = document.querySelector('aside').getBoundingClientRect().top < 0 ? false : true;
                 bottom = document.querySelector('aside').getBoundingClientRect().bottom > document.querySelector('aside .wrapper').clientHeight ? false : true;
@@ -53,6 +53,7 @@
                             title='<?php echo $category->name; ?>'; 
                             collapse = !collapse;
                             current = '<?php echo $category->slug; ?>';
+                            anchor = current;
                             ">
                             <a href="<?php echo "#{$category->slug}"; ?>"><?php echo $category->name; ?></a>
                         </li>

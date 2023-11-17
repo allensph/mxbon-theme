@@ -43,8 +43,18 @@ article > *:not(.entry-content),
 
 /* Section title, Page title */
 
+[lang="zh-TW"] {
+    .section-title, .page-title, .product-title, .industry-title {
+        @apply font-sans;
+    }
+}
+[lang="en-US"] {
+    .section-title, .page-title, .product-title, .industry-title {
+        @apply font-raj font-bold uppercase;
+    }
+}
 .section-title, .page-title, .product-title, .industry-title {
-    @apply relative z-10 title font-sans text-zinc-800 mb-12 lg:mb-16 w-[calc(100%+16px)] lg:w-full overflow-hidden lg:overflow-visible;
+    @apply relative z-10 title text-zinc-800 mb-12 lg:mb-16 w-[calc(100%+16px)] lg:w-full overflow-hidden lg:overflow-visible;
 
     &:after {
         @apply absolute content-[''] bg-mxbon-red;
@@ -458,6 +468,21 @@ header {
                     }
                 }
             }
+            /*
+            .sub-menu {
+                li {
+                    &.current-menu-item {
+                        a {
+                            @apply text-zinc-600 bg-white hover:text-white hover:bg-mxbon-red;
+                        }
+                        
+                    }
+                    &.current-menu-item.current-anchor {
+                        @apply text-white bg-mxbon-red;
+                    }
+                }
+            }
+            */
         }
     }
 }
@@ -552,7 +577,7 @@ footer {
         .footer-menu {
             @apply py-7 max-w-[992px] flex-1;
             .menu-footer-nav {
-                @apply grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-x-8 gap-y-16;
+                @apply grid grid-cols-2 md:grid-cols-3 xl:grid-cols-7 gap-x-8 gap-y-16;
                 > li {
                     @apply flex-1;
                     > a {

@@ -126,6 +126,7 @@ module.exports = {
             //'lg': tailpress.theme('settings.layout.contentSize', theme),//960
             'lg': '1024px',
             'xl': tailpress.theme('settings.layout.wideSize', theme),//1280
+            'xl+': '1366px',
             '2xl': '1440px',
             '3xl': '1536px',
         },

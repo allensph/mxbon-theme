@@ -4,6 +4,9 @@
  * Theme setup.
  */
 function tailpress_setup() {
+
+  load_theme_textdomain('tailpress', get_template_directory() . '/languages');
+
 	add_theme_support( 'title-tag' );
 
 	register_nav_menus(

@@ -40,7 +40,17 @@ class Mxbon_Primary_Menu_Walker extends Walker_Nav_Menu {
 		 * @param stdClass $args      An object of wp_nav_menu() arguments.
 		 * @param int      $depth     Depth of menu item. Used for padding.
 		 */
-		$class_names = implode( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $menu_item, $args, $depth ) );
+		$class_array = apply_filters( 'nav_menu_css_class', array_filter( $classes ), $menu_item, $args, $depth );
+		//echo "<pre>".print_r( $class_array, true )."</pre>"; die;
+		
+		if( is_post_type_archive( 'product' ) ) {
+			$key = array_search( 'current-menu-item', $class_array );
+			if( $key !== null ) {
+				unset( $class_array[$key] );
+			}
+		}
+		
+		$class_names = implode( ' ', $class_array );
 	
 		/**
 		 * Filters the ID attribute applied to a menu item's list item element.
@@ -78,11 +88,33 @@ class Mxbon_Primary_Menu_Walker extends Walker_Nav_Menu {
 		$li_attributes = $this->build_atts( $li_atts );
 	
 		if ($depth === 0) {
-			$accordion_attributes = ' :class="nav === '.$menu_item->menu_order.' ? \'active\' : \'\'" x-on:click="nav = nav === ' . $menu_item->menu_order . ' ? 0 : '. $menu_item->menu_order .' "';
+			$li_additional_attributes = ' :class="nav === '.$menu_item->menu_order.' ? \'active\' : \'\'" x-on:click="nav = nav === ' . $menu_item->menu_order . ' ? 0 : '. $menu_item->menu_order .' "';
 		} else {
-			$accordion_attributes = '';
+			
+			if ( is_post_type_archive( 'product' ) ) {
+				
+				// 產品分類 的 page id
+				$p_page = get_page_by_path( 'products' );
+				$item_slug = explode( '#', $menu_item->url )[1]; 
+				
+				if( $main_nav = wp_get_nav_menu_items( 'main-nav' ) ) {
+					// 產品分類 的 menu item key
+					$p_page_menu_item_key = array_search( $p_page->ID, array_column( $main_nav, 'object_id' ) );
+					$p_page_menu_item = $main_nav[$p_page_menu_item_key];
+				}
+				
+				$li_additional_attributes = intval($menu_item->menu_item_parent) === $p_page_menu_item->db_id
+					? ' :class="{ \'current-menu-item\' : anchor === \''.$item_slug.'\' }"'
+					: '';
+
+			} else {
+				$li_additional_attributes = '';
+			}
+			
+			//$li_additional_attributes = '';
+			
 		}
-		$output .= $indent . '<li' . $li_attributes . $accordion_attributes . '>';
+		$output .= $indent . '<li' . $li_attributes . $li_additional_attributes . '>';
 	
 		$atts           = array();
 		$atts['title']  = ! empty( $menu_item->attr_title ) ? $menu_item->attr_title : '';

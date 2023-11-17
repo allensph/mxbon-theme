@@ -14,7 +14,7 @@
 <?php do_action( 'tailpress_site_before' ); ?>
 
 <div id="page" class="min-h-screen flex flex-col" 
-	x-data="{ menu: false, search: false, nav: 0, topScreen: false }"
+	x-data="{ menu: false, search: false, nav: 0, topScreen: false, anchor: '' }"
 	@scroll.window="topScreen = false"
 	@scroll.window.debounce.2000ms="topScreen = (window.pageYOffset < 90) ? false: true">
 
