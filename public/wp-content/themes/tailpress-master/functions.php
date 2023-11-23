@@ -515,4 +515,5 @@ function tellustek_redirect_post() {
 }
 add_action( 'template_redirect', 'tellustek_redirect_post' );
 
+// ACF Option pafe for Polylang : Disable using 'All languages' fields as default value
 add_filter( 'bea.aofp.get_default', '__return_false' );
