@@ -50,24 +50,46 @@ function tailpress_enqueue_scripts() {
 	wp_enqueue_style( 'rajdhani', 'https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap' );
 	wp_enqueue_style( 'fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
 
-	if ( is_front_page() || is_singular( 'product' ) || is_page( 'talent-recruitment' ) ) {
+	if ( is_front_page() || is_singular( 'product' ) || is_page( 'talent-recruitment' ) || is_page( 'talent-recruitment-en' ) ) {
 		wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css' );
 		wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js' );
 	}
-	if ( is_page( 'company-overview' ) ) {
+	if ( is_page( 'company-overview' ) || is_page( 'company-overview-en' ) ) {
 		wp_enqueue_script( 'counter-up', 'https://unpkg.com/counterup2@2.0.2/dist/index.js' );
 	}
-	if( is_page( 'history' ) ) {
+	if( is_page( 'history' ) || is_page( 'history-en' ) ) {
 		wp_enqueue_script( 'alpine-intersect', 'https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js' );
 		wp_enqueue_script( 'alpine', 'https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js', array('alpine-intersect') );
 	} else {
 		wp_enqueue_script( 'alpine', 'https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js' );
 	}
 
-	if ( is_page( 'corporate-philsosphy' ) || is_page( 'innovation' ) || is_page( 'certification' ) || is_page( 'talent-recruitment' ) || is_singular( 'product' ) || is_singular( 'industry' ) ) {
-		wp_enqueue_style( 'aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.css' );
-		wp_enqueue_script( 'aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js' );
-	}
+  if( is_page() ) {
+
+    global $post;
+    $lang = pll_current_language();
+
+    $aos_pages = array(
+      'corporate-philsosphy',
+      'innovation',
+      'certification',
+      'talent-recruitment',
+    );
+
+    $aos_pages = $lang === "en"
+     ? array_map( fn($value): string => $value . "-en", $aos_pages )
+     : $aos_pages;
+
+    if ( in_array( $post->post_name, $aos_pages ) ) {
+      wp_enqueue_style( 'aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.css' );
+      wp_enqueue_script( 'aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js' );
+    }
+  }
+
+  if( is_singular( 'product' ) || is_singular( 'industry' ) ) {
+    wp_enqueue_style( 'aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.css' );
+    wp_enqueue_script( 'aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js' );
+  }
 	
 
 	wp_enqueue_script( 'paroller', 'https://cdn.jsdelivr.net/npm/paroller.js@1.4.4/dist/jquery.paroller.min.js', array('jquery') );
@@ -144,9 +166,14 @@ add_filter( 'nav_menu_submenu_css_class', 'tailpress_nav_menu_add_submenu_class'
 add_action('admin_enqueue_scripts', 'tellustek_admin_enqueue_scripts');
 function tellustek_admin_enqueue_scripts($hook) {
 	//global $pagenow;
-	if ( isset( $_GET['page'] ) && $_GET['page'] == 'options-about-us' ) {
+  $option_pages = array('options-about-us', 'options-talent-recruitment', 'options-information', 'options-contact-us' );
+	if ( isset( $_GET['page'] ) && in_array( $_GET['page'], $option_pages ) ) {
 		wp_enqueue_style( 'acf-option-page', get_stylesheet_directory_uri() . "/css/acf-option-style.css" );
 	}
+  $post_types = array( 'product' );
+  if( isset($_GET['post']) && in_array( get_post_type( $_GET['post'] ), $post_types ) ) {
+    wp_enqueue_style( 'acf-option-page', get_stylesheet_directory_uri() . "/css/acf-option-style.css" );
+  }
 }
 
 
@@ -319,13 +346,14 @@ add_filter( 'wp_nav_menu_objects', 'tellustek_sub_menu_for_wp_nav_menu_objects',
 
 // Change Homepage text in Naxvt Breabcrumbs
 function tellustek_breadcrumb_title_swapper($title, $type, $id) {
-    if(in_array('home', $type))
-    {
+    if( in_array( 'home', $type ) ) {
         $title = __('Home');
     }
-    if(in_array('404', $type))
-    {
+    if( in_array( '404', $type ) ) {
         $title = __('找不到符合條件的頁面');
+    }
+    if( in_array( 'post-industry-archive', $type) ) {
+        $title = __( 'Industries', 'tailpress' );
     }
     return $title;
 }
@@ -379,9 +407,10 @@ function mxbon_get_side_navigation_title() {
 	  
     $parent_item_title = '';
     $parent_id = 0;
-    //echo "<pre>" . print_r( $post,true ) . "</pre>";
+    $menu_name = pll_current_language() === 'en'
+      ? 'main-nav-en' : 'main-nav';
 
-    if( $menu_items = wp_get_nav_menu_items( 'main-nav' ) ) :
+    if( $menu_items = wp_get_nav_menu_items( $menu_name ) ) :
       
         if( is_singular( 'post' ) ) : 
 
@@ -459,6 +488,15 @@ function tellustek_replace_repeater_field( $where ) {
 }
 add_filter( 'posts_where', 'tellustek_replace_repeater_field' );
 
+// Relpace product archive title in English
+function tellustek_replace_product_archive_title( $title ) {
+  if ( is_post_type_archive( 'product' ) && pll_current_language() === "en" ) {
+      $title = 'Products';
+  }
+  return $title;
+}
+add_filter( 'post_type_archive_title', 'tellustek_replace_product_archive_title' );
+
 // Redirect: to archive if link to singular knowledge post
 function tellustek_redirect_post() {
   if( is_singular( 'post' ) ) {
@@ -476,3 +514,5 @@ function tellustek_redirect_post() {
   }
 }
 add_action( 'template_redirect', 'tellustek_redirect_post' );
+
+add_filter( 'bea.aofp.get_default', '__return_false' );

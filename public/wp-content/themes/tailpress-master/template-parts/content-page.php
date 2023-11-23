@@ -1,5 +1,8 @@
 <?php
-	global $post_name, $sub_title;
+	global $post_name, $sub_title, $current_language;
+	$post_name = $current_language === 'en'
+		? str_replace( '-en', '', $post_name )
+		: $post_name;
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>

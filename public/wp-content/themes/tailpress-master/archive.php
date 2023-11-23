@@ -2,6 +2,7 @@
 
 <?php
     $query_obj = get_queried_object();
+    $sub_title = str_replace( '-' , ' ',  str_replace( '-en' , '', $query_obj->slug ) );
     //echo "<pre>" . print_r( $query_obj, true ) . "</pre>";
 ?>
 
@@ -52,15 +53,15 @@
                     <h1 class="page-title side">
                         <?php echo $query_obj->name; ?>
                         <span class="sub">
-                            <?php echo $query_obj->slug; ?>
+                            <?php echo $sub_title; ?>
                         </span>
                     </h1>
                 </header>
 
-                <section class="news">
+                <section class="post-grid">
                     <div class="container">
 
-                        <?php if( $query_obj->slug === "knowledge" ) : ?>
+                        <?php if( $query_obj->slug === "knowledge" || $query_obj->slug === "knowledge-en" ) : ?>
        
                             <?php
                                 $posts_arg = array(

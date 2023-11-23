@@ -1,9 +1,9 @@
 <?php
+    global $current_language;
     $catalogs = get_field( 'catalogs', 'option');
-    //echo "<pre>" . print_r( $catalogs, true) . "</pre>";
 ?>
 
-<section class="news">
+<section class="post-grid">
     <div class="container">  
 
     <?php if( $catalogs ) : ?>
@@ -17,7 +17,9 @@
         ?>
         <h2 class="content-title" id="<?php echo $category->slug; ?>">
             <?php echo $category->name; ?>
-            <span><?php echo $subtitle; ?></span>
+            <?php if( $current_language !== "en" ) : ?>
+                <span><?php echo $subtitle; ?></span>
+            <?php endif; ?>
         </h2>
 
         <div class="posts">
@@ -27,16 +29,21 @@
             <a class="post" href="<?php echo $item['file']['url']; ?>" download>
                 <?php 
                     $thumbnail = $item['image'] ? $item['image']['sizes']['medium_large'] : '/wp-content/themes/tailpress-master/resources/images/news-default-img.svg';
-                    $product_title = explode(' ', $item['name'], 2);
-
+                    
+                    if( $current_language === "en" ) {
+                        $product_title  = sprintf( "<h3 class=\"title\">%s</h3>", $item['name'] );
+                    } else {
+                        $title_array = explode(' ', $item['name'], 2);
+                        $product_title  = sprintf( "<h3 class=\"title\">%s</h3>", $title_array[0] );
+                        $product_title .= sprintf( "<div class=\"sub\">%s</div>", $title_array[1] );
+                    }
                 ?>
                 <div class="image-wrapper">
                     <img src="<?php echo $thumbnail; ?>" title="<?php echo $item['name']; ?>" alt="<?php echo $item['name']; ?>">    
                 </div>
                 <div class="info">
-                    <div class="category"><?php echo "產品型錄"; ?></div>
-                    <h3 class="title"><?php echo $product_title[0]; ?></h3>
-                    <div class="sub"><?php echo $product_title[1]; ?></div>
+                    <div class="category"><?php _e( 'Catalog', 'tailpress' ); ?></div>
+                    <?php echo $product_title; ?>
                 </div>
             </a>
         <?php endforeach; ?>

@@ -39,7 +39,7 @@
 
             <div class="wrapper">
 
-                <div class="title">產品分類</div>
+                <div class="title"><?php _e( 'Products', 'tailpress' ); ?></div>
 
                 <div class="mobile-toggle-btn" x-text="title" x-on:click="collapse = !collapse"></div>
                 
@@ -76,7 +76,7 @@
                     <h2 class="section-title side">
                         <?php echo $category->name ?>
                         <span class="sub">
-                            <?php $sub_title = str_replace( '-', ' ', $category->slug ); ?>
+                            <?php $sub_title = str_replace( '-', ' ', str_replace( '-en', '', $category->slug ) ); ?>
                             <?php echo $sub_title; ?>
                         </span>
                     </h2>

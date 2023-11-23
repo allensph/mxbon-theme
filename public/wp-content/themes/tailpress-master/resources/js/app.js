@@ -16,7 +16,7 @@ window.addEventListener('DOMContentLoaded', function () {
 })
 
 // Frontpage
-if (window.location.pathname == '/') {
+if (window.location.pathname == '/' || window.location.pathname == '/en/') {
 
       window.addEventListener('DOMContentLoaded', function () {
 
@@ -81,7 +81,7 @@ if (window.location.pathname == '/') {
       })
 }
 
-if (window.location.pathname == '/about-us/company-overview/') {
+if (window.location.pathname.includes('company-overview')) {
 
       window.addEventListener('DOMContentLoaded', function () {
 
@@ -109,14 +109,14 @@ if (window.location.pathname == '/about-us/company-overview/') {
       })
 }
 
-if (window.location.pathname == '/about-us/history/') {
+if (window.location.pathname.includes('history')) {
       window.addEventListener('DOMContentLoaded', function () {
             // paroller.js
             jQuery("[data-paroller-factor]").paroller();
       })
 }
 
-if (window.location.pathname == '/about-us/corporate-philsosphy/') {
+if (window.location.pathname.includes('corporate-philsosphy')) {
       window.addEventListener('DOMContentLoaded', function () {
 
             // animate on scroll
@@ -127,7 +127,7 @@ if (window.location.pathname == '/about-us/corporate-philsosphy/') {
       })
 }
 
-if (window.location.pathname == '/about-us/innovation/') {
+if (window.location.pathname.includes('innovation')) {
       window.addEventListener('DOMContentLoaded', function () {
             // animate on scroll
             AOS.init({ once: true, easing: 'ease-in-out', });
@@ -209,20 +209,23 @@ if (window.location.pathname == '/about-us/innovation/') {
       })
 }
 
-if (window.location.pathname == '/about-us/certification/') {
+if (window.location.pathname.includes('certification')) {
       window.addEventListener('DOMContentLoaded', function () {
             // animate on scroll
             AOS.init({ once: true, easing: 'ease-in-out', });
       })
 }
 
-if (window.location.pathname.split('/')[1] == 'product') {
+if (window.location.pathname.includes('/product/')) {
       window.addEventListener('DOMContentLoaded', function () {
 
             // paroller.js
             jQuery("[data-paroller-factor]").paroller();
 
-            if (window.location.pathname.split('/')[2]) {
+            //if (window.location.pathname.split('/')[2]) {
+            let swiperElement = document.querySelector('section.product-banner .swiper')
+            if (document.body.contains(swiperElement)) {
+
                   const swiper = new Swiper('section.product-banner .swiper', {
                         slidesPerView: 1,
                         spaceBetween: 1,
@@ -233,10 +236,11 @@ if (window.location.pathname.split('/')[1] == 'product') {
                         },
                   })
             }
+            //}
       })
 }
 
-if (window.location.pathname.split('/')[1] == 'industry') {
+if (window.location.pathname.includes('/industry/')) {
       window.addEventListener('DOMContentLoaded', function () {
 
             // paroller.js
@@ -257,7 +261,7 @@ if (window.location.pathname.split('/')[1] == 'industry') {
       })
 }
 
-if (window.location.pathname == '/talent-recruitment/') {
+if (window.location.pathname.includes('talent-recruitment')) {
       window.addEventListener('DOMContentLoaded', function () {
             // animate on scroll
             AOS.init({ once: true, easing: 'ease-in-out', });

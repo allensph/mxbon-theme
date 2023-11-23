@@ -1,3 +1,85 @@
+body[class*="_page_options"] {
+    /* Option pages: hide fields on all languages, show hint messenge.  */
+    &:not([class*="pll-lang"]) {
+        .acf-field, .acf-tab-wrap {
+            @apply hidden;
+        }
+        .acf-field.hint-messenge-language {
+            @apply block;
+            p {
+                @apply text-sm;
+                strong {
+                    @apply !font-semibold;
+                }
+                .ab-icon {
+                    &:before {
+                        @apply inline-block mx-2 content-["\f326"] text-[22.4px] font-dashicons not-italic align-text-bottom;
+                    }
+                }
+            }
+        }
+        #side-sortables {
+            @apply invisible;
+        }
+    }
+    &[class*="pll-lang"] {
+        .acf-field.hint-messenge-language {
+            @apply hidden;
+        }
+    }
+
+    /* Titles decoration */
+    /*
+    .inside.acf-fields {
+        & > .acf-field > .acf-label {
+            label {
+                @apply text-zinc-800 text-xl leading-ext-tight !font-semibold mb-4;
+                @apply !flex flex-row gap-x-3 items-baseline lg:items-center;
+                &:before {
+                    @apply content-[''] block w-2 h-5 bg-mxbon-red;
+                }
+            }
+        }
+        .acf-fc-layout-handle, .acf-th {
+            @apply text-zinc-800 leading-ext-tight !font-semibold;
+        }
+    }
+    .acf-fields:not(.inside) {
+        .acf-field > .acf-label, .acf-th {
+            label {
+                @apply text-zinc-800 leading-ext-tight !font-semibold;
+            }
+        }
+    }
+    */
+}
+
+/* Titles decoration */
+body[class*="_page_options"], body.post-php.post-type-product {
+    .inside.acf-fields {
+        & > .acf-field > .acf-label {
+            label {
+                @apply text-zinc-800 text-xl leading-ext-tight !font-semibold mb-4;
+                @apply !flex flex-row gap-x-3 items-baseline lg:items-center;
+                &:before {
+                    @apply content-[''] block w-2 h-5 bg-mxbon-red;
+                }
+            }
+        }
+        .acf-fc-layout-handle, .acf-th {
+            @apply text-zinc-800 leading-ext-tight !font-semibold;
+        }
+    }
+    .acf-fields:not(.inside) {
+        .acf-field > .acf-label, .acf-th {
+            label {
+                @apply text-zinc-800 leading-ext-tight !font-semibold;
+            }
+        }
+    }
+}
+
+/* Option Page About us: SDGs checknboxes */
 .acf-field-checkbox.sdgs {
     .acf-checkbox-list.acf-bl {
         @apply grid gap-4 grid-cols-6 grid-rows-3 w-fit before:hidden focus-within:border-none focus-within:rounded-none;

@@ -90,15 +90,22 @@ class Mxbon_Primary_Menu_Walker extends Walker_Nav_Menu {
 		if ($depth === 0) {
 			$li_additional_attributes = ' :class="nav === '.$menu_item->menu_order.' ? \'active\' : \'\'" x-on:click="nav = nav === ' . $menu_item->menu_order . ' ? 0 : '. $menu_item->menu_order .' "';
 		} else {
-			
-			if ( is_post_type_archive( 'product' ) ) {
+
+			// Setup the current-menu-item class in product archive page
+			if ( is_post_type_archive( 'product' ) && str_contains( $menu_item->url, '#' ) ) {
+
+				$current_lang = pll_current_language();
+				$p_page_slug = $current_lang === "en" ? "products-en" : "products";
+				$menu_name   = $current_lang === "en" ? "main-nav-en" : "main-nav";
+
+				$p_page = get_page_by_path( $p_page_slug );
+				//print_r( explode( '#', $menu_item->url ) ); die;
+				$item_slug = explode( '#', $menu_item->url )[1];
+
 				
-				// 產品分類 的 page id
-				$p_page = get_page_by_path( 'products' );
-				$item_slug = explode( '#', $menu_item->url )[1]; 
 				
-				if( $main_nav = wp_get_nav_menu_items( 'main-nav' ) ) {
-					// 產品分類 的 menu item key
+				if( $main_nav = wp_get_nav_menu_items( $menu_name ) ) {
+
 					$p_page_menu_item_key = array_search( $p_page->ID, array_column( $main_nav, 'object_id' ) );
 					$p_page_menu_item = $main_nav[$p_page_menu_item_key];
 				}
@@ -110,9 +117,6 @@ class Mxbon_Primary_Menu_Walker extends Walker_Nav_Menu {
 			} else {
 				$li_additional_attributes = '';
 			}
-			
-			//$li_additional_attributes = '';
-			
 		}
 		$output .= $indent . '<li' . $li_attributes . $li_additional_attributes . '>';
 	

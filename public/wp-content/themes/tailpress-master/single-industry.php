@@ -3,8 +3,14 @@
 <?php
     $post_name = get_post_field('post_name');
     $sub_title = str_replace( '-', ' ', $post_name );
+    
     $banner_bg = get_the_post_thumbnail_url($post);
+    $banner_attr = $banner_bg ? " style=\"background-image: url('{$banner_bg}')\"" : "";
+
     $products = get_field('related_products');
+
+    $current_language = pll_current_language();
+    $form_id   = $current_language == 'zh' ? 1 : 3;
 ?>
 
 <div class="breadcrumb-wrapper">
@@ -60,10 +66,13 @@
             <div class="entry-content">
                 <section class="industry-block">
                     <div class="wrapper">
-                        <div class="content" style="<?php echo "background-image: url('{$banner_bg}')"; ?>">
-                            <div class="decoration" data-aos="fade-down-right" data-aos-duration="1200" >
-                                <p class="desc"><?php echo mxbon_get_paragraph(0); //strip_tags( get_the_content() ); ?></p>
-                            </div>
+                        <div class="content"<?php echo $banner_attr; ?>>
+                        
+                            <?php if( get_the_content() !== "" ) : ?>
+                                <div class="decoration" data-aos="fade-down-right" data-aos-duration="1200" >
+                                    <p class="desc"><?php echo mxbon_get_paragraph(0); //strip_tags( get_the_content() ); ?></p>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="description"><?php echo get_the_content(); ?></div>
@@ -71,7 +80,7 @@
                 
                 <section class="related-products">
                     <?php if( $products ) : ?>
-                        <h3 class="content-title subline">相關產品</h3>
+                        <h3 class="content-title subline"><?php _e( 'Related Products', 'tailpress' ); ?></h3>
                         <ul class="products">
                             <?php foreach( $products as $product ) : ?>
                                 <li>
@@ -103,11 +112,11 @@
 <section class="contact-us">
     <div class="container">
         <div class="section-title side">
-            聯絡我們
+        <?php _e( 'Contact Us', 'tailpress' ); ?>
             <span class="sub">contact us</span>
         </div>
 
-        <?php echo do_shortcode( '[fluentform id="1"]'); ?>
+        <?php echo do_shortcode( '[fluentform id="'. $form_id .'"]'); ?>
     </div>
     <span class="molecular-dark" data-paroller-factor="-0.1"></span>
     <span class="molecular-light" data-paroller-factor="-0.1"></span>

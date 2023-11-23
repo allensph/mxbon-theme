@@ -1,8 +1,11 @@
 <?php get_header(); ?>
 
 <?php
+    $current_language = pll_current_language();
+    $form_id   = $current_language == 'zh' ? 1 : 3;
+
     $post_name = get_post_field('post_name');
-    $sub_title = str_replace( '-', ' ', $post_name );
+    $sub_title = str_replace( '-', ' ', str_replace( '-en', '', $post_name ) );
     $images_uri =  get_stylesheet_directory_uri() . '/resources/images';
 
     $product_images  = get_field( 'gallery' );
@@ -61,15 +64,15 @@
                 
                 <div class="buttons">
                     <?php if( $usage_guideline['image'] || $usage_guideline['desc'] ) : ?>
-                        <a class="product-btn" href="#introduction">使用技巧與重點</a>
+                        <a class="product-btn" href="#introduction"><?php _e( 'Usage', 'tailpress' ); ?></a>
                     <?php endif; ?>
 
                     <?php if( acf_layout_search( $product_detail, 'series') ) : ?>
-                        <a class="product-btn" href="#series">產品特性</a>
+                        <a class="product-btn" href="#series"><?php _e( 'Feartures', 'tailpress' ); ?></a>
                     <?php endif; ?>
 
                     <?php if( acf_layout_search( $product_detail, 'specialties') ) : ?>
-                        <a class="product-btn" href="#specialties">產品規格</a>
+                        <a class="product-btn" href="#specialties"><?php _e( 'Specifications', 'tailpress'); ?></a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -103,7 +106,7 @@
         <div class="wrapper usage">
             <img src="<?php echo $usage_guideline['image']['url']; ?>" alt="">
             <div class="content">
-                <h2>使用技巧與重點</h2>
+                <h2><?php _e( 'Usage', 'tailpress' ); ?></h2>
                 <p class="desc"><?php echo wp_strip_all_tags( $usage_guideline['desc'] ); ?></p>
             </div>
         </div>
@@ -140,7 +143,7 @@
 
                 <section class="series" id="series">
                     <div class="container">
-                        <h2>產品特性</h2>
+                        <h2><?php _e( 'Feartures', 'tailpress' ); ?></h2>
                         <ul>
                             <?php foreach( $layout['series'] as $item ) : ?>
                                 <?php 
@@ -169,7 +172,7 @@
 
                 <section class="specialties" id="specialties">
                     <div class="container">
-                    <h2>產品規格</h2>
+                    <h2><?php _e( 'Specifications', 'tailpress'); ?></h2>
                         <?php 
                             $layout_name = 'specialties';
                             get_template_part( 'template-parts/single-product-table' );
@@ -200,11 +203,11 @@
 <section class="contact-us">
     <div class="container">
         <div class="section-title side">
-            聯絡我們
+            <?php _e( 'Contact Us', 'tailpress' ); ?>
             <span class="sub">contact us</span>
         </div>
 
-        <?php echo do_shortcode( '[fluentform id="1"]'); ?>
+        <?php echo do_shortcode( '[fluentform id="'. $form_id .'"]'); ?>
     </div>
     <span class="molecular-dark" data-paroller-factor="-0.1"></span>
     <span class="molecular-light" data-paroller-factor="-0.1"></span>

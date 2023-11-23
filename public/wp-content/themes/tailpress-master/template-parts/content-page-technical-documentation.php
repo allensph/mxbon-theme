@@ -1,4 +1,6 @@
 <?php
+    global $current_language;
+
     $categories = get_terms( array(
         'taxonomy' => 'product-category',
         'hide_empty' => true,
@@ -40,7 +42,10 @@
 
             <h2 class="content-title subline" id="<?php echo $category->slug; ?>">
                 <?php echo $category->name ?>
-                <span><?php echo $term_slug; ?></span>
+
+                <?php if( $current_language !== "en" ) : ?>
+                    <span><?php echo $term_slug; ?></span>
+                <?php endif; ?>
             </h2>
             <?php 
                 $args = array(
@@ -75,21 +80,30 @@
                             $document_count = 0;
 
                             if( $detail ) {
-                                $feature_key = array_search( 'feature', array_column( $detail, 'acf_fc_layout' ) );
 
-                                if( $feature_key !== null && $detail[$feature_key]['series'] ) {
-                                    $document_count = count( array_filter( array_column( $detail[$feature_key]['series'], 'document' ) ) );
+                                if( $acf_fc_layout  = array_column( $detail, 'acf_fc_layout' ) ) {
+
+                                    $feature_key = array_search( 'feature', $acf_fc_layout );
+
+                                    if( $feature_key !== null && $detail[$feature_key]['series'] ) { //
+
+                                        $document_count = count( array_filter( array_column( $detail[$feature_key]['series'], 'document' ) ) );
+                                    }
                                 }
-
                             }
                         ?>
 
                         <?php if( $document_count ) : ?>
 
-                        <?php //echo "<pre>" . print_r( $product, true ) . "</pre>"; ?>
 
                         <li>
-                            <h3 id="<?php echo $product->post_name; ?>"><?php echo $product->post_title; ?><span><?php echo $subtitle; ?></span></h3>
+                            <h3 id="<?php echo $product->post_name; ?>">
+                                <?php echo $product->post_title; ?>
+                                
+                                <?php if( $current_language !== "en" ) : ?>
+                                    <span><?php echo $subtitle; ?></span>
+                                <?php endif; ?>
+                            </h3>
                             <ul class="docs">
                                 <?php foreach( $detail[$feature_key]['series'] as $item ) : ?>
                                     <?php if( $item['document'] ) : ?>

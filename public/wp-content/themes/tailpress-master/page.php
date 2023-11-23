@@ -3,7 +3,11 @@
 <?php
     global $post;
     $post_name = $post->post_name;
-    $sub_title = str_replace( '-', ' ', $post_name );
+    $current_language = pll_current_language();
+
+    $sub_title = $current_language === 'en'
+        ? str_replace( '-', ' ', str_replace( 'en', '', $post_name ) )
+        : str_replace( '-', ' ', $post_name );
 
     $has_post_parent = has_post_parent();
     $container_class = $has_post_parent ? 'container' : 'container full-width';

@@ -25,24 +25,25 @@
 <section class="vision">
     <div class="wrapper">
         <div class="content" data-aos="fade-up" data-aos-duration="500">
-            <h3>願景使命</h3>
+            <h3><?php _e( 'Vission Statement', 'tailpress' ); ?></h3>
             <p><?php echo get_field('vision', 'option'); ?></p>
             <span class="vision-bg" data-paroller-factor="-0.1">
             </span>
         </div>
-        <img src="<?php echo "{$images_uri}/vision.png"; ?>" alt="願景使命" data-aos="fade-up" data-aos-duration="500">
+        <img src="<?php echo "{$images_uri}/vision.png"; ?>" alt="<?php _e( 'Vission Statement', 'tailpress' ); ?>" data-aos="fade-up" data-aos-duration="500">
     </div>
 </section>
 
 <section class="sdgs">
     <div class="wrapper">
         <div class="content">
-            <h3>北回對SDGs的主要貢獻</h3>
+            <h3><?php _e( 'Contribution to the SDGs', 'tailpress' ); ?></h3>
             <?php 
                 $goals = get_field('sdg_goals', 'option'); 
                 $list = implode('、', $goals);
+                $locale_sdgs_description = sprintf( __( '%1$s Sustainable Development Goals: %2$s' , 'tailpress'),  strval( count($goals) ), $list );
             ?>
-            <p>對照北回永續原則、重要利害關係人與 SDGs，我們持續努力回應的永續發展重點包括目標 <?php echo $list; ?> 等 <?php echo count($goals); ?> 個目標。</p>
+            <p><?php echo $locale_sdgs_description; ?></p>
         </div>
         <div class="sdg-goals">
             

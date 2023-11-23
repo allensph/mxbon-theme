@@ -33,7 +33,7 @@
                         </span>
                     </h1>
                 </header>
-                <p class="description">文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容文字內容。</p>
+                <p class="description"><?php echo wp_strip_all_tags( get_the_content() ); ?></p>
             </div>
 
             <div class="image">

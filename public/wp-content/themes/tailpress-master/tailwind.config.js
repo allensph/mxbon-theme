@@ -88,6 +88,7 @@ module.exports = {
                 'raj': ['Rajdhani', 'sans-serif'],
                 'awesome': '"Font Awesome 6 Free"',
                 'swiper-icons': '"swiper-icons"',
+                'dashicons': '"dashicons"',
             },
             maxWidth: {
                 '8xl': '1440px',

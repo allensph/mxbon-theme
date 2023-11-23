@@ -11,7 +11,7 @@
 <section class="ceritfication-block quality">
     <div class="wrapper">
         <div class="content">
-            <h2>品質政策</h2>
+            <h2><?php _e( 'Quality policy', 'tailpress' ); ?></h2>
             <?php echo $q_policy; ?>
             <span class="decoration" data-aos="fade-down-right" data-aos-duration="1200" ></span>
         </div>
@@ -38,7 +38,7 @@
 <section class="ceritfication-block enviroment">
     <div class="wrapper">
         <div class="content">
-            <h2>環境政策</h2>
+            <h2><?php _e( 'Environmental policy', 'tailpress' ); ?></h2>
             <?php echo $e_policy; ?>
             <span class="decoration" data-aos="fade-down-left" data-aos-duration="1200" ></span>
         </div>

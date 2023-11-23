@@ -43,7 +43,9 @@
 
 <section class="recruitment-contacts">
     <div class="container">
-        <h2 class="content-title subline">聯絡我們（人資組）</h2>
+        <h2 class="content-title subline">
+            <?php _e( 'Contact Us ( HR Group )', 'tailpress' ); ?>
+        </h2>
         <ul class="contacts">
             <?php foreach( $contacts as $contact ) : ?>
                 <li>
@@ -63,7 +65,7 @@
     <div class="container">
 
         <h2 class="content-title">
-            公司活動
+            <?php _e( 'Company Activities', 'tailpress' ); ?>
             <div class="swiper-buttons">
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>                
