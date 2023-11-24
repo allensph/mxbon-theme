@@ -4,7 +4,7 @@ Tags: contact form, quiz, wp forms, forms, form builder, contact form builder, f
 Requires at least: 4.5
 Tested up to: 6.4.1
 Requires PHP: 7.1
-Stable tag: 5.1.4
+Stable tag: 5.1.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -440,6 +440,12 @@ You can get support from our official support thread at <a href="https://wpmanag
 12. Asset Loading Comparison with Other Plugins
 
 == Changelog ==
+
+= 5.1.5 (Date: November 23, 2023) =
+- Fixes max length validation
+- Improves options validation
+- Improves date validation
+- Improves conditional logics
 
 = 5.1.4 (Date: November 22, 2023) =
 - Fixes advanced country list issue

@@ -2,10 +2,6 @@
     global $layout, $layout_name, $product_models, $product_colors, $images_uri;
     
     $table = $layout[$layout_name];
-    
-    
-
-    //echo "<pre>" . print_r( $table['header'], true ) . "</pre>";
 
     if ( ! empty( $table['header'] ) ) :
 

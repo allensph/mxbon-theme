@@ -27,35 +27,10 @@ body[class*="_page_options"] {
             @apply hidden;
         }
     }
-
-    /* Titles decoration */
-    /*
-    .inside.acf-fields {
-        & > .acf-field > .acf-label {
-            label {
-                @apply text-zinc-800 text-xl leading-ext-tight !font-semibold mb-4;
-                @apply !flex flex-row gap-x-3 items-baseline lg:items-center;
-                &:before {
-                    @apply content-[''] block w-2 h-5 bg-mxbon-red;
-                }
-            }
-        }
-        .acf-fc-layout-handle, .acf-th {
-            @apply text-zinc-800 leading-ext-tight !font-semibold;
-        }
-    }
-    .acf-fields:not(.inside) {
-        .acf-field > .acf-label, .acf-th {
-            label {
-                @apply text-zinc-800 leading-ext-tight !font-semibold;
-            }
-        }
-    }
-    */
 }
 
 /* Titles decoration */
-body[class*="_page_options"], body.post-php.post-type-product {
+body[class*="_page_options"], body.post-php.post-type-product, body.post-php.post-type-industry  {
     .inside.acf-fields {
         & > .acf-field > .acf-label {
             label {
@@ -77,6 +52,37 @@ body[class*="_page_options"], body.post-php.post-type-product {
             }
         }
     }
+}
+
+.acf-label {
+    @apply flex flex-row flex-wrap;
+    label {
+        @apply w-full;
+    }
+    .lity-button {
+        @apply ml-auto;
+    }
+}
+
+.lity {
+    @apply bg-black/50;
+    .lity-wrap {
+        .lity-inner-content {
+            @apply bg-white px-8 py-4;
+        }
+    }
+}
+span[class^="dashicons"] {
+    @apply font-dashicons text-base leading-none align-sub;
+}
+.dashicons-insert {
+    @apply content-['\f10f'];
+}
+.dashicons-remove {
+    @apply content-['\f14f'];
+}
+.dashicons-info {
+    @apply content-['\f348'] mr-2;
 }
 
 /* Option Page About us: SDGs checknboxes */

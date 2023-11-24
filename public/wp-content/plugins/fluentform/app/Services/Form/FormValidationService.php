@@ -241,7 +241,7 @@ class FormValidationService
             }
 
             if ($options) {
-                $options = array_map('trim', $options);
+                $options = array_map('sanitize_text_field', $options);
             }
 
             $isValid = true;
@@ -275,7 +275,7 @@ class FormValidationService
                     $fieldData = Arr::get($field, 'raw');
                     $data = (new SelectCountry())->loadCountries($fieldData);
                     $validCountries = Arr::get($fieldData, 'settings.country_list.priority_based', []);
-                    $validCountries = array_merge($validCountries,array_keys(Arr::get($data, 'options')));
+                    $validCountries = array_merge($validCountries, array_keys(Arr::get($data, 'options')));
                     $isValid = in_array($inputValue, $validCountries);
                     break;
                 case 'repeater_field':
@@ -297,16 +297,6 @@ class FormValidationService
                         $submitdCols = Arr::flatten(Arr::get($formData, $fieldName, []));
                         $colDiff = array_diff($submitdCols, $columns);
                         $isValid = empty($colDiff);
-                    }
-                    break;
-                case 'input_date':
-                    $format = Arr::get($rawField, 'settings.date_format');
-                    $format = str_replace(['AM', 'PM', 'K'], 'A', $format);
-                    $dateObject = \DateTime::createFromFormat($format, $inputValue);
-                    if (!$dateObject) {
-                        $isValid = false;
-                    } elseif ($dateObject->format($format) != $inputValue) {
-                        $isValid = false;
                     }
                     break;
                 default:

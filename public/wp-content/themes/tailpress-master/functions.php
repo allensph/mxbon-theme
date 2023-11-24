@@ -170,9 +170,13 @@ function tellustek_admin_enqueue_scripts($hook) {
 	if ( isset( $_GET['page'] ) && in_array( $_GET['page'], $option_pages ) ) {
 		wp_enqueue_style( 'acf-option-page', get_stylesheet_directory_uri() . "/css/acf-option-style.css" );
 	}
-  $post_types = array( 'product' );
+
+  $post_types = array( 'product', 'industry' );
   if( isset($_GET['post']) && in_array( get_post_type( $_GET['post'] ), $post_types ) ) {
     wp_enqueue_style( 'acf-option-page', get_stylesheet_directory_uri() . "/css/acf-option-style.css" );
+    wp_enqueue_style( 'lity', "https://cdn.jsdelivr.net/npm/lity@2.4.1/dist/lity.min.css" );
+    wp_enqueue_script( 'lity', "https://cdn.jsdelivr.net/npm/lity@2.4.1/dist/lity.min.js" );
+    wp_enqueue_script( 'admin-custom-script', get_stylesheet_directory_uri() . '/js/admin-custom-script.js', array(), '1.0', true );
   }
 }
 
@@ -517,3 +521,12 @@ add_action( 'template_redirect', 'tellustek_redirect_post' );
 
 // ACF Option pafe for Polylang : Disable using 'All languages' fields as default value
 add_filter( 'bea.aofp.get_default', '__return_false' );
+
+add_filter('acf/prepare_field/name=specialties', 'tellustek_acf_prepare_specialties_field');
+function tellustek_acf_prepare_specialties_field( $field ) {
+  $post_obj = get_page_by_path('specialties-hint-content');
+  $output = '<div id="specialties_lity_content" class="lity-inner-content lity-hide">' . $post_obj->post_content . '</div>';
+  $output.= '<a href="#specialties_lity_content" class="lity-button components-button is-tertiary" data-lity><span class="dashicons-info"></span>檢視編輯說明</a>';
+	$field['instructions'] .= $output;
+	return $field;
+}

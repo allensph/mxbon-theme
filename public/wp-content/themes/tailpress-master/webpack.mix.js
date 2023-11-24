@@ -16,6 +16,8 @@ mix.webpackConfig({
 
 mix.js('resources/js/app.js', 'js');
 
+mix.js('resources/js/admin-custom-script.js', 'js');
+
 mix.postCss("resources/css/app.css", "css");
 
 mix.postCss("resources/css/editor-style.css", "css");
