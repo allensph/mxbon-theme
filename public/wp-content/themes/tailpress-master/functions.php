@@ -165,7 +165,9 @@ add_filter( 'nav_menu_submenu_css_class', 'tailpress_nav_menu_add_submenu_class'
  */
 add_action('admin_enqueue_scripts', 'tellustek_admin_enqueue_scripts');
 function tellustek_admin_enqueue_scripts($hook) {
-	//global $pagenow;
+	
+  wp_enqueue_style( 'admin-dashboard', get_stylesheet_directory_uri() . "/css/dashboard-style.css" );
+
   $option_pages = array('options-about-us', 'options-talent-recruitment', 'options-information', 'options-contact-us' );
 	if ( isset( $_GET['page'] ) && in_array( $_GET['page'], $option_pages ) ) {
 		wp_enqueue_style( 'acf-option-page', get_stylesheet_directory_uri() . "/css/acf-option-style.css" );

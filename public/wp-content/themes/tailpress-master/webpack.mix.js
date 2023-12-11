@@ -20,6 +20,8 @@ mix.js('resources/js/admin-custom-script.js', 'js');
 
 mix.postCss("resources/css/app.css", "css");
 
+mix.postCss("resources/css/dashboard-style.css", "css");
+
 mix.postCss("resources/css/editor-style.css", "css");
 
 mix.postCss("resources/css/acf-option-style.css", "css");
