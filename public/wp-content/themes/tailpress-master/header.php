@@ -25,7 +25,7 @@
 		<div class="container">
 
 			<div class="wrapper">
-				<a href="/" class="custom-logo-link" rel="home" aria-current="page">
+				<a href="<?php echo pll_home_url(); ?>" class="custom-logo-link" rel="home" aria-current="page">
 					<img src="/wp-content/themes/tailpress-master/resources/images/header-logo.svg" class="custom-logo" alt="<?php echo bloginfo('name'); ?>" decoding="async">
 				</a>
 

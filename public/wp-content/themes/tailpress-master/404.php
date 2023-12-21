@@ -24,8 +24,10 @@
 		<div class="container">
 			<div class="wrapper">
 				<img class="logo" src="<?php echo $images_uri; ?>/mxbon-logo.svg" alt="">
-				<p class="description">很抱歉，找不到符合條件的頁面。</p>
-				<a class="home-url" href="<?php echo get_home_url(); ?>">回到首頁</a>
+				<p class="description"><?php _e( 'Sorry, the page you are looking for cannot be found.', 'tailpress' ); ?></p>
+				<a class="home-url" href="<?php echo get_home_url(); ?>">
+					<?php _e( 'Back to homepage', 'tailpress' ); ?>
+				</a>
 			</div>
 		</div>		
 	</section>

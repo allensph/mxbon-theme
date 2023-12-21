@@ -200,6 +200,18 @@ article > *:not(.entry-content),
     }
    
 }
+[lang="en-US"] {
+    .mxbon-radio.ff_list_inline {
+        .ff-el-input--content {
+            @apply md:flex-wrap;
+            .ff-el-form-check {
+                .ff-el-form-check-label {
+                    @apply md:pr-0 tracking-[-0.1px];
+                }
+            }
+        }
+    }
+}
 
 /* Titles */
 
@@ -2273,7 +2285,7 @@ footer {
                         @apply py-8;
                     }
                     .home-url {
-                        @apply mxbon-btn mxbon-btn-red mxbon-btn-md w-48 text-center mb-8;
+                        @apply mxbon-btn mxbon-btn-red mxbon-btn-md min-w-[192px] text-center mb-8;
                     }
                 }
             }
