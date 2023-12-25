@@ -107,7 +107,10 @@
                                 <a href="<?php the_permalink( $product ); ?>">
                                     <div class="image-wrapper">
                                         <?php  
-                                            $product_img = get_the_post_thumbnail_url( $product, 'medium' );
+                                            //$product_img = get_the_post_thumbnail_url( $product, 'medium' );
+
+                                            $product_images  = get_field( 'gallery', $product );
+                                            $product_img = $product_images ? $product_images[0]['url'] : null;
                                             $categoery_img = get_field( 'category_image', $category );
                                             $image_path = $product_img ? $product_img : $categoery_img['url'];
                                         ?>

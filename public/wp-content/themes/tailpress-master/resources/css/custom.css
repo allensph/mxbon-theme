@@ -864,7 +864,7 @@ footer {
         .page-banner {
             @apply relative w-full h-[220px] md:h-60 lg:h-[480px] mb-4 lg:mb-16 overflow-hidden;
             img {
-                @apply w-full h-full object-cover object-[0%_12%];
+                @apply w-full h-full object-cover;
             }
             .section-title {
                 @apply absolute pt-10 mb-0 top-6 lg:top-20 overflow-visible;
@@ -1186,7 +1186,7 @@ footer {
                             .sketch {
                                 @apply relative w-full lg:w-[calc(28%-32px)] mb-6 lg:mb-0 py-4;
                                 #bg {
-                                    @apply px-12 lg:px-0;
+                                    @apply px-12 lg:px-0 h-[230px];
                                 }
                                 #fg {
                                     @apply absolute top-0 left-0;
@@ -1710,6 +1710,18 @@ footer {
             }
             h2 {
                 @apply font-raj font-bold text-2xl lg:text-4xl;
+            }
+        }
+    }
+}
+
+/* Page banner alternative */
+
+.page.page-id-325{
+    main {
+        .page-banner {
+            img {
+                @apply object-[50%_84%];
             }
         }
     }
