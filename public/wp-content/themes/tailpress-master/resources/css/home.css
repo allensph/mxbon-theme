@@ -95,12 +95,12 @@
         }
     }
     section.products {
-        @apply pt-20 pb-10;
+        @apply pt-8 lg:pt-16 pb-10;
         .section-title {
-            @apply pt-10;
+            @apply pt-14;
         }
         .section-swiper {
-            @apply relative px-12 xl:px-[88px] pb-[72px];
+            @apply relative px-12 xl:px-[88px] pb-9 lg:pb-[72px];
             .swiper {
                 @apply relative w-full min-h-[300px];
                 .swiper-slide {
@@ -162,7 +162,7 @@
     
     }
     section.industries {
-        @apply relative pt-20 pb-10 overflow-hidden;
+        @apply relative pt-10 lg:pt-20 pb-10 overflow-hidden;
         &:after {
             @apply absolute content-[''] w-full h-full left-0 top-0 bg-molecular-white bg-cover bg-no-repeat bg-blend-luminosity saturate-0 opacity-25;
         }
@@ -171,7 +171,7 @@
         }
         .section-title {
             .sub {
-                @apply text-white;
+                @apply text-black/5;
             }
             /*
             .swiper-buttons {
@@ -221,7 +221,7 @@
         }
     }
     section.post-grid {
-        @apply py-20;
+        @apply py-10 lg:py-20;
         .container {
             @apply px-4;
         }

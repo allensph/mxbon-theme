@@ -86,6 +86,7 @@ module.exports = {
             fontFamily: {
                 'sans': ['Noto Sans TC', 'sans-serif'],
                 'raj': ['Rajdhani', 'sans-serif'],
+                'raj-fallback': ['Rajdhani', 'Noto Sans TC', 'sans-serif'],
                 'awesome': '"Font Awesome 6 Free"',
                 'swiper-icons': '"swiper-icons"',
                 'dashicons': '"dashicons"',

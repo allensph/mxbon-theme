@@ -1,4 +1,4 @@
-#adminmenu li:nth-child(3) {
+#adminmenu li:nth-child(3), #adminmenu li:nth-child(4) {
     .wp-menu-image.dashicons-before {
         @apply flex justify-center items-center;
         img {

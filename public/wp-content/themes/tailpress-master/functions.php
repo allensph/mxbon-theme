@@ -35,6 +35,8 @@ function tailpress_setup() {
 
 	add_theme_support( 'editor-styles' );
 	add_editor_style( 'css/editor-style.css' );
+
+  add_theme_support( 'responsive-embeds' );
 }
 
 add_action( 'after_setup_theme', 'tailpress_setup' );
@@ -397,12 +399,10 @@ function tellustek_breadcrumb_url_changer($url, $type, $id)
 // Template function: Get paragraph
 
 function mxbon_get_paragraph( $index ) {
-    global $post, $posts;
-    $post_content = $post->post_content;
-    $post_content = apply_filters('the_content', $post_content);
-    $post_content = str_replace('</p>', '', $post_content);
-    $paras = explode('<p>', $post_content);
-    array_shift($paras);
+
+    $post_content = str_replace( '</p>', '', get_the_content() );
+    $paras = explode( '<p>', $post_content );
+    array_shift( $paras );
 
     return $paras[$index]; 
 }

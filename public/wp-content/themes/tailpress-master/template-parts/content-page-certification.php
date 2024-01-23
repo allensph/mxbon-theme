@@ -62,7 +62,7 @@
 </section>
 
 <section class="achivement">
-    <h2>獲獎與肯定</h2>
+    <h2><?php _e( 'Accolades and Affirmations', 'tailpress' ); ?></h2>
     <?php if( $awards ) : ?>
         <ul class="awards">
         <?php foreach( $awards as $award ) : ?>

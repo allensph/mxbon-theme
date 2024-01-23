@@ -60,7 +60,7 @@
         <div class="wrapper">      
             <div class="content">
 
-                <p class="description"><?php echo strip_tags( get_the_content() ); ?></p>
+                <div class="description"><?php the_content(); ?></div>
                 
                 <div class="buttons">
                     <?php if( $usage_guideline['image'] || $usage_guideline['desc'] ) : ?>
@@ -107,25 +107,43 @@
             <img src="<?php echo $usage_guideline['image']['url']; ?>" alt="">
             <div class="content">
                 <h2><?php _e( 'Usage', 'tailpress' ); ?></h2>
-                <p class="desc"><?php echo wp_strip_all_tags( $usage_guideline['desc'] ); ?></p>
+                <div class="desc"><?php echo $usage_guideline['desc']; ?></div>
             </div>
         </div>
 
     <?php endif; ?>
 
-    <?php if( $addition_info['gallery'] ) : ?>
+    <?php if( $addition_info['content'] ) : ?>
+
         <div class="wrapper addition">
-        
+            
             <?php if( $addition_info['title'] ) : ?>
                 <h2><?php echo $addition_info['title']  ?></h2>
             <?php endif; ?>
 
             <div class="gallery">
-                <?php foreach( $addition_info['gallery'] as $index => $image ) : ?>
-                    <div class="image-wrapper">
-                        <img src="<?php echo $image['url']; ?>" alt="<?php echo $addition_info['title'] . $index+1;  ?>">
-                    </div>
+
+                <?php foreach( $addition_info['content'] as $layout ) : ?>
+                    
+                    <?php if( 'content_gallery' === $layout['acf_fc_layout'] ) : ?>
+                        
+                        <?php foreach( $layout['gallery'] as $index => $image ) : ?>
+                            <div class="item-wrapper">
+                                <img src="<?php echo $image['url']; ?>" alt="<?php echo $addition_info['title'] . $index+1;  ?>">
+                            </div>
+                        <?php endforeach; ?>
+
+                    <?php endif; ?>
+                    
+                    <?php if( 'content_video' === $layout['acf_fc_layout'] ) : ?>
+                        <div class="item-wrapper">
+                            <?php echo $layout['video']; ?>
+                        </div>
+                    <?php endif; ?>
+
                 <?php endforeach; ?>
+
+                <pre><?php //print_r( $addition_info['content'] ); ?></pre>
             </div>
         </div>
     <?php endif; ?>
@@ -139,11 +157,16 @@
 
         <?php if( 'feature' === $layout['acf_fc_layout'] ) : ?>
 
+            <?php 
+                $series_title = $layout['series_title'] && strlen( $layout['series_title'] )
+                    ? $layout['series_title'] : __( 'Feartures', 'tailpress' )
+            ?>
+
             <?php if( $layout['series'] ) : ?>
 
                 <section class="series" id="series">
                     <div class="container">
-                        <h2><?php _e( 'Feartures', 'tailpress' ); ?></h2>
+                        <h2><?php echo $series_title; ?></h2>
                         <ul>
                             <?php foreach( $layout['series'] as $item ) : ?>
                                 <?php 
@@ -169,10 +192,15 @@
             <?php endif; ?>
 
             <?php if( $layout['specialties'] ) : ?>
+                
+                <?php 
+                    $specialties_title = $layout['specialties_title'] && strlen( $layout['specialties_title'] )
+                        ? $layout['specialties_title'] : __( 'Specifications', 'tailpress' )
+                ?>
 
                 <section class="specialties" id="specialties">
                     <div class="container">
-                    <h2><?php _e( 'Specifications', 'tailpress'); ?></h2>
+                    <h2><?php echo $specialties_title; ?></h2>
                         <?php 
                             $layout_name = 'specialties';
                             get_template_part( 'template-parts/single-product-table' );
@@ -184,14 +212,23 @@
         <?php endif; ?>
 
         <?php if( 'custom' === $layout['acf_fc_layout'] ) : ?>
+
+            <?php 
+                $single_table_title = $layout['single_table_title'] && strlen( $layout['single_table_title'] )
+                    ? $layout['single_table_title'] : null;
+            ?>
             <section class="custom-tables">
                 <div class="container">
+                    <?php if( $single_table_title ) : ?>
+                        <h2><?php echo $single_table_title; ?></h2>
+                    <?php endif; ?>
                     <?php
                         $layout_name = 'single_table';
                         get_template_part( 'template-parts/single-product-table' );
                     ?>
                 </div>
             </section>
+
         <?php endif; ?>
 
     <?php endforeach; ?>

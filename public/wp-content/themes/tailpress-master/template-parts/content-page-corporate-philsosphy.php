@@ -25,12 +25,12 @@
 <section class="vision">
     <div class="wrapper">
         <div class="content" data-aos="fade-up" data-aos-duration="500">
-            <h3><?php _e( 'Vission Statement', 'tailpress' ); ?></h3>
-            <p><?php echo get_field('vision', 'option'); ?></p>
+            <h3><?php _e( 'Vision Statement', 'tailpress' ); ?></h3>
+            <?php echo get_field('vision', 'option'); ?>
             <span class="vision-bg" data-paroller-factor="-0.1">
             </span>
         </div>
-        <img src="<?php echo "{$images_uri}/vision.png"; ?>" alt="<?php _e( 'Vission Statement', 'tailpress' ); ?>" data-aos="fade-up" data-aos-duration="500">
+        <img src="<?php echo "{$images_uri}/vision.png"; ?>" alt="<?php _e( 'Vision Statement', 'tailpress' ); ?>" data-aos="fade-up" data-aos-duration="500">
     </div>
 </section>
 

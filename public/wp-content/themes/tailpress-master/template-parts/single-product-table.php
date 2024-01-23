@@ -1,5 +1,7 @@
 <?php
     global $layout, $layout_name, $product_models, $product_colors, $images_uri;
+
+    $marks = array('V', 'VV', 'VVV', 'VVVV', 'VVVVV');
     
     $table = $layout[$layout_name];
 
@@ -14,7 +16,7 @@
         if( $layout_name === 'specialties' && !empty( $product_colors) ) :
             $table_header = array_merge(
                 array_slice($table['header'], 0, 1), 
-                array( ['c' => '外觀顏色'] ), 
+                array( ['c' => __( 'Appearance', 'tailpress' ) ] ), 
                 array_slice($table['header'], 1, null)        
             );
         else:
@@ -125,9 +127,13 @@
                             ?>
                             <tr>
                                 <?php foreach ( $table_row as $key => $td ) : ?>
-                                    
-                                    <?php if( $td['c'] === 'V' ) : ?>
-                                        <td><span class="check"></span></td>
+
+                                    <?php if( in_array( $td['c'], $marks ) ): ?>
+                                        <td>
+                                            <?php foreach( range(1, strlen( $td['c'] ) ) as $item )  : ?>
+                                                <span class="check"></span>
+                                            <?php endforeach; ?>
+                                        </td>
                                     <?php elseif( !in_array( $key, $td_tobe_removed ) ) : ?>
                                         <td><?php echo str_replace( "|", "<br>", $td['c'] ); ?></td>
                                     <?php endif; ?>
@@ -143,8 +149,12 @@
                         <tr>
                             <?php foreach ( $tr as $key => $td ) : ?>
                                 
-                                <?php if( $td['c'] === 'V' ) : ?>
-                                    <td><span class="check"></span></td>
+                                <?php if( in_array( $td['c'], $marks ) ): ?>
+                                    <td>
+                                        <?php foreach( range(1, strlen( $td['c'] ) ) as $item )  : ?>
+                                            <span class="check"></span>
+                                        <?php endforeach; ?>
+                                    </td>
                                 <?php elseif( !in_array( $key, $td_tobe_removed ) ) : ?>
                                     <td><?php echo str_replace( "|", "<br>", $td['c'] ); ?></td>
                                 <?php endif; ?>

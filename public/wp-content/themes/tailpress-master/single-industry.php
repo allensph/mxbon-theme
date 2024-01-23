@@ -2,7 +2,7 @@
 
 <?php
     $post_name = get_post_field('post_name');
-    $sub_title = str_replace( '-', ' ', $post_name );
+    $sub_title = str_replace( '-', ' ', str_replace( '-en', '', $post_name ) );
     
     $banner_bg = get_the_post_thumbnail_url($post);
     $banner_attr = $banner_bg ? " style=\"background-image: url('{$banner_bg}')\"" : "";
@@ -26,7 +26,7 @@
             x-bind:class="{ 'dropdown-collapse': collapse, 'wrapper-fixed': fixed, 'wrapper-bottom': bottom }"
             x-init="fixed = !top"
             x-on:scroll.window="
-                top = document.querySelector('aside').getBoundingClientRect().top < 0 ? false : true;
+                top = document.querySelector('aside').getBoundingClientRect().top < 90 ? false : true;
                 bottom = document.querySelector('aside').getBoundingClientRect().bottom > document.querySelector('aside .wrapper').clientHeight ? false : true;
                 fixed = !top;
                 "
@@ -75,7 +75,7 @@
                             <?php endif; ?>
                         </div>
                     </div>
-                    <div class="description"><?php echo get_the_content(); ?></div>
+                    <div class="description"><?php the_content(); ?></div>
                 </section>
                 
                 <section class="related-products">
@@ -87,11 +87,11 @@
                                     <a href="<?php the_permalink( $product ); ?>">
                                         <div class="image-wrapper">
                                             <?php  
-                                                $product_img = get_the_post_thumbnail_url( $product, 'medium' );
+                                                $product_images = get_field( 'gallery', $product );
                                                 $categories = get_the_terms( $product, 'product-category' );
-
                                                 $categoery_img = get_field( 'category_image', $categories[0] );
-                                                $image_path = $product_img ? $product_img : $categoery_img['url'];
+                                                
+                                                $image_path = $product_images ? $product_images[0]['sizes']['medium'] : $categoery_img['url'];
                                             ?>
                                             <img src="<?php echo $image_path ?>" alt="<?php echo $product->post_title; ?>">
                                         </div>

@@ -22,11 +22,11 @@
 	<div class="container">
 		<div class="company">
 			<img src="/wp-content/themes/tailpress-master/resources/images/mxbon-logo.svg" alt="<?php echo get_bloginfo( 'name' ); ?>" class="logo">
-			<h2 class="name">北回化學股份有限公司</h2>
+			<h2 class="name"><?php _e( 'Company Name', 'tailpress' ); ?></h2>
 			<ul class="info">
 				<li><a href="https://goo.gl/maps/8D2RevVbzSPV2fsG6">
 						<i class="fa-solid fa-location-dot"></i>
-						621 嘉義縣民雄工業區成功街18號
+						<?php _e( 'Company Address', 'tailpress' ); ?>
 					</a>
 				</li>
 				<li>

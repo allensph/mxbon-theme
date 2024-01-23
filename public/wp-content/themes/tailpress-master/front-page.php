@@ -28,7 +28,9 @@
     );
     $posts = get_posts( $posts_arg );
 ?>
-<section class="page-banner">
+<section class="page-banner" x-ref="banner" 
+    x-on:scroll.window="banner = $refs.banner.getBoundingClientRect().top > (0 - $refs.banner.offsetHeight) ? true : false"
+    >
     <?php
         echo do_shortcode('[smartslider3 slider="' . $slider_id . '"]');
     ?>
@@ -44,7 +46,7 @@
                 <div class="swiper">
                     <div class="swiper-wrapper">
                         <?php foreach ($terms as $term) : ?>
-                            <a class="swiper-slide" href="<?php echo get_term_link( $term, $terms_arg['taxonomy'] ); ?>">
+                            <a class="swiper-slide" href="/product/#<?php echo $term->slug; ?>">
                                 <div class="image">
                                     <div class="image-wrapper">
                                         

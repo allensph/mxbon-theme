@@ -26,7 +26,7 @@
 
         <?php foreach ( $catalog['files'] as $item ) : ?>
 
-            <a class="post" href="<?php echo $item['file']['url']; ?>" download>
+            <a class="post" href="<?php echo $item['file']['url']; ?>" target="_blank">
                 <?php 
                     $thumbnail = $item['image'] ? $item['image']['sizes']['medium_large'] : '/wp-content/themes/tailpress-master/resources/images/news-default-img.svg';
                     

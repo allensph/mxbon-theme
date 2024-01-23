@@ -309,7 +309,7 @@
             x-bind:class="{ 'dropdown-collapse': collapse, 'wrapper-fixed': fixed, 'wrapper-bottom': bottom }"
             x-init="fixed = !top"
             x-on:scroll.window="
-                top = document.querySelector('aside').getBoundingClientRect().top < 0 ? false : true;
+                top = document.querySelector('aside').getBoundingClientRect().top < 90 ? false : true;
                 bottom = document.querySelector('aside').getBoundingClientRect().bottom > document.querySelector('aside .wrapper').clientHeight ? false : true;
                 fixed = !top;
                 "

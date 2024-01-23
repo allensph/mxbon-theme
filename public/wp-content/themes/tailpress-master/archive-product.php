@@ -8,6 +8,7 @@
         'meta_key' => 'homepage_order',
         'orderby' => 'meta_value_num',
     ) );
+    $categories_count = $categories ? count( $categories ) : 0;
 ?>
 
 <div class="breadcrumb-wrapper">
@@ -22,15 +23,29 @@
 
         <aside class="side-navigation" 
             x-bind:class="{ 'dropdown-collapse': collapse, 'wrapper-fixed': fixed, 'wrapper-bottom': bottom }"
-            x-init="fixed = !top ; anchor = current"
+            x-init="
+                fixed = !top ; anchor = current ;
+                $nextTick( () => {
+                    <?php foreach( range( 1, $categories_count ) as $key ) : ?>
+                        $refs.content<?php echo $key; ?>.style.scrollMarginTop = $refs.menuitem<?php echo $key; ?>.getBoundingClientRect().top-96+'px';
+                    <?php endforeach; ?>            
+                })
+                "
             x-on:scroll.window="
-                top = document.querySelector('aside').getBoundingClientRect().top < 0 ? false : true;
+                top = document.querySelector('aside').getBoundingClientRect().top < 90 ? false : true;
                 bottom = document.querySelector('aside').getBoundingClientRect().bottom > document.querySelector('aside .wrapper').clientHeight ? false : true;
                 fixed = !top;
+                $nextTick( () => {
+                    <?php foreach( range( 1, $categories_count ) as $key ) : ?>
+                        if( $refs.content<?php echo $key; ?>.getBoundingClientRect().top > 90 
+                         && $refs.content<?php echo $key; ?>.getBoundingClientRect().top < ($refs.menuitem<?php echo $key; ?>.getBoundingClientRect().top)+56 ) { current = '<?php echo $categories[$key-1]->slug ?>' }
+                    <?php endforeach; ?>            
+                })
                 "
             x-data="{ 
                 collapse: false, 
                 current: window.location.hash.replace('#', '') ? window.location.hash.replace('#', '') : '<?php echo $categories[0]->slug; ?>' , 
+                last: '',
                 title: '<?php echo $categories[0]->name; ?>', 
                 fixed: false,
                 top: true,
@@ -46,15 +61,17 @@
                 <ul class="menu">
 
                     <?php if( $categories ) : ?>
-                    <?php foreach( $categories as $category) : ?>
+                    <?php foreach( $categories as $key => $category) : ?>
 
-                        <li class="menu-item" x-bind:class="current == '<?php echo $category->slug; ?>' ? 'current-menu-item' : ''"
+                        <li class="menu-item"
+                            x-bind:class="current == '<?php echo $category->slug; ?>' ? 'current-menu-item' : ''"
                             x-on:click="
                             title='<?php echo $category->name; ?>'; 
                             collapse = !collapse;
-                            current = '<?php echo $category->slug; ?>';
                             anchor = current;
-                            ">
+                            $refs.article.style.marginTop = 0;"
+                            x-ref="menuitem<?php echo $key + 1; ?>"
+                            >
                             <a href="<?php echo "#{$category->slug}"; ?>"><?php echo $category->name; ?></a>
                         </li>
 
@@ -65,12 +82,12 @@
             </div>
         </aside>
 
-        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> x-ref="article">
 
         <?php if( $categories ) : ?>
-        <?php foreach( $categories as $category) : ?>
+        <?php foreach( $categories as $key => $category) : ?>
 
-            <section class="<?php echo $category->id ?> <?php echo $category->slug ?>" id="<?php echo $category->slug ?>">
+            <section class="product-section <?php echo $category->slug ?>">
 
                 <header class="section-header">
                     <h2 class="section-title side">
@@ -99,7 +116,11 @@
                     $products = get_posts($args); 
                 ?>
 
-                <div class="section-content">
+                <div class="section-content" id="<?php echo $category->slug ?>" 
+                    x-ref="content<?php echo $key+1; ?>"
+                    x-on:scroll.window=""
+                    >
+
                     <?php if( $products ) : ?>
                     <ul class="products">
                         <?php foreach( $products as $product ) : ?>

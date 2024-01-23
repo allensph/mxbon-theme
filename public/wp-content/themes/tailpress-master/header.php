@@ -14,7 +14,7 @@
 <?php do_action( 'tailpress_site_before' ); ?>
 
 <div id="page" class="min-h-screen flex flex-col" 
-	x-data="{ menu: false, search: false, nav: 0, topScreen: false, anchor: '' }"
+	x-data="{ menu: false, search: false, nav: 0, topScreen: false, banner: true, anchor: '' }"
 	@scroll.window="topScreen = false"
 	@scroll.window.debounce.2000ms="topScreen = (window.pageYOffset < 90) ? false: true">
 
@@ -67,7 +67,7 @@
 				);		
 			?>
 
-			<div class="search-wrapper">
+			<div class="search-wrapper" x-bind:class="{ 'hide-vertical-line' : !banner }">
 				<button class="search-toggle">
 					<div class="header-button close"><span>Close</span></div>
 					<div class="header-button open"><span>Search</span></div>
