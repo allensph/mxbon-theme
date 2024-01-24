@@ -1,24 +1,61 @@
-<!DOCTYPE html>
-<html <?php language_attributes(); ?> class="no-js">
-<head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width">
-	<link rel="profile" href="http://gmpg.org/xfn/11">
+<?php get_header(); ?>
 
-	<?php wp_head(); ?>
-</head>
-<body class="antialiased">
-	<div class="md:flex min-h-screen">
-		<div class="w-full md:w-1/2 flex items-center justify-center">
-			<div class="max-w-sm m-8">
-				<div class="text-5xl md:text-15xl text-gray-800 border-primary border-b">404</div>
-				<div class="w-16 h-1 bg-purple-light my-3 md:my-6"></div>
-				<p class="text-gray-800 text-2xl md:text-3xl font-light mb-8"><?php _e( 'Sorry, the page you are looking for could not be found.', 'tailpress' ); ?></p>
-				<a href="<?php echo get_bloginfo( 'url' ); ?>" class="bg-primary px-4 py-2 rounded text-white">
-					<?php _e( 'Go Home', 'tailpress' ); ?>
+	<?php
+		$images_uri =  get_stylesheet_directory_uri() . '/resources/images';
+
+		$categories = get_terms([
+			'taxonomy' => 'product-category',
+			'hide_empty' => false,
+			'order' => 'ASC',
+			'meta_key' => 'homepage_order',
+			'orderby' => 'meta_value_num',
+		]);
+
+		$categories = array_slice( $categories, 0, 4 );
+	?>
+
+	<div class="breadcrumb-wrapper">
+        <div class="breadcrumb">
+            <?php bcn_display(); ?>
+        </div>
+    </div>
+
+	<section class="error-404-banner">
+		<div class="container">
+			<div class="wrapper">
+				<img class="logo" src="<?php echo $images_uri; ?>/mxbon-logo.svg" alt="">
+				<p class="description"><?php _e( 'Sorry, the page you are looking for cannot be found.', 'tailpress' ); ?></p>
+				<a class="home-url" href="<?php echo get_home_url(); ?>">
+					<?php _e( 'Back to homepage', 'tailpress' ); ?>
 				</a>
 			</div>
+		</div>		
+	</section>
+
+	<section class="products-categories">
+		<div class="container">
+			<?php if( $categories ) : ?>
+			<?php foreach( $categories as $category) : ?>
+
+				<?php $category_img = get_field( 'category_image', $category );  ?>
+
+
+				<div class="card">
+					<?php if( $category_img ) : ?>
+						<img class="image" src="<?php echo $category_img['url']; ?>" alt="<?php echo $category->name; ?>">
+					<?php endif; ?>
+
+					<div class="content">
+						<h2><?php echo $category->name; ?></h2>
+						<p><?php echo $category->description; ?></p>
+						<a href="<?php echo "/product/#{$category->slug}"; ?>" class="permalink">Read more</a>
+					</div>
+
+				</div>
+
+			<?php endforeach; ?>
+			<?php endif; ?>
 		</div>
-	</div>
-</body>
-</html>
+	</section>
+<?php
+	get_footer();

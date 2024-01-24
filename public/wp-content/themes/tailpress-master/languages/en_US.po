@@ -1,0 +1,243 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TailPress\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-16 09:12+0000\n"
+"PO-Revision-Date: 2024-01-17 03:48+0000\n"
+"Last-Translator: \n"
+"Language-Team: English (United States)\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.6; wp-6.3.1\n"
+"X-Domain: tailpress"
+
+#: template-parts/content-page-corporate-philsosphy.php:44
+#, php-format
+msgid "%1$s Sustainable Development Goals: %2$s"
+msgstr ""
+
+#: template-parts/content-page-company-overview.php:48
+msgid "%d metric ton / year"
+msgid_plural "Over %d metric tons / year"
+msgstr[0] ""
+msgstr[1] ""
+
+#: comments.php:47
+msgid "&larr; Older Comments"
+msgstr ""
+
+#: template-parts/content-page-certification.php:65
+msgid "Accolades and Affirmations"
+msgstr ""
+
+#: template-parts/single-product-table.php:19
+msgid "Appearance"
+msgstr ""
+
+#: 404.php:29
+msgid "Back to homepage"
+msgstr ""
+
+#: template-parts/content-page-company-overview.php:122
+msgid "branch"
+msgid_plural "branches"
+msgstr[0] "Branch"
+msgstr[1] "Branches"
+
+#: template-parts/content-page-company-overview.php:47
+msgid "Capacity"
+msgstr ""
+
+#: template-parts/content-page-product-catalog.php:45
+msgid "Catalog"
+msgstr ""
+
+#: comments.php:43
+msgid "Comment navigation"
+msgstr ""
+
+#: comments.php:62
+msgid "Comments are closed."
+msgstr ""
+
+#: comments.php:18
+#, php-format
+msgctxt "comments title"
+msgid "One comment"
+msgid_plural "%1$s comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: template-parts/content-page-talent-recruitment.php:68
+msgid "Company Activities"
+msgstr ""
+
+#: footer.php:29
+msgid "Company Address"
+msgstr ""
+"No.18 Cheng Gong Street, Min-Shyong Industrial Park, Chia-Yi Hsien, (621)"
+"Taiwan"
+
+#: footer.php:25
+msgid "Company Name"
+msgstr "Cartell Chemical Co., Ltd."
+
+#: front-page.php:119
+msgid "Company Updates"
+msgstr ""
+
+#: single-product.php:243 single-industry.php:115 front-page.php:162
+msgid "Contact Us"
+msgstr ""
+
+#: template-parts/content-page-talent-recruitment.php:47
+msgid "Contact Us ( HR Group )"
+msgstr ""
+
+#. %s: Name of current post
+#: template-parts/content.php:21
+#, php-format
+msgid "Continue reading %s"
+msgstr ""
+
+#: template-parts/content-page-corporate-philsosphy.php:40
+msgid "Contribution to the SDGs"
+msgstr ""
+
+#: template-parts/content-page-company-overview.php:102
+msgid "employee"
+msgid_plural "employees"
+msgstr[0] "Employee"
+msgstr[1] "Employees"
+
+#: template-parts/content-page-certification.php:41
+msgid "Environmental policy"
+msgstr ""
+
+#: template-parts/content-page-company-overview.php:92
+msgid "experience"
+msgid_plural "experiences"
+msgstr[0] "Experience"
+msgstr[1] "Experiences"
+
+#: single-product.php:71 single-product.php:162
+msgid "Feartures"
+msgstr ""
+
+#: template-parts/content-page-company-overview.php:14
+#: template-parts/content-page-company-overview.php:26
+msgid "Founder"
+msgstr ""
+
+#. URI of the theme
+msgid "https://github.com/jeffreyvr/tailpress"
+msgstr ""
+
+#. Author URI of the theme
+msgid "https://vanrossum.dev"
+msgstr ""
+
+#: functions.php:364 front-page.php:81
+msgid "Industries"
+msgstr ""
+
+#: template-parts/content-page-company-overview.php:78
+msgid "Innovation"
+msgstr ""
+
+#. Author of the theme
+msgid "Jeffrey van Rossum"
+msgstr ""
+
+#: functions.php:15
+msgid "Language Menu"
+msgstr ""
+
+#: template-parts/content-page-company-overview.php:40
+msgid "Main Products"
+msgstr ""
+
+#: template-parts/content-page-company-overview.php:132
+msgid "nation"
+msgid_plural "nations"
+msgstr[0] "Nation"
+msgstr[1] "Nations"
+
+#: comments.php:53
+msgid "Newer Comments &rarr;"
+msgstr ""
+
+#: template-parts/content.php:32 template-parts/content-single.php:29
+msgid "Page"
+msgstr ""
+
+#: template-parts/content.php:28 template-parts/content-single.php:25
+msgid "Pages:"
+msgstr ""
+
+#: functions.php:14
+msgid "Primary Menu"
+msgstr ""
+
+#: template-parts/content-page-company-overview.php:112
+msgid "product"
+msgid_plural "products"
+msgstr[0] "Product"
+msgstr[1] "Products"
+
+#: archive-product.php:42 front-page.php:39
+msgid "Products"
+msgstr "Products"
+
+#: template-parts/content-page-certification.php:14
+msgid "Quality policy"
+msgstr ""
+
+#. Name of the template
+msgid "Redirect To First Child"
+msgstr ""
+
+#: single-industry.php:83
+msgid "Related Products"
+msgstr ""
+
+#: template-parts/content-page-company-overview.php:33
+msgid "Since"
+msgstr ""
+
+#: 404.php:27
+msgid "Sorry, the page you are looking for cannot be found."
+msgstr ""
+
+#: single-product.php:75 single-product.php:198
+msgid "Specifications"
+msgstr ""
+
+#. Name of the theme
+msgid "TailPress"
+msgstr ""
+
+#. Description of the theme
+msgid "TailPress is a simple boilerplate WordPress theme with Tailwind CSS."
+msgstr ""
+
+#: template-parts/content-page-company-overview.php:66
+msgid "Technology"
+msgstr ""
+
+#: single-product.php:67 single-product.php:109
+msgid "Usage"
+msgstr ""
+
+#: template-parts/content-page-corporate-philsosphy.php:28
+#: template-parts/content-page-corporate-philsosphy.php:33
+msgid "Vision Statement"
+msgstr ""
+
+#: template-parts/content-page-company-overview.php:34
+msgid "Year %d"
+msgstr "%d"

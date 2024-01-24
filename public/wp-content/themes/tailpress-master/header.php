@@ -7,87 +7,109 @@
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 
 	<?php wp_head(); ?>
+
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-5355BJX');</script>
+	<!-- End Google Tag Manager -->
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5355BJX "
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
 </head>
 
 <body <?php body_class( 'bg-white text-gray-900 antialiased' ); ?>>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LX0VFYELHL"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'G-LX0VFYELHL');
+</script>
 
 <?php do_action( 'tailpress_site_before' ); ?>
 
-<div id="page" class="min-h-screen flex flex-col">
+<div id="page" class="min-h-screen flex flex-col" 
+	x-data="{ menu: false, search: false, nav: 0, topScreen: false, banner: true, anchor: '' }"
+	@scroll.window="topScreen = false"
+	@scroll.window.debounce.2000ms="topScreen = (window.pageYOffset < 90) ? false: true">
 
 	<?php do_action( 'tailpress_header' ); ?>
 
-	<header>
+	<header id="site-header">
 
-		<div class="mx-auto container">
-			<div class="lg:flex lg:justify-between lg:items-center border-b py-6">
-				<div class="flex justify-between items-center">
-					<div>
-						<?php if ( has_custom_logo() ) { ?>
-                            <?php the_custom_logo(); ?>
-						<?php } else { ?>
-							<a href="<?php echo get_bloginfo( 'url' ); ?>" class="font-extrabold text-lg uppercase">
-								<?php echo get_bloginfo( 'name' ); ?>
-							</a>
+		<div class="container">
 
-							<p class="text-sm font-light text-gray-600">
-								<?php echo get_bloginfo( 'description' ); ?>
-							</p>
+			<div class="wrapper">
+				<a href="<?php echo pll_home_url(); ?>" class="custom-logo-link" rel="home" aria-current="page">
+					<img src="/wp-content/themes/tailpress-master/resources/images/header-logo.svg" class="custom-logo" alt="<?php echo bloginfo('name'); ?>" decoding="async">
+				</a>
 
-						<?php } ?>
-					</div>
-
-					<div class="lg:hidden">
-						<a href="#" aria-label="Toggle navigation" id="primary-menu-toggle">
-							<svg viewBox="0 0 20 20" class="inline-block w-6 h-6" version="1.1"
-								 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-								<g stroke="none" stroke-width="1" fill="currentColor" fill-rule="evenodd">
-									<g id="icon-shape">
-										<path d="M0,3 L20,3 L20,5 L0,5 L0,3 Z M0,9 L20,9 L20,11 L0,11 L0,9 Z M0,15 L20,15 L20,17 L0,17 L0,15 Z"
-											  id="Combined-Shape"></path>
-									</g>
-								</g>
-							</svg>
-						</a>
-					</div>
+				<div class="primary-menu-container">
+					<?php
+						wp_nav_menu(
+							array(
+								'container'=> false,
+								'menu_class'      => 'language-switcher mobile',
+								'theme_location'  => 'lang',
+								'fallback_cb'     => false,
+							)
+						);		
+					?>
+					<?php
+						wp_nav_menu(
+							array(
+								'container_id'    => 'primary-menu',
+								'container_class' => 'primary-menu',
+								'menu_class'      => '',
+								'theme_location'  => 'primary',
+								'li_class'        => '',
+								'walker'		  => new Mxbon_Primary_Menu_Walker(),
+								'fallback_cb'     => false,
+							)
+						);
+					?>
 				</div>
+			</div><!--wrapper-->
 
-				<?php
+			<?php
 				wp_nav_menu(
 					array(
-						'container_id'    => 'primary-menu',
-						'container_class' => 'hidden bg-gray-100 mt-4 p-4 lg:mt-0 lg:p-0 lg:bg-transparent lg:block',
-						'menu_class'      => 'lg:flex lg:-mx-4',
-						'theme_location'  => 'primary',
-						'li_class'        => 'lg:mx-4',
+						'container'=> false,
+						'menu_class'      => 'language-switcher',
+						'theme_location'  => 'lang',
 						'fallback_cb'     => false,
 					)
-				);
-				?>
+				);		
+			?>
+
+			<div class="search-wrapper" x-bind:class="{ 'hide-vertical-line' : !banner }">
+				<button class="search-toggle">
+					<div class="header-button close"><span>Close</span></div>
+					<div class="header-button open"><span>Search</span></div>
+				</button>
+				<div class="form-wrapper">
+					<?php echo get_search_form(); ?>
+				</div>
 			</div>
-		</div>
+
+			<div class="toggle-wrapper">
+				<a href="#" aria-label="Toggle navigation" id="primary-menu-toggle">
+					<i class="fa-solid fa-bars"></i>
+					<i class="fa-solid fa-xmark"></i>
+				</a>
+			</div>
+
+		</div><!--container-->
+
 	</header>
 
 	<div id="content" class="site-content flex-grow">
-
-		<?php if ( is_front_page() ) { ?>
-			<!-- Start introduction -->
-			<div class="container mx-auto">
-				<div class="px-12 py-16 my-12 rounded-xl bg-gradient-to-r from-blue-50 from-10% via-sky-100 via-30% to-blue-200 to-90%">
-                    <div class="mx-auto max-w-screen-md">
-                        <h1 class="text-3xl lg:text-6xl tracking-tight font-extrabold text-gray-800 mb-6">Start building your next <a href="https://tailwindcss.com" class="text-secondary">Tailwind CSS</a> flavoured WordPress theme
-                            with <a href="https://tailpress.io" class="text-primary">TailPress</a>.</h1>
-                        <p class="text-gray-600 text-xl font-medium mb-10">TailPress is your go-to starting
-                            point for developing WordPress themes with Tailwind CSS and comes with basic block-editor support out
-                            of the box.</p>
-                        <a href="https://github.com/jeffreyvr/tailpress"
-                            class="w-full sm:w-auto flex-none bg-gray-900 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-900 focus:outline-none transition-colors duration-200">View
-                            on GitHub</a>
-                    </div>
-                </div>
-			</div>
-			<!-- End introduction -->
-		<?php } ?>
 
 		<?php do_action( 'tailpress_content_start' ); ?>
 

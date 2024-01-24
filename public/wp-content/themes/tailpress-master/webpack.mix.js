@@ -5,18 +5,26 @@ mix.setResourceRoot('../');
 mix.setPublicPath(path.resolve('./'));
 
 mix.webpackConfig({
-    watchOptions: { ignored: [
-        path.posix.resolve(__dirname, './node_modules'),
-        path.posix.resolve(__dirname, './css'),
-        path.posix.resolve(__dirname, './js')
-    ] }
+    watchOptions: {
+        ignored: [
+            path.posix.resolve(__dirname, './node_modules'),
+            path.posix.resolve(__dirname, './css'),
+            path.posix.resolve(__dirname, './js')
+        ]
+    }
 });
 
 mix.js('resources/js/app.js', 'js');
 
+mix.js('resources/js/admin-custom-script.js', 'js');
+
 mix.postCss("resources/css/app.css", "css");
 
+mix.postCss("resources/css/dashboard-style.css", "css");
+
 mix.postCss("resources/css/editor-style.css", "css");
+
+mix.postCss("resources/css/acf-option-style.css", "css");
 
 // mix.browserSync({
 //     proxy: 'http://tailpress.test',
