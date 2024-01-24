@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TailPress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-16 09:12+0000\n"
-"PO-Revision-Date: 2024-01-17 03:48+0000\n"
+"PO-Revision-Date: 2024-01-15 11:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: 繁體中文\n"
 "Language: zh_TW\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.6; wp-6.4.2\n"
+"X-Loco-Version: 2.6.6; wp-6.3.1\n"
 "X-Domain: tailpress"
 
 #: template-parts/content-page-corporate-philsosphy.php:44
@@ -33,10 +33,6 @@ msgstr ""
 #: template-parts/content-page-certification.php:65
 msgid "Accolades and Affirmations"
 msgstr "獲獎與肯定"
-
-#: template-parts/single-product-table.php:19
-msgid "Appearance"
-msgstr "外觀顏色"
 
 #: 404.php:29
 msgid "Back to homepage"
@@ -73,14 +69,6 @@ msgstr[0] ""
 #: template-parts/content-page-talent-recruitment.php:68
 msgid "Company Activities"
 msgstr "公司活動"
-
-#: footer.php:29
-msgid "Company Address"
-msgstr "621 嘉義縣民雄工業區成功街18號"
-
-#: footer.php:25
-msgid "Company Name"
-msgstr "北回化學股份有限公司"
 
 #: front-page.php:119
 msgid "Company Updates"
@@ -227,8 +215,7 @@ msgstr "使用技巧與重點"
 
 #: template-parts/content-page-corporate-philsosphy.php:28
 #: template-parts/content-page-corporate-philsosphy.php:33
-#| msgid "Vission Statement"
-msgid "Vision Statement"
+msgid "Vission Statement"
 msgstr "願景使命"
 
 #: template-parts/content-page-company-overview.php:34

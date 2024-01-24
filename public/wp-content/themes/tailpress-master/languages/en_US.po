@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TailPress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-16 09:12+0000\n"
-"PO-Revision-Date: 2023-11-22 09:17+0000\n"
+"PO-Revision-Date: 2024-01-17 03:48+0000\n"
 "Last-Translator: \n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -15,44 +15,56 @@ msgstr ""
 "X-Loco-Version: 2.6.6; wp-6.3.1\n"
 "X-Domain: tailpress"
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-corporate-philsosphy.php:44
+#: template-parts/content-page-corporate-philsosphy.php:44
 #, php-format
 msgid "%1$s Sustainable Development Goals: %2$s"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-company-overview.php:48
+#: template-parts/content-page-company-overview.php:48
 msgid "%d metric ton / year"
 msgid_plural "Over %d metric tons / year"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/comments.php:47
+#: comments.php:47
 msgid "&larr; Older Comments"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-company-overview.php:122
+#: template-parts/content-page-certification.php:65
+msgid "Accolades and Affirmations"
+msgstr ""
+
+#: template-parts/single-product-table.php:19
+msgid "Appearance"
+msgstr ""
+
+#: 404.php:29
+msgid "Back to homepage"
+msgstr ""
+
+#: template-parts/content-page-company-overview.php:122
 msgid "branch"
 msgid_plural "branches"
 msgstr[0] "Branch"
 msgstr[1] "Branches"
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-company-overview.php:47
+#: template-parts/content-page-company-overview.php:47
 msgid "Capacity"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-product-catalog.php:45
+#: template-parts/content-page-product-catalog.php:45
 msgid "Catalog"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/comments.php:43
+#: comments.php:43
 msgid "Comment navigation"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/comments.php:62
+#: comments.php:62
 msgid "Comments are closed."
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/comments.php:18
+#: comments.php:18
 #, php-format
 msgctxt "comments title"
 msgid "One comment"
@@ -60,57 +72,64 @@ msgid_plural "%1$s comments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-talent-recruitment.php:68
+#: template-parts/content-page-talent-recruitment.php:68
 msgid "Company Activities"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/front-page.php:119
+#: footer.php:29
+msgid "Company Address"
+msgstr ""
+"No.18 Cheng Gong Street, Min-Shyong Industrial Park, Chia-Yi Hsien, (621)"
+"Taiwan"
+
+#: footer.php:25
+msgid "Company Name"
+msgstr "Cartell Chemical Co., Ltd."
+
+#: front-page.php:119
 msgid "Company Updates"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/front-page.php:162
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/single-industry.php:115
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/single-product.php:206
+#: single-product.php:243 single-industry.php:115 front-page.php:162
 msgid "Contact Us"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-talent-recruitment.php:47
+#: template-parts/content-page-talent-recruitment.php:47
 msgid "Contact Us ( HR Group )"
 msgstr ""
 
 #. %s: Name of current post
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content.php:21
+#: template-parts/content.php:21
 #, php-format
 msgid "Continue reading %s"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-corporate-philsosphy.php:40
+#: template-parts/content-page-corporate-philsosphy.php:40
 msgid "Contribution to the SDGs"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-company-overview.php:102
+#: template-parts/content-page-company-overview.php:102
 msgid "employee"
 msgid_plural "employees"
 msgstr[0] "Employee"
 msgstr[1] "Employees"
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-certification.php:41
+#: template-parts/content-page-certification.php:41
 msgid "Environmental policy"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-company-overview.php:92
+#: template-parts/content-page-company-overview.php:92
 msgid "experience"
 msgid_plural "experiences"
 msgstr[0] "Experience"
 msgstr[1] "Experiences"
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/single-product.php:71
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/single-product.php:146
+#: single-product.php:71 single-product.php:162
 msgid "Feartures"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-company-overview.php:14
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-company-overview.php:26
+#: template-parts/content-page-company-overview.php:14
+#: template-parts/content-page-company-overview.php:26
 msgid "Founder"
 msgstr ""
 
@@ -122,12 +141,11 @@ msgstr ""
 msgid "https://vanrossum.dev"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/front-page.php:81
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/functions.php:351
+#: functions.php:364 front-page.php:81
 msgid "Industries"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-company-overview.php:78
+#: template-parts/content-page-company-overview.php:78
 msgid "Innovation"
 msgstr ""
 
@@ -135,50 +153,47 @@ msgstr ""
 msgid "Jeffrey van Rossum"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/functions.php:15
+#: functions.php:15
 msgid "Language Menu"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-company-overview.php:40
+#: template-parts/content-page-company-overview.php:40
 msgid "Main Products"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-company-overview.php:132
+#: template-parts/content-page-company-overview.php:132
 msgid "nation"
 msgid_plural "nations"
 msgstr[0] "Nation"
 msgstr[1] "Nations"
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/comments.php:53
+#: comments.php:53
 msgid "Newer Comments &rarr;"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-single.php:29
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content.php:32
+#: template-parts/content.php:32 template-parts/content-single.php:29
 msgid "Page"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-single.php:25
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content.php:28
+#: template-parts/content.php:28 template-parts/content-single.php:25
 msgid "Pages:"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/functions.php:14
+#: functions.php:14
 msgid "Primary Menu"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-company-overview.php:112
+#: template-parts/content-page-company-overview.php:112
 msgid "product"
 msgid_plural "products"
 msgstr[0] "Product"
 msgstr[1] "Products"
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/archive-product.php:42
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/front-page.php:39
+#: archive-product.php:42 front-page.php:39
 msgid "Products"
 msgstr "Products"
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-certification.php:14
+#: template-parts/content-page-certification.php:14
 msgid "Quality policy"
 msgstr ""
 
@@ -186,16 +201,19 @@ msgstr ""
 msgid "Redirect To First Child"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/single-industry.php:83
+#: single-industry.php:83
 msgid "Related Products"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-company-overview.php:33
+#: template-parts/content-page-company-overview.php:33
 msgid "Since"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/single-product.php:75
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/single-product.php:175
+#: 404.php:27
+msgid "Sorry, the page you are looking for cannot be found."
+msgstr ""
+
+#: single-product.php:75 single-product.php:198
 msgid "Specifications"
 msgstr ""
 
@@ -207,20 +225,19 @@ msgstr ""
 msgid "TailPress is a simple boilerplate WordPress theme with Tailwind CSS."
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-company-overview.php:66
+#: template-parts/content-page-company-overview.php:66
 msgid "Technology"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/single-product.php:67
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/single-product.php:109
+#: single-product.php:67 single-product.php:109
 msgid "Usage"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-corporate-philsosphy.php:28
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-corporate-philsosphy.php:33
-msgid "Vission Statement"
+#: template-parts/content-page-corporate-philsosphy.php:28
+#: template-parts/content-page-corporate-philsosphy.php:33
+msgid "Vision Statement"
 msgstr ""
 
-#: ../../../../../repo/public/wp-content/themes/tailpress-master/template-parts/content-page-company-overview.php:34
+#: template-parts/content-page-company-overview.php:34
 msgid "Year %d"
 msgstr "%d"
