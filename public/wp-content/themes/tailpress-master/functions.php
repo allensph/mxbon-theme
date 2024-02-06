@@ -72,7 +72,7 @@ function tailpress_enqueue_scripts() {
     $lang = pll_current_language();
 
     $aos_pages = array(
-      'corporate-philsosphy',
+      'corporate-philosophy',
       'innovation',
       'certification',
       'talent-recruitment',

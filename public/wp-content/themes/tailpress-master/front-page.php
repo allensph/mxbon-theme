@@ -45,8 +45,9 @@
             <div class="section-swiper">
                 <div class="swiper">
                     <div class="swiper-wrapper">
+                        <?php $products_page = $pll_current_language === 'zh' ? 'product' : 'product-en'; ?>
                         <?php foreach ($terms as $term) : ?>
-                            <a class="swiper-slide" href="/product/#<?php echo $term->slug; ?>">
+                            <a class="swiper-slide" href="<?php echo "/{$products_page}/#{$term->slug}"; ?>">
                                 <div class="image">
                                     <div class="image-wrapper">
                                         
@@ -101,7 +102,7 @@
                                 <div class="info">
                                     <div class="content">
                                         <h3 class="name"><?php echo $industry->post_title ?></h3>
-                                        <?php echo get_the_content($industry); ?>
+                                        <p><?php echo wp_strip_all_tags( $industry->post_content ); ?></p>
                                     </div>
                                     <a class="permalink" href="<?php echo get_permalink( $industry ); ?>">Read More</a>
                                 </div>

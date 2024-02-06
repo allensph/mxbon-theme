@@ -116,7 +116,7 @@ if (window.location.pathname.includes('history')) {
       })
 }
 
-if (window.location.pathname.includes('corporate-philsosphy')) {
+if (window.location.pathname.includes('corporate-philosophy')) {
       window.addEventListener('DOMContentLoaded', function () {
 
             // animate on scroll
